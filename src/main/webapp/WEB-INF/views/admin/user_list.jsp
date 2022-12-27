@@ -33,6 +33,7 @@
 				<td><%= dto.getGender() %></td>
 			</tr>
 		<%  } // for %> --%>
+		user리스트 유효성 검사
 		</tbody>
 	</table>
 </div>
