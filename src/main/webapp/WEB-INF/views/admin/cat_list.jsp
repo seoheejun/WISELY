@@ -11,7 +11,7 @@
 <div class="container w-75 border shadow-sm p-5 mt-5">
 	<div class="container d-flex justify-content-between mb-3">
 		<h3>카테고리관리</h3>
-		<a href="${ctx}/admin/cat_input.jsp" class="btn btn-outline-secondary">카테고리 추가</a>
+		<a href="<c:url value='cat_input'/>" class="btn btn-outline-secondary">카테고리 추가</a>
 	</div>
 	<table class="table">
 		<thead>

@@ -4,7 +4,7 @@
 <main>
 <div class="container w-50 border shadow-sm p-5 mt-5">
 	<h3>카테고리 등록</h3>
-	<form action="${ctx}/cat_regOk.do" method="post" name="cat_inputFrm">
+	<form action="cat_regOk.do" method="post" name="cat_inputFrm">
 		<div class="mt-3">
 			<label for="code">카테고리 코드</label>
 			<input type="text" class="form-control" id="code" placeholder="카테고리 코드를 입력하세요" name="code"/>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.mapper.CategoryDao">
+  
+    <select id="selectAll" parameterType="int" resultType="CategoryDto">
+    	<![CDATA[
+	    	SELECT * FROM category
+    	]]>
+    </select>
+    <insert id="insert" parameterType="com.project.shopping.domain.CategoryDto">
+    	<![CDATA[
+	    	INSERT INTO category (cat_code, cat_name)
+	    	VALUES (#{cat_code}, #{cat_name})
+    	]]>
+    </insert>
+</mapper>
