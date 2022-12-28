@@ -16,31 +16,44 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>코드</th>
-				<th>카테고리명</th>
-				<th>삭제</th>
+				<th>대분류</th>
+				<th>소분류</th>
+				<th>수정/삭제</th>
 			</tr>
 		</thead>
 		<tbody>
-		<%-- <%
-			CategoryDAO dao = CategoryDAO.getInstance();
-			ArrayList<CategoryDTO> dtos = dao.categoryList();
-			
-			for(int i=0; i<dtos.size(); i++){
-				CategoryDTO dto = dtos.get(i);
-		%>
+		<c:forEach var="dto" items="${list}">
 			<tr>
-				<td><%= dto.getCatNum() %></td>
-				<td><%= dto.getCatCode() %></td>
-				<td><%= dto.getCatName() %></td>
+				<td>${dto.catMajor}</td>
+				<td>${dto.catMinor}</td>
 				<td>
-					<a href="cat_delete.do?catNum=<%=dto.getCatNum()%>" class="btn btn-sm btn-outline-danger">삭제</a>
+					<input type="button" value="수정" class="btn btn-warning btn-sm"
+					onclick="infoCategory(${dto.catNo})"/>
+					<input type="button" value="삭제" class="btn btn-danger btn-sm"
+					onclick="delCategory(${dto.catNo})"/>
 				</td>
 			</tr>
-		<%  } // for %> --%>
+		</c:forEach>
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	function infoCategory(catNo){
+		location.href="<c:url value='cat_info?catNo='/>"+catNo;
+	}
+	
+	function delCategory(catNo){
+		location.href="<c:url value='cat_delete?catNo='/>"+catNo;
+	}
+	
+	/* function delCategory(catNo){
+		if((confirm("정말로 삭제하시겠습니까?")==true){
+			location.href="<c:url value='cat_delete?catNo='/>"+catNo;
+			alert("삭제되었습니다.")
+		}else{
+			alert("취소되었습니다.")
+		})
+	} */
+</script>
 </main>
-<%@ include file="../inc/footer.jsp" %>
+<jsp:include page="../inc/footer.jsp"/>

@@ -16,7 +16,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@RequestMapping("cat_list")
+	@RequestMapping("/cat_list")
 	public String categoryList(Model model) {
 		List<CategoryDTO> categoryList = categoryService.catList();
 		
@@ -24,34 +24,34 @@ public class CategoryController {
 		return "admin/cat_list";
 	}
 	
-	@RequestMapping("cat_input")
+	@RequestMapping("/cat_input")
 	public String categoryInput() {
 		return "admin/cat_input";
 	}
 	
-	@RequestMapping("/categoryInsert.do")
+	@RequestMapping("/cat_insert")
 	public String categoryInsert(CategoryDTO dto) {
 		categoryService.catInsert(dto);
-		return "redirect:/categoryList.do";
+		return "redirect:/cat_list";
 	}
 	
-	@RequestMapping("/categoryInfo.do")
+	@RequestMapping("/cat_info")
 	public String categoryInfo(int catNo, Model model) {
 		CategoryDTO dto = categoryService.catInfo(catNo);
 		model.addAttribute("dto", dto);
 		
-		return "cat_Info";
+		return "admin/cat_info";
 	}
 	
-	@RequestMapping("/categoryUpdate.do")
+	@RequestMapping("/cat_update")
 	public String categoryUpdate(CategoryDTO dto) {
 		int cnt = categoryService.catUpdate(dto);
-		return "redirect:/categoryList.do";
+		return "redirect:/cat_list";
 	}
 	
-	@RequestMapping("/categoryDelete.do")
+	@RequestMapping("/cat_delete")
 	public String categoryDelete(int catNo) {
 		categoryService.catDelete(catNo);
-		return "redirect:/categoryList.do";
+		return "redirect:/cat_list";
 	}
 }
