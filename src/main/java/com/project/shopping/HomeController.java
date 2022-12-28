@@ -23,10 +23,10 @@ public class HomeController {
 		return "admin/user_list";
 	}
 	
-	@RequestMapping("cat_list")
-	public String cat_list() {
-		return "admin/cat_list";
-	}
+//	@RequestMapping("cat_list")
+//	public String cat_list() {
+//		return "admin/cat_list";
+//	}
 	
 	@RequestMapping("pd_list")
 	public String pd_list() {

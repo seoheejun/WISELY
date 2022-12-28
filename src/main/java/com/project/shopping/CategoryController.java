@@ -1,39 +1,57 @@
 package com.project.shopping;
 
-import java.net.URLEncoder;
+import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.domain.CategoryDTO;
+import com.project.service.CategoryService;
 
 @Controller
-@RequestMapping("/category")
 public class CategoryController {
 	
-	@GetMapping("/input")
-	public String input() {
+	@Autowired
+	private CategoryService categoryService;
+	
+	@RequestMapping("cat_list")
+	public String categoryList(Model model) {
+		List<CategoryDTO> categoryList = categoryService.catList();
+		
+		model.addAttribute("list", categoryList);
+		return "admin/cat_list";
+	}
+	
+	@RequestMapping("cat_input")
+	public String categoryInput() {
 		return "admin/cat_input";
 	}
 	
-	@PostMapping("/add")
-	public String add(CategoryDTO category, Model m) throws Exception{
-		// 1. 유효성 검사
-		if(!isValid(category)) {
-			String msg = URLEncoder.encode("카테고리를 등록하지 못했습니다.", "utf-8");
-			
-			m.addAttribute("msg", msg);
-			return "forward:/admin/category/add";
-		}
-		return "admin/category/input";
+	@RequestMapping("/categoryInsert.do")
+	public String categoryInsert(CategoryDTO dto) {
+		categoryService.catInsert(dto);
+		return "redirect:/categoryList.do";
 	}
 	
-	private boolean isValid(CategoryDTO category) {
-		return false;
+	@RequestMapping("/categoryInfo.do")
+	public String categoryInfo(int catNo, Model model) {
+		CategoryDTO dto = categoryService.catInfo(catNo);
+		model.addAttribute("dto", dto);
+		
+		return "cat_Info";
+	}
+	
+	@RequestMapping("/categoryUpdate.do")
+	public String categoryUpdate(CategoryDTO dto) {
+		int cnt = categoryService.catUpdate(dto);
+		return "redirect:/categoryList.do";
+	}
+	
+	@RequestMapping("/categoryDelete.do")
+	public String categoryDelete(int catNo) {
+		categoryService.catDelete(catNo);
+		return "redirect:/categoryList.do";
 	}
 }

@@ -1,36 +1,49 @@
 package com.project.domain;
 
 public class CategoryDTO {
-	private int cat_no;
-	private String cat_code;
-	private String cat_name;
+	private int catNo;
+	private String catCode;
+	private String catName;
 	
-	public int getCat_no() {
-		return cat_no;
+	// 기본생성자
+	public CategoryDTO() {}
+	
+	// DB에서 조회한 결과를 이용할 때 catNo 필요
+	public CategoryDTO(int catNo, String catCode, String catName) {
+		super();
+		this.catNo = catNo;
+		this.catCode = catCode;
+		this.catName = catName;
 	}
 	
-	public void setCat_no(int cat_no) {
-		this.cat_no = cat_no;
+	// DB에 데이터 입력시 catNo 필요 없음
+	public CategoryDTO(String catCode, String catName) {
+		super();
+		this.catCode = catCode;
+		this.catName = catName;
 	}
 	
-	public String getCat_code() {
-		return cat_code;
+	public int getCatNo() {
+		return catNo;
 	}
-	
-	public void setCat_code(String cat_code) {
-		this.cat_code = cat_code;
+	public void setCatNo(int catNo) {
+		this.catNo = catNo;
 	}
-	
-	public String getCat_name() {
-		return cat_name;
+	public String getCatCode() {
+		return catCode;
 	}
-	
-	public void setCat_name(String cat_name) {
-		this.cat_name = cat_name;
+	public void setCatCode(String catCode) {
+		this.catCode = catCode;
+	}
+	public String getCatName() {
+		return catName;
+	}
+	public void setCatName(String catName) {
+		this.catName = catName;
 	}
 	
 	@Override
 	public String toString() {
-		return "CategoryDto [cat_no=" + cat_no + ", cat_code=" + cat_code + ", cat_name=" + cat_name + "]";
+		return "CategoryDTO [catNo=" + catNo + ", catCode=" + catCode + ", catName=" + catName + "]";
 	}
 }

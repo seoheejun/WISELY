@@ -10,17 +10,26 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven/>
+	
+	<!-- @Controller, @Autowire, @Repository, @Component,.... 
+	 전처리 : 컴파일러에게 알려줌, 어노테이션: 주석 -> /** 시작 -->
+	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/img/**" location="/resources/img/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- 뷰리졸버객체 생성 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.project.shopping" />
+	<!-- @Component 애너테이션 붙은 클래스들을 스캔을 해서 객체로 만들어주는 역할
+		이렇게 만들어진 객체는 스프링 컨터네이너에 보관, 스프링 컨테이너 : 객체를 보관하는 메모리
+	-->
+	<context:component-scan base-package="com.project.shopping"/>
 	
 </beans:beans>

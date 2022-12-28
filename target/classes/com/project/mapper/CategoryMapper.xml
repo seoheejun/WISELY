@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.mapper.CategoryDao">
+<mapper namespace="com.project.mapper.CategoryMapper">
   
-    <select id="selectAll" parameterType="int" resultType="CategoryDto">
-    	<![CDATA[
-	    	SELECT * FROM category
-    	]]>
+    <select id="categoryList" resultType="categoryDTO">
+	    SELECT * FROM category
     </select>
-    <insert id="insert" parameterType="com.project.shopping.domain.CategoryDto">
-    	<![CDATA[
-	    	INSERT INTO category (cat_code, cat_name)
-	    	VALUES (#{cat_code}, #{cat_name})
-    	]]>
+    
+    <select id="categoryInfo" parameterType="Integer" resultType="categoryDTO">
+    	SELECT * FROM category WHERE cat_no = #{catNo}
+    </select>
+    
+    <insert id="categoryInsert" parameterType="categoryDTO">
+    	INSERT INTO category (cat_code, cat_name)
+    	VALUES (#{catCode}, #{catName})
     </insert>
+    
+    <update id="categoryUpdate" parameterType="categoryDTO">
+    	UPDATE category SET cat_code = #{catCode}, cat_name = #{catName} WHERE cat_no = #{catNo}
+    </update>
+    
+    <delete id="categoryDelete" parameterType="Integer">
+    	DELETE FROM category WHERE cat_no = #{catNo}
+    </delete>
+   
 </mapper>
