@@ -4,6 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.project.domain.CategoryDTO" alias="categoryDTO" />
+		<typeAlias type="com.project.domain.CategoryDTO" alias="categoryDTO"/>
+		<typeAlias type="com.project.domain.AdminDTO" alias="adminDTO"/>
 	</typeAliases>
 </configuration>

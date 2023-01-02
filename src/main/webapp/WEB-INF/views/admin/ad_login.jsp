@@ -4,14 +4,14 @@
 <main>
 <div class="container mt-5 w-50 border shadow p-5">
 	<h2>관리자 로그인</h2>
-	<form action="<c:url value='/admin/login'/>" method="post">
+	<form action="<c:url value='/ad_loginOK'/>" method="post">
 		<div class="mt-3 mb-3">
-			<label for="id">아이디</label>
-			<input type="text" class="form-control" id="id" placeholder="아이디" name="id"/>
+			<label for="adminId">아이디</label>
+			<input type="text" class="form-control" id="adminId" placeholder="아이디" name="adminId"/>
 		</div>
 		<div class="mb-3">
-			<label for="pw">비밀번호</label>
-			<input type="password" class="form-control" id="pw" placeholder="비밀번호" name="pw"/>
+			<label for="adminPw">비밀번호</label>
+			<input type="password" class="form-control" id="adminPw" placeholder="비밀번호" name="adminPw"/>
 		</div>
 		<div class="text-center">
 			<input type="submit" class="btn btn-sm btn-primary" value="로그인"/>

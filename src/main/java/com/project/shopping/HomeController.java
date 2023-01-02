@@ -23,10 +23,15 @@ public class HomeController {
 		return "admin/user_list";
 	}
 	
-//	@RequestMapping("cat_list")
-//	public String cat_list() {
-//		return "admin/cat_list";
-//	}
+	@RequestMapping("user_login")
+	public String user_login() {
+		return "customer/user_login";
+	}
+	
+	@RequestMapping("user_join")
+	public String user_join() {
+		return "customer/user_join";
+	}
 	
 	@RequestMapping("pd_list")
 	public String pd_list() {

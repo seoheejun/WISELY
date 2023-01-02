@@ -4,7 +4,7 @@ public class CategoryDTO {
 	private int catNo;
 	private String catMajor;
 	private String catMinor;
-	
+		
 	// 기본생성자
 	public CategoryDTO() {}
 	
@@ -15,7 +15,7 @@ public class CategoryDTO {
 		this.catMajor = catMajor;
 		this.catMinor = catMinor;
 	}
-	
+
 	// DB에 데이터 입력시 catNo 필요 없음
 	public CategoryDTO(String catMajor, String catMinor) {
 		super();
