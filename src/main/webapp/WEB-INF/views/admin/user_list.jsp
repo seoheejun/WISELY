@@ -8,12 +8,10 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>이메일</th>
-				<th>비밀번호</th>
-				<th>전화번호</th>
-				<th>생년월일</th>
 				<th>이름</th>
-				<th>성별</th>
+				<th>이메일</th>
+				<th>전화번호</th>
+				<th>수정/삭제</th>
 			</tr>
 		</thead>
 		<tbody>

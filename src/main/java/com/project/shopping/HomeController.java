@@ -33,8 +33,4 @@ public class HomeController {
 		return "customer/user_join";
 	}
 	
-	@RequestMapping("pd_list")
-	public String pd_list() {
-		return "admin/pd_list";
-	}
 }

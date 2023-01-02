@@ -3,15 +3,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ include file="../inc/header.jsp" %>
-<%-- <%
-	CategoryDAO dao = CategoryDAO.getInstance();
-	ArrayList<CategoryDTO> dtos = dao.categoryList();
-	request.setAttribute("list", dtos);
-%> --%>
 <main>
 	<div class="container w-50 border shadow-sm p-5 mt-5">
 		<h3>상품 등록</h3>
-		<form action="${ctx}/prod_regOk.do" method="post" enctype="multipart/form-data">
+		<form action="<c:url value='pd_insert'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-borderless">
 				<tbody>
 					<tr>
@@ -23,7 +18,7 @@
 								</c:if>
 								<c:if test="${list != null || list.size() != 0}">
 									<c:forEach var="dto" items="${list}">
-										<option value="${dto.catCode}">${dto.catName}[${dto.catCode}]</option>
+										<option>${dto.catMajor} > ${dto.catMinor}</option>
 									</c:forEach>
 								</c:if>		
 							</select>
@@ -67,9 +62,25 @@
 						</td>
 					</tr>
 					<tr>
+						<td>상세정보 1</td>
+						<td><input type="file" class="form-control form-control-sm" name="pInputImage_1"/></td>
+					</tr>
+					<tr>
+						<td>상세정보 2</td>
+						<td><input type="file" class="form-control form-control-sm" name="pInputImage_2"/></td>
+					</tr>
+					<tr>
+						<td>상세정보 3</td>
+						<td><input type="file" class="form-control form-control-sm" name="pInputImage_3"/></td>
+					</tr>
+					<tr>
+						<td>상세정보 4</td>
+						<td><input type="file" class="form-control form-control-sm" name="pInputImage_4"/></td>
+					</tr>
+					<tr>
 						<td colspan="2" class="text-center">
 							<input type="submit" class="btn btn-sm btn-primary" value="상품등록"/>	
-							<input type="reset" class="btn btn-sm btn-secondary" value="취소"/>	
+							<a href="pd_list" class="btn btn-sm btn-secondary">취소</a>	
 						</td>
 					</tr>
 				</tbody>			

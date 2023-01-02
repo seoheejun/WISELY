@@ -24,10 +24,10 @@
 		    	<ul class="navbar-nav w-100">
 			        <c:if test="${sessionScope.userName == null && sessionScope.adminName == null}">
 			        	<li class="nav-item ms-auto">
-			        		<a href="<c:url value='/user_login'/>" class="nav-link">로그인</a>
+			        		<a href="<c:url value='user_login'/>" class="nav-link">로그인</a>
 			        	</li>
 			        	<li class="nav-item ms-3">
-			        		<a href="<c:url value='/user_join'/>" class="nav-link">회원가입</a>
+			        		<a href="<c:url value='user_join'/>" class="nav-link">회원가입</a>
 			        	</li>
 			        	<li class="nav-item ms-3">
 			        		<a href="<c:url value='/'/>" class="nav-link">고객센터</a>
@@ -35,16 +35,16 @@
 		        	</c:if>
 		    		<c:if test="${sessionScope.adminName != null}">
 			        	<li class="nav-item ms-auto" style="margin-right:20px;">
-			          		<a href="<c:url value='/admin/member_list'/>" class="nav-link">회원관리</a>
+			          		<a href="<c:url value='user_list'/>" class="nav-link">회원관리</a>
 			        	</li>
 			        	<li class="nav-item" style="margin-right:20px;">
-			          		<a href="<c:url value='/admin/cat_list'/>" class="nav-link">카테고리관리</a>
+			          		<a href="<c:url value='cat_list'/>" class="nav-link">카테고리관리</a>
 			        	</li>
 			        	<li class="nav-item" style="margin-right:20px;">
-			          		<a href="<c:url value='/admin/pd_list'/>" class="nav-link">상품관리</a>
+			          		<a href="<c:url value='pd_list'/>" class="nav-link">상품관리</a>
 			        	</li>
 			        	<li>
-			        		<a href="<c:url value='/ad_logoutOK'/>" class="nav-link">로그아웃</a>
+			        		<a href="<c:url value='ad_logoutOK'/>" class="nav-link">로그아웃</a>
 			        	</li>
 		        	</c:if>
 		        	<c:if test="${sessionScope.userName != null}">
