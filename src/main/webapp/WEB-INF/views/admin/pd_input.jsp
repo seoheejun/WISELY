@@ -34,7 +34,7 @@
 					</tr>
 					<tr>
 						<td>상품이미지</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_1"/></td>
 					</tr>
 					<tr>
 						<td>상품수량</td>
@@ -63,19 +63,19 @@
 					</tr>
 					<tr>
 						<td>상세정보 1</td>
-						<td><input type="file" class="form-control form-control-sm" name="pInputImage_1"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_2"/></td>
 					</tr>
 					<tr>
 						<td>상세정보 2</td>
-						<td><input type="file" class="form-control form-control-sm" name="pInputImage_2"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_3"/></td>
 					</tr>
 					<tr>
 						<td>상세정보 3</td>
-						<td><input type="file" class="form-control form-control-sm" name="pInputImage_3"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_4"/></td>
 					</tr>
 					<tr>
 						<td>상세정보 4</td>
-						<td><input type="file" class="form-control form-control-sm" name="pInputImage_4"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_5"/></td>
 					</tr>
 					<tr>
 						<td colspan="2" class="text-center">

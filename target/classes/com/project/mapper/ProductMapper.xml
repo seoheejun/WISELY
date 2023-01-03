@@ -10,7 +10,7 @@
     </select>
     
     <select id="productInfo" parameterType="Integer" resultType="productDTO">
-    	SELECT * FROM product WHERE pNo = #{pNo}, pCategory_fk = #{pCategory_fk}, pSpec = #{pSpec}
+    	SELECT * FROM product WHERE pNo = #{pNo}
     </select>
     
     <insert id="productInsert">

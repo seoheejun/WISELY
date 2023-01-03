@@ -29,13 +29,13 @@
 					<td>${dto.pCompany}</td>
 					<td>${dto.pName}</td>
 					<td>
-						<img src="/prod_img/${dto.pImage_1}" style="width:50px; height:50px;"/>
+						<img src="../prod_img/${dto.pImage_1}" style="width:50px; height:50px;"/>
 					</td>
-					<td>${dto.price}</td>
+					<td><fmt:formatNumber value="${dto.price}"/></td>
 					<td>${dto.pQty}</td>
 					<td>
 						<input type="button" value="수정" class="btn btn-warning btn-sm"
-						onclick="infoProduct(${dto.pNo}, ${dto.pCategory_fk}, ${dto.pSpec})"/>
+						onclick="infoProduct(${dto.pNo})"/>
 						<input type="button" value="삭제" class="btn btn-danger btn-sm"
 						onclick="delProduct(${dto.pNo})"/>
 					</td>
@@ -46,8 +46,8 @@
 	</div>
 </main>
 <script type="text/javascript">
-	function infoProduct(pNo, pCategory_fk, pSpec){
-		location.href="<c:url value='pd_info?pNo='/>" + pNo + "&pCategory_fk=" + pCategory_fk + "&pSpec=" + pSpec;
+	function infoProduct(pNo){
+		location.href="<c:url value='pd_info?pNo='/>" + pNo;
 	}
 	
 	function delProduct(pNo){

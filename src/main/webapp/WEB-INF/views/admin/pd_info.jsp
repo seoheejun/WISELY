@@ -10,16 +10,7 @@
 				<tr>
 					<td>카테고리</td>
 					<td>
-						<select class="form-select form-select-sm" name="pCategory_fk">
-							<c:if test="${cat_dto == null || cat_dto.size() == 0}">
-								<option value="">카테고리 없음</option>						
-							</c:if>
-							<c:if test="${cat_dto != null || cat_dto.size() != 0}">
-								<c:forEach var="cat_dto" items="${cat_dto}">
-									<option value="${cat_dto.catMajor} > ${cat_dto.catMinor}">${cat_dto.catMajor} > ${cat_dto.catMinor}</option>
-								</c:forEach>
-							</c:if>		
-						</select>
+						<input type="text" class="form-control form-control-sm" value="${pd_dto.pCategory_fk}" name="pCategory_fk" readonly/>
 					</td>
 				</tr>
 				<tr>
@@ -32,7 +23,14 @@
 				</tr>
 				<tr>
 					<td>상품이미지</td>
-					<td><input type="file" class="form-control form-control-sm" value="${pd_dto.pImage_1}" name="pImage_1"/></td>
+					<td>
+						<img src="../prod_img/${pd_dto.pImage_1}" width="100px"/>
+						<input type="file" class="form-control form-control-sm" 
+						value="${pd_dto.pImage_1}" name="pImage_1"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_1old" value="${pd_dto.pImage_1}"/>
+					</td>
 				</tr>
 				<tr>
 					<td>상품수량</td>
@@ -45,12 +43,38 @@
 				<tr>
 					<td>상품사양</td>
 					<td>
+						<c:if test="${pd_dto.pSpec == 'none'}">
 						<select class="form-select form-select-sm" name="pSpec">
-							<option value="none">일반</option>
+							<option value="none" selected>일반</option>
 							<option value="hit">인기</option>
 							<option value="new">최신</option>
 							<option value="recommend">추천</option>
 						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'hit'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="hit" selected>인기</option>
+							<option value="new">최신</option>
+							<option value="recommend">추천</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'new'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none" selected>일반</option>
+							<option value="hit">인기</option>
+							<option value="new" selected>최신</option>
+							<option value="recommend">추천</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'recommend'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="hit">인기</option>
+							<option value="new">최신</option>
+							<option value="recommend" selected>추천</option>
+						</select>
+						</c:if>
 					</td>
 				</tr>
 				<tr>
@@ -61,19 +85,43 @@
 				</tr>
 				<tr>
 					<td>상세정보 1</td>
-					<td><input type="file" class="form-control form-control-sm" value="${pd_dto.pImage_2}" name="pImage_2"/></td>
+					<td>
+						<input type="file" class="form-control form-control-sm" 
+						name="pImage_2"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_2old" value="${pd_dto.pImage_2}"/>
+					</td>
 				</tr>
 				<tr>
 					<td>상세정보 2</td>
-					<td><input type="file" class="form-control form-control-sm" value="${pd_dto.pImage_3}" name="pImage_3"/></td>
+					<td>
+						<input type="file" class="form-control form-control-sm" 
+						name="pImage_3"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_3old" value="${pd_dto.pImage_3}"/>
+					</td>
 				</tr>
 				<tr>
 					<td>상세정보 3</td>
-					<td><input type="file" class="form-control form-control-sm" value="${pd_dto.pImage_4}" name="pImage_4"/></td>
+					<td>
+						<input type="file" class="form-control form-control-sm" 
+						name="pImage_4"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_4old" value="${pd_dto.pImage_4}"/>
+					</td>
 				</tr>
 				<tr>
 					<td>상세정보 4</td>
-					<td><input type="file" class="form-control form-control-sm" value="${pd_dto.pImage_5}" name="pImage_5"/></td>
+					<td>
+						<input type="file" class="form-control form-control-sm" 
+						name="pImage_5"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_5old" value="${pd_dto.pImage_5}"/>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="text-center">
@@ -86,16 +134,4 @@
 	</form>
 </div>
 </main>
-<script>
-	function inputCheck(){
-		if(!cat_inputFrm.catMajor.value) { // code의 값이 null이면 참
-			alert("카테고리 대분류를 입력하세요!!!")
-			cat_inputFrm.catMajor.focus();
-			return;
-		}
-		
-		document.cat_inputFrm.submit();
-	}
-	function 
-</script>
 <%@ include file="../inc/footer.jsp" %>
