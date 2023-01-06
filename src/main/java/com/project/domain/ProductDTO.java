@@ -7,9 +7,6 @@ public class ProductDTO {
 	private String pCompany;
 	private String pImage_1;
 	private String pImage_2;
-	private String pImage_3;
-	private String pImage_4;
-	private String pImage_5;
 	private int pQty;
 	private int price;
 	private String pSpec;
@@ -18,7 +15,7 @@ public class ProductDTO {
 	public ProductDTO() {}
 
 	public ProductDTO(int pNo, String pCategory_fk, String pName, String pCompany, String pImage_1, String pImage_2,
-			String pImage_3, String pImage_4, String pImage_5, int pQty, int price, String pSpec, String pContent) {
+			int pQty, int price, String pSpec, String pContent) {
 		super();
 		this.pNo = pNo;
 		this.pCategory_fk = pCategory_fk;
@@ -26,26 +23,6 @@ public class ProductDTO {
 		this.pCompany = pCompany;
 		this.pImage_1 = pImage_1;
 		this.pImage_2 = pImage_2;
-		this.pImage_3 = pImage_3;
-		this.pImage_4 = pImage_4;
-		this.pImage_5 = pImage_5;
-		this.pQty = pQty;
-		this.price = price;
-		this.pSpec = pSpec;
-		this.pContent = pContent;
-	}
-
-	public ProductDTO(String pCategory_fk, String pName, String pCompany, String pImage_1, String pImage_2,
-			String pImage_3, String pImage_4, String pImage_5, int pQty, int price, String pSpec, String pContent) {
-		super();
-		this.pCategory_fk = pCategory_fk;
-		this.pName = pName;
-		this.pCompany = pCompany;
-		this.pImage_1 = pImage_1;
-		this.pImage_2 = pImage_2;
-		this.pImage_3 = pImage_3;
-		this.pImage_4 = pImage_4;
-		this.pImage_5 = pImage_5;
 		this.pQty = pQty;
 		this.price = price;
 		this.pSpec = pSpec;
@@ -100,30 +77,6 @@ public class ProductDTO {
 		this.pImage_2 = pImage_2;
 	}
 
-	public String getpImage_3() {
-		return pImage_3;
-	}
-
-	public void setpImage_3(String pImage_3) {
-		this.pImage_3 = pImage_3;
-	}
-
-	public String getpImage_4() {
-		return pImage_4;
-	}
-
-	public void setpImage_4(String pImage_4) {
-		this.pImage_4 = pImage_4;
-	}
-
-	public String getpImage_5() {
-		return pImage_5;
-	}
-
-	public void setpImage_5(String pImage_5) {
-		this.pImage_5 = pImage_5;
-	}
-
 	public int getpQty() {
 		return pQty;
 	}
@@ -159,8 +112,7 @@ public class ProductDTO {
 	@Override
 	public String toString() {
 		return "ProductDTO [pNo=" + pNo + ", pCategory_fk=" + pCategory_fk + ", pName=" + pName + ", pCompany="
-				+ pCompany + ", pImage_1=" + pImage_1 + ", pImage_2=" + pImage_2 + ", pImage_3=" + pImage_3
-				+ ", pImage_4=" + pImage_4 + ", pImage_5=" + pImage_5 + ", pQty=" + pQty + ", price=" + price
+				+ pCompany + ", pImage_1=" + pImage_1 + ", pImage_2=" + pImage_2 + ", pQty=" + pQty + ", price=" + price
 				+ ", pSpec=" + pSpec + ", pContent=" + pContent + "]";
 	}
 

@@ -29,7 +29,7 @@
 					<td>${dto.pCompany}</td>
 					<td>${dto.pName}</td>
 					<td>
-						<img src="../prod_img/${dto.pImage_1}" style="width:50px; height:50px;"/>
+						<img src="prod_img/${dto.pImage_1}" style="width:50px; height:50px;"/>
 					</td>
 					<td><fmt:formatNumber value="${dto.price}"/></td>
 					<td>${dto.pQty}</td>

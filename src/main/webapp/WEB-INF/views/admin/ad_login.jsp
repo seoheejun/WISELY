@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp" %>
 <main>
-<div class="container mt-5 w-50 border shadow p-5">
+<div class="container mt-5 border shadow p-5" style="width:600px;">
 	<h2>관리자 로그인</h2>
 	<form action="<c:url value='/ad_loginOK'/>" method="post">
 		<div class="mt-3 mb-3">
@@ -14,7 +14,8 @@
 			<input type="password" class="form-control" id="adminPw" placeholder="비밀번호" name="adminPw"/>
 		</div>
 		<div class="text-center">
-			<input type="submit" class="btn btn-sm btn-primary" value="로그인"/>
+			<input type="submit" class="btn btn-lg btn-primary" value="로그인"
+				style="background:#00388C; border-color:#00388C;"/>
 		</div>
 	</form>
 </div>

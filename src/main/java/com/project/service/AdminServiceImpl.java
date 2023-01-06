@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void adminLogin(AdminDTO dto, HttpServletRequest request) {
+	public void ad_Login(AdminDTO dto, HttpServletRequest request) {
 		String adminName = mapper.adminLogin(dto);
 		
 		HttpSession session = request.getSession();

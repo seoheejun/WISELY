@@ -13,16 +13,33 @@
     	SELECT * FROM product WHERE pNo = #{pNo}
     </select>
     
+    <select id="getProductAll" resultType="productDTO">
+    	SELECT * FROM product;
+    </select>
+    
+    <select id="getProductBySpec" parameterType="String" resultType="productDTO">
+    	SELECT * FROM product WHERE pSpec = #{pSpec}
+    </select>
+    
+    <select id="getProductByCategory" parameterType="String" resultType="productDTO">
+    	SELECT * FROM product WHERE pCategory_fk = #{pCategory_fk}
+    </select>
+    
+    <select id="getProductBySearch" parameterType="String" resultType="productDTO">
+    	SELECT * FROM product WHERE pName like '%' || #{pName} || '%'
+    </select>
+    
+    <select id="productView" parameterType="Integer" resultType="productDTO">
+    	SELECT * FROM product WHERE pNo = #{pNo}
+    </select>
+        
     <insert id="productInsert">
-    	INSERT INTO product (pCategory_fk, pName, pCompany, pImage_1, pImage_2, pImage_3, pImage_4, pImage_5, pQty, price, pSpec, pContent) 
+    	INSERT INTO product (pCategory_fk, pName, pCompany, pImage_1, pImage_2, pQty, price, pSpec, pContent) 
     	VALUES (#{pCategory_fk},
     		    #{pName},
     		    #{pCompany},
     		    #{pImage_1},
     		    #{pImage_2},
-    		    #{pImage_3},
-    		    #{pImage_4},
-    		    #{pImage_5},
     		    #{pQty},
     		    #{price},
     		    #{pSpec},
@@ -31,8 +48,8 @@
     
     <update id="productUpdate">
     	UPDATE product SET pCategory_fk = #{pCategory_fk}, pName = #{pName}, pCompany = #{pCompany}, 
-    	pImage_1 = #{pImage_1}, pImage_2 = #{pImage_2}, pImage_3 = #{pImage_3}, pImage_4 = #{pImage_4}, 
-    	pImage_5 = #{pImage_5}, pQty = #{pQty}, price = #{price}, pSpec = #{pSpec}, pContent = #{pContent}
+    	pImage_1 = #{pImage_1}, pImage_2 = #{pImage_2}, 
+    	pQty = #{pQty}, price = #{price}, pSpec = #{pSpec}, pContent = #{pContent}
     </update>
     
     <delete id="productDelete" parameterType="Integer">

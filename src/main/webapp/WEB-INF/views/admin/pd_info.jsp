@@ -24,12 +24,20 @@
 				<tr>
 					<td>상품이미지</td>
 					<td>
-						<img src="../prod_img/${pd_dto.pImage_1}" width="100px"/>
-						<input type="file" class="form-control form-control-sm" 
-						value="${pd_dto.pImage_1}" name="pImage_1"/>
+						<img src="prod_img/${pd_dto.pImage_1}" style="margin-bottom:10px; width:200px;"/>
+						<input type="file" class="form-control form-control-sm" name="pImage_1"/>
 						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
 						<input type="hidden" class="form-control form-control-sm" 
-						name="pImage_1old" value="${pd_dto.pImage_1}"/>
+						name="pImage_1Old" value="${pd_dto.pImage_1}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>상세정보</td>
+					<td>
+						<input type="file" class="form-control form-control-sm" name="pImage_2"/>
+						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
+						<input type="hidden" class="form-control form-control-sm" 
+						name="pImage_2Old" value="${pd_dto.pImage_2}"/>
 					</td>
 				</tr>
 				<tr>
@@ -46,33 +54,78 @@
 						<c:if test="${pd_dto.pSpec == 'none'}">
 						<select class="form-select form-select-sm" name="pSpec">
 							<option value="none" selected>일반</option>
-							<option value="hit">인기</option>
-							<option value="new">최신</option>
-							<option value="recommend">추천</option>
-						</select>
-						</c:if>
-						<c:if test="${pd_dto.pSpec == 'hit'}">
-						<select class="form-select form-select-sm" name="pSpec">
-							<option value="none">일반</option>
-							<option value="hit" selected>인기</option>
-							<option value="new">최신</option>
-							<option value="recommend">추천</option>
+							<option value="new">신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
 						</select>
 						</c:if>
 						<c:if test="${pd_dto.pSpec == 'new'}">
 						<select class="form-select form-select-sm" name="pSpec">
-							<option value="none" selected>일반</option>
-							<option value="hit">인기</option>
-							<option value="new" selected>최신</option>
-							<option value="recommend">추천</option>
+							<option value="none">일반</option>
+							<option value="new" selected>신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
 						</select>
 						</c:if>
-						<c:if test="${pd_dto.pSpec == 'recommend'}">
+						<c:if test="${pd_dto.pSpec == 'best'}">
 						<select class="form-select form-select-sm" name="pSpec">
 							<option value="none">일반</option>
-							<option value="hit">인기</option>
-							<option value="new">최신</option>
-							<option value="recommend" selected>추천</option>
+							<option value="new">신제품</option>
+							<option value="best" selected>베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'recommend_1'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="new">신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1" selected>새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'recommend_2'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="new">신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2" selected>이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'recommend_3'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="new">신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3" selected>후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
+						</select>
+						</c:if>
+						<c:if test="${pd_dto.pSpec == 'recommend_4'}">
+						<select class="form-select form-select-sm" name="pSpec">
+							<option value="none">일반</option>
+							<option value="new">신제품</option>
+							<option value="best">베스트</option>
+							<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+							<option value="recommend_2">이런 가격은 처음이시죠?</option>
+							<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+							<option value="recommend_4" selected>꾸준히 찾아주시는 장바구니 단골 제품</option>
 						</select>
 						</c:if>
 					</td>
@@ -81,46 +134,6 @@
 					<td>상품소개</td>
 					<td>
 						<textarea class="form-control" name="pContent" rows="3">${pd_dto.pContent}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>상세정보 1</td>
-					<td>
-						<input type="file" class="form-control form-control-sm" 
-						name="pImage_2"/>
-						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
-						<input type="hidden" class="form-control form-control-sm" 
-						name="pImage_2old" value="${pd_dto.pImage_2}"/>
-					</td>
-				</tr>
-				<tr>
-					<td>상세정보 2</td>
-					<td>
-						<input type="file" class="form-control form-control-sm" 
-						name="pImage_3"/>
-						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
-						<input type="hidden" class="form-control form-control-sm" 
-						name="pImage_3old" value="${pd_dto.pImage_3}"/>
-					</td>
-				</tr>
-				<tr>
-					<td>상세정보 3</td>
-					<td>
-						<input type="file" class="form-control form-control-sm" 
-						name="pImage_4"/>
-						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
-						<input type="hidden" class="form-control form-control-sm" 
-						name="pImage_4old" value="${pd_dto.pImage_4}"/>
-					</td>
-				</tr>
-				<tr>
-					<td>상세정보 4</td>
-					<td>
-						<input type="file" class="form-control form-control-sm" 
-						name="pImage_5"/>
-						<!-- 이미지를 수정하지 않고 그대로 사용할 경우 -->
-						<input type="hidden" class="form-control form-control-sm" 
-						name="pImage_5old" value="${pd_dto.pImage_5}"/>
 					</td>
 				</tr>
 				<tr>

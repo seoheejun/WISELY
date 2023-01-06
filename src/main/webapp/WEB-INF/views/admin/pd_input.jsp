@@ -18,7 +18,7 @@
 								</c:if>
 								<c:if test="${list != null || list.size() != 0}">
 									<c:forEach var="dto" items="${list}">
-										<option>${dto.catMajor} > ${dto.catMinor}</option>
+										<option>${dto.catName}</option>
 									</c:forEach>
 								</c:if>		
 							</select>
@@ -37,6 +37,10 @@
 						<td><input type="file" class="form-control form-control-sm" name="pImage_1"/></td>
 					</tr>
 					<tr>
+						<td>상세정보</td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_2"/></td>
+					</tr>
+					<tr>
 						<td>상품수량</td>
 						<td><input type="text" class="form-control form-control-sm" name="pQty"/></td>
 					</tr>
@@ -49,9 +53,12 @@
 						<td>
 							<select class="form-select form-select-sm" name="pSpec">
 								<option value="none" selected>일반</option>
-								<option value="hit">인기</option>
-								<option value="new">최신</option>
-								<option value="recommend">추천</option>
+								<option value="new">신제품</option>
+								<option value="best">베스트</option>
+								<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+								<option value="recommend_2">이런 가격은 처음이시죠?</option>
+								<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+								<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
 							</select>
 						</td>
 					</tr>
@@ -60,22 +67,6 @@
 						<td>
 							<textarea class="form-control" name="pContent" rows="3"></textarea>
 						</td>
-					</tr>
-					<tr>
-						<td>상세정보 1</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage_2"/></td>
-					</tr>
-					<tr>
-						<td>상세정보 2</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage_3"/></td>
-					</tr>
-					<tr>
-						<td>상세정보 3</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage_4"/></td>
-					</tr>
-					<tr>
-						<td>상세정보 4</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage_5"/></td>
 					</tr>
 					<tr>
 						<td colspan="2" class="text-center">

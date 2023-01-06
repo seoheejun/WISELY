@@ -6,12 +6,8 @@
 	<h3>카테고리 등록</h3>
 	<form action="<c:url value='cat_insert'/>" method="post" name="cat_inputFrm">
 		<div class="mt-3">
-			<label for="catMajor">대분류</label>
-			<input type="text" class="form-control" id="catMajor" placeholder="카테고리 대분류를 입력하세요" name="catMajor"/>
-		</div>
-		<div class="mt-3">
-			<label for="catMinor">소분류</label>
-			<input type="text" class="form-control" id="catMinor" placeholder="카테고리 소분류를 입력하세요" name="catMinor"/>
+			<label for="catName">카테고리명</label>
+			<input type="text" class="form-control" id="catName" placeholder="카테고리명을 입력하세요" name="catName"/>
 		</div>
 		<div class="text-center mt-3">
 			<input type="button" class="btn btn-primary btn-sm" value="등록" onclick="inputCheck()"/>
@@ -22,9 +18,9 @@
 </main>
 <script>
 	function inputCheck(){
-		if(!cat_inputFrm.catMajor.value) { // code의 값이 null이면 참
+		if(!cat_inputFrm.catName.value) { // code의 값이 null이면 참
 			alert("카테고리 대분류를 입력하세요!!!")
-			cat_inputFrm.catMajor.focus();
+			cat_inputFrm.catName.focus();
 			return;
 		}
 		

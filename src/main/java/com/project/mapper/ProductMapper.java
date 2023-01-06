@@ -15,4 +15,9 @@ public interface ProductMapper {
 	public ProductDTO productInfo(int pNo);
 	public int productUpdate(Map<String, String> map);
 	public int productDelete(int pNo);
+	public List<ProductDTO> getProductAll();
+	public List<ProductDTO> getProductBySpec(String pSpec);
+	public List<ProductDTO> getProductByCategory(String pCategory_fk);
+	public List<ProductDTO> getProductBySearch(String pName);
+	public ProductDTO productView(int pNo);
 }

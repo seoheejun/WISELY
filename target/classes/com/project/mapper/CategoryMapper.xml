@@ -6,7 +6,7 @@
 <mapper namespace="com.project.mapper.CategoryMapper">
   
     <select id="categoryList" resultType="categoryDTO">
-	    SELECT * FROM category ORDER BY catMajor, catMinor;
+	    SELECT * FROM category;
     </select>
     
     <select id="categoryInfo" parameterType="Integer" resultType="categoryDTO">
@@ -14,12 +14,12 @@
     </select>
     
     <insert id="categoryInsert" parameterType="categoryDTO">
-    	INSERT INTO category (catMajor, catMinor)
-    	VALUES (#{catMajor}, #{catMinor})
+    	INSERT INTO category (catName)
+    	VALUES (#{catName})
     </insert>
     
     <update id="categoryUpdate" parameterType="categoryDTO">
-    	UPDATE category SET catMajor = #{catMajor}, catMinor = #{catMinor} WHERE catNo = #{catNo}
+    	UPDATE category SET catName = #{catName} WHERE catNo = #{catNo}
     </update>
     
     <delete id="categoryDelete" parameterType="Integer">

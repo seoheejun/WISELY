@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletRequest;
 import com.project.domain.AdminDTO;
 
 public interface AdminService {
-	public void adminLogin(AdminDTO dto, HttpServletRequest request);
+	public void ad_Login(AdminDTO dto, HttpServletRequest request);
 }

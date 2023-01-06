@@ -7,12 +7,8 @@
 	<form action="<c:url value='cat_update'/>" method="post" name="cat_inputFrm">
 		<input type='hidden' name='catNo' value='${dto.catNo}'/>
 		<div class="mt-3">
-			<label for="catMajor">대분류</label>
-			<input type="text" class="form-control" id="catMajor" value='${dto.catMajor}' name="catMajor"/>
-		</div>
-		<div class="mt-3">
-			<label for="catMinor">소분류</label>
-			<input type="text" class="form-control" id="catMinor" value='${dto.catMinor}' name="catMinor"/>
+			<label for="catName">카테고리명</label>
+			<input type="text" class="form-control" id="catName" value='${dto.catName}' name="catName"/>
 		</div>
 		<div class="text-center mt-3">
 			<input type="button" class="btn btn-warning btn-sm" value="수정" onclick="inputCheck()"/>
@@ -23,9 +19,9 @@
 </main>
 <script>
 	function inputCheck(){
-		if(!cat_inputFrm.catMajor.value) { // code의 값이 null이면 참
-			alert("카테고리 대분류를 입력하세요!!!")
-			cat_inputFrm.catMajor.focus();
+		if(!cat_inputFrm.catName.value) { // code의 값이 null이면 참
+			alert("카테고리명을 입력하세요!!!")
+			cat_inputFrm.catName.focus();
 			return;
 		}
 		
