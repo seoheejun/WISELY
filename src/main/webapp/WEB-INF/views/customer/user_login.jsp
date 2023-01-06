@@ -21,7 +21,7 @@
 					style="background:#00388C; border-color:#00388C;"/>
 				<input type="button" class="btn btn-lg btn-primary mt-3" value="회원가입" 
 					style="color:#00388C; border-color:#00388C; background-color:white;" 
-					onclick="javascript:window.location='${ctx}/customer/user_join.jsp'"/>
+					onclick="javascript:window.location='<c:url value='user_join'/>'"/>
 			</div>
 		</form>
 		<div class="container text-center mt-4">

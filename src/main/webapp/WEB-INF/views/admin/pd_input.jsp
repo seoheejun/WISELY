@@ -3,15 +3,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ include file="../inc/header.jsp" %>
-<%-- <%
-	CategoryDAO dao = CategoryDAO.getInstance();
-	ArrayList<CategoryDTO> dtos = dao.categoryList();
-	request.setAttribute("list", dtos);
-%> --%>
 <main>
 	<div class="container w-50 border shadow-sm p-5 mt-5">
 		<h3>상품 등록</h3>
-		<form action="${ctx}/prod_regOk.do" method="post" enctype="multipart/form-data">
+		<form action="<c:url value='pd_insert'/>" method="post" enctype="multipart/form-data">
 			<table class="table table-borderless">
 				<tbody>
 					<tr>
@@ -23,7 +18,7 @@
 								</c:if>
 								<c:if test="${list != null || list.size() != 0}">
 									<c:forEach var="dto" items="${list}">
-										<option value="${dto.catCode}">${dto.catName}[${dto.catCode}]</option>
+										<option>${dto.catName}</option>
 									</c:forEach>
 								</c:if>		
 							</select>
@@ -39,7 +34,11 @@
 					</tr>
 					<tr>
 						<td>상품이미지</td>
-						<td><input type="file" class="form-control form-control-sm" name="pImage"/></td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_1"/></td>
+					</tr>
+					<tr>
+						<td>상세정보</td>
+						<td><input type="file" class="form-control form-control-sm" name="pImage_2"/></td>
 					</tr>
 					<tr>
 						<td>상품수량</td>
@@ -54,9 +53,12 @@
 						<td>
 							<select class="form-select form-select-sm" name="pSpec">
 								<option value="none" selected>일반</option>
-								<option value="hit">인기</option>
-								<option value="new">최신</option>
-								<option value="recommend">추천</option>
+								<option value="new">신제품</option>
+								<option value="best">베스트</option>
+								<option value="recommend_1">새해를 건강하게 시작하세요!</option>
+								<option value="recommend_2">이런 가격은 처음이시죠?</option>
+								<option value="recommend_3">후기가 칭찬하는 새 제품</option>
+								<option value="recommend_4">꾸준히 찾아주시는 장바구니 단골 제품</option>
 							</select>
 						</td>
 					</tr>
@@ -69,7 +71,7 @@
 					<tr>
 						<td colspan="2" class="text-center">
 							<input type="submit" class="btn btn-sm btn-primary" value="상품등록"/>	
-							<input type="reset" class="btn btn-sm btn-secondary" value="취소"/>	
+							<a href="pd_list" class="btn btn-sm btn-secondary">취소</a>	
 						</td>
 					</tr>
 				</tbody>			

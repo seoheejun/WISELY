@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-  <typeAliases>
-  	<!-- domain 패키지 아래에 DTO객체를 생성하고 config.xml에서 연동 -->
-  	<typeAlias type="ez.web.domain.ReplyDTO" alias="replyDTO"/>
-  </typeAliases>
+	<typeAliases>
+		<typeAlias type="com.project.domain.CategoryDTO" alias="categoryDTO"/>
+		<typeAlias type="com.project.domain.AdminDTO" alias="adminDTO"/>
+		<typeAlias type="com.project.domain.ProductDTO" alias="productDTO"/>
+	</typeAliases>
 </configuration>

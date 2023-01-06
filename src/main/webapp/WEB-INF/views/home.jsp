@@ -2,42 +2,130 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../views/inc/header.jsp" %>
 <main>
-	<div class="container" style="width:1200px;">
-		<section style="margin-bottom:100px;">
-			<h1 class="text-center mt-5">
-				<b>환영합니다!</b>
-			</h1>
-			<h2 class="text-center">
-				The smartest way to shopping.
-			</h2>
-		</section>
-		<section class="d-flex justify-content-between" style="margin-bottom:100px;">
-			<div class="container">
-				<div class="text-center">
-					<img src="" style="width:200px; height:200px; border-round:50%"/>				
-				</div>
-				<div class="text-center"><b>찾기.</b></div>
-				<div class="text-center">계절별 맞춤 코디와 추천 아이템을 찾아보세요.</div>
-			</div>
-			<div class="container">
-				<div class="text-center">
-					<img src="" style="width:200px; height:200px; border-round:50%"/>				
-				</div>				<div class="text-center"><b>확인하기.</b></div>
-				<div class="text-center">할인 상품과 지금 가장 필요한 아이템을 확인하세요.</div>
-			</div>
-			<div class="container">
-				<div class="text-center">
-					<img src="" style="width:200px; height:200px; border-round:50%"/>				
-				</div>				<div class="text-center"><b>공유하기.</b></div>
-				<div class="text-center">나만의 장바구니를 친구와 공유하세요.</div>
-			</div>
-		</section>
-		<section>
-			<div class="text-center">
-				<a href="" style="margin-right:10px;">지금 시작하기</a>
-				<a href="">처음 방문하시나요?</a>
-			</div>
-		</section>
+	
+	<!-- carousel -->
+	<div id="demo" class="carousel slide carousel-fade mb-5 carousel-dark" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+		    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+		    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+		</div>
+
+	  	<!-- The slideshow/carousel -->
+	  	<div class="carousel-inner">
+		    <div class="carousel-item active" data-bs-interval="3000">
+		     	<a href="<c:url value='pd_cat?pCategory_fk=영양제'/>">
+			     	<img src="img/home_banner/1.png" alt="..." class="d-block w-100">
+		     	</a>
+		    </div>
+		    <div class="carousel-item">
+		    	<a href="<c:url value='pd_cat?pCategory_fk=면도/제모용품'/>">
+		    		<img src="img/home_banner/2.png" alt="..." class="d-block w-100">
+		    	</a>
+		    </div>
+		    <div class="carousel-item">
+		    	<a href="<c:url value='pd_cat?pCategory_fk=헤어케어'/>">
+			    	<img src="img/home_banner/3.png" alt="..." class="d-block w-100">
+		    	</a>
+		    </div>
+		    <div class="carousel-item">
+		    	<a href="<c:url value='pd_cat?pCategory_fk=주방/청소용품'/>">
+			    	<img src="img/home_banner/4.png" alt="..." class="d-block w-100">
+		    	</a>
+		    </div>
+		    <div class="carousel-item">
+		    	<a href="<c:url value='pd_cat?pCategory_fk=스킨케어'/>">
+			    	<img src="img/home_banner/5.png" alt="..." class="d-block w-100">
+		    	</a>
+		    </div>
+	  	</div>
+
+	  	<!-- Left and right controls/icons -->
+	  	<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+	    	<span class="carousel-control-prev-icon" style="color:black; margin-left:30em; padding:30px;"></span>
+	  	</button>
+	  	<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="padding:20px;">
+	    	<span class="carousel-control-next-icon" style="color:black; margin-right:30em; padding:30px;"></span>
+	  	</button>
+	</div>
+	
+	<section style="width:1000px; margin:auto;">
+		<h2 style="margin-top:100px; margin-bottom:40px;"><b>새해를 건강하게 시작하세요!</b></h2>
+		<div class="row row-cols-1 row-cols-md-4 g-4">
+			<c:forEach var="dto" items="${list1}">
+			<div class="col">
+		    	<div class="card h-100 text-center border-light">
+		    		<a href="<c:url value='pd_view?pNo=${dto.pNo}'/>">
+			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
+		    		</a>
+		      		<div class="card-body">
+			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
+		      		</div>
+   					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
+		    	</div>
+		  	</div>
+		  	</c:forEach>
+		</div>
+		<h2 style="margin-top:100px; margin-bottom:40px;"><b>이런 가격은 처음이시죠?</b></h2>
+		<div class="row row-cols-1 row-cols-md-4 g-4">
+			<c:forEach var="dto" items="${list2}">
+			<div class="col">
+		    	<div class="card h-100 text-center border-light">
+		    		<a href="<c:url value='pd_view?pNo=${dto.pNo}'/>">
+			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
+		    		</a>
+		      		<div class="card-body">
+			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
+		      		</div>
+   					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
+		    	</div>
+		  	</div>
+		  	</c:forEach>
+		</div>
+		<a href="<c:url value='pd_cat?pCategory_fk=욕실용품'/>">
+	    	<img src="img/home_banner/6.png" alt="..." class="d-block w-100" style="margin-top:100px;">
+    	</a>
+		<h2 style="margin-top:100px; margin-bottom:40px;"><b>후기가 칭찬하는 새 제품</b></h2>
+		<div class="row row-cols-1 row-cols-md-4 g-4">
+			<c:forEach var="dto" items="${list3}">
+			<div class="col">
+		    	<div class="card h-100 text-center border-light">
+		    		<a href="<c:url value='pd_view?pNo=${dto.pNo}'/>">
+			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
+		    		</a>
+		      		<div class="card-body">
+			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
+		      		</div>
+   					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
+		    	</div>
+		  	</div>
+		  	</c:forEach>
+		</div>
+		<h2 style="margin-top:100px; margin-bottom:40px;"><b>꾸준히 찾아주시는 장바구니 단골 제품</b></h2>
+		<div class="row row-cols-1 row-cols-md-4 g-4">
+			<c:forEach var="dto" items="${list4}">
+			<div class="col">
+		    	<div class="card h-100 text-center border-light">
+		    		<a href="<c:url value='pd_view?pNo=${dto.pNo}'/>">
+			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
+		    		</a>
+		      		<div class="card-body">
+			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
+		      		</div>
+   					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
+		    	</div>
+		  	</div>
+		  	</c:forEach>
+		</div>
+	</section>
+	<div>
+		<a href></a>
 	</div>
 </main>
 <%@ include file="../views/inc/footer.jsp" %>
