@@ -17,10 +17,10 @@ public class HomeController {
 		return "admin/ad_login";
 	}
 	
-	@GetMapping("user_list")
-	public String user_list() {
-		return "admin/user_list";
-	}
+//	@GetMapping("user_list")
+//	public String user_list() {
+//		return "admin/user_list";
+//	}
 	
 	@GetMapping("cat_list")
 	public String cat_list() {

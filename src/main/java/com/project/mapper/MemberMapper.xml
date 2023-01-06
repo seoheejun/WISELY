@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.project.mapper.MemberMapper">
+	<select id="memberList" resultType="memberDTO">
+		SELECT * FROM member
+	</select>
+  
+	<select id="memberInfo" parameterType="Integer" resultType="memberDTO">
+		SELECT * FROM member WHERE memNo = #{memNo}
+	</select>
+  
+	<delete id="memberDelete" parameterType="Integer">
+		DELETE FROM member WHERE memNo = #{memNo}
+	</delete>
+  
+	<update id="memberUpdate" parameterType="memberDTO">
+		UPDATE member SET memEmail=#{memEmail}, memPw=#{memPw} WHERE memNo=#{memNo}
+	</update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+	<!-- 
+	<insert id="memberInsert" parameterType="memberDTO">
+		INSERT INTO member(memEmail, memPw) VALUES(#{memEmail}, #{memPw})
+	</insert>
+	
+	<select id="findLoginName" parameterType="memberDTO" resultType="String">
+		select name from member3 where id= #{id} and pw = #{pw}
+	</select>
+  -->
+  
+</mapper>
+
