@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper.xml 파일 DTD 를 위한 코드 -->
+ <!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.project.mapper.MemberMapper"> 
+<!--   <mapper namespace="mymember"> -->
+ 
+<!--  회원가입 하기 -->
+<insert id="memberInsert" parameterType="memberDTO">
+   INSERT INTO member(mem_name,
+   					  mem_email,
+   					  mem_pw,
+   					  mem_tel,
+   					  mem_zipcode, 
+   					  mem_road_addr,
+   					  mem_jibun_addr,
+   					  mem_detail_addr )
+  	
+  	values(
+  	#{mem_name}, 
+  	#{mem_email}, 
+  	#{mem_pw},
+  	#{ mem_tel},
+  	 #{mem_zipcode}, 
+  	 #{mem_road_addr}, 
+  	 #{mem_jibun_addr}, 
+  	 #{mem_detail_addr})
+  	 
+  </insert>
+  <!-- 로그인 하기 -->
+  <!-- 파라미터로 id와 pw를 받고 조회한 값을 resultType의 DTO로 전달 -->
+  <select id="memberLogin" resultType="memberDTO">
+  	SELECT mem_name,
+  		  mem_email,
+   		  mem_pw,
+   		   mem_tel,
+   		  mem_zipcode, 
+   		  mem_road_addr,
+   		  mem_jibun_addr,
+   		  mem_detail_addr
+  	FROM member
+  	WHERE mem_email = #{mem_email}
+  	AND mem_pw = #{mem_pw}
+  	
+  
+  </select>
+   
+  <!-- 이메일 찾기 -->
+  <select id="emailFind" resultType="memberDTO">
+  	SELECT mem_email 
+  	FROM member
+  	WHERE mem_name = #{mem_name}
+  	AND mem_tel = #{mem_tel}
+  </select>
+  </mapper>
+ 

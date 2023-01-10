@@ -5,6 +5,8 @@
 <configuration>
   <typeAliases>
   	<!-- domain 패키지 아래에 DTO객체를 생성하고 config.xml에서 연동 -->
-  	<typeAlias type="ez.web.domain.ReplyDTO" alias="replyDTO"/>
+  					
+  	<typeAlias type="com.project.domain.MemberDTO" alias="memberDTO"/>
   </typeAliases>
+
 </configuration>

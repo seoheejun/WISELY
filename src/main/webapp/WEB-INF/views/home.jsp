@@ -40,4 +40,4 @@
 		</section>
 	</div>
 </main>
-<%@ include file="../views/inc/footer.jsp" %>
+<%-- <%@ include file="../views/inc/footer.jsp" %> --%>

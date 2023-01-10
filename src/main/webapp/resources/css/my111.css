@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/*side menu*/
+aside{
+	background-color: none;
+	
+}
+
+aside .button{
+	display: block;
+	padding: 30px;
+	color: #111;
+
+
+}
+
+
+ aside .button.active {
+	background: #667812;
+	color: #00388C;
+font-weight:bold;
+} 
+
+aside .button:visited {
+	background: #eee;
+	font-weight:bold;  
+}
+
