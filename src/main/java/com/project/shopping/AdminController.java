@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.domain.AdminDTO;
 import com.project.service.AdminService;
@@ -32,9 +33,13 @@ public class AdminController {
 	}
 	
 	@RequestMapping("ad_loginOK")
-	public String adminLogin(AdminDTO dto, HttpServletRequest request) {
-		adminService.ad_Login(dto, request);
+	public String adminLogin(AdminDTO dto, HttpServletRequest request, RedirectAttributes rttr) {
+		boolean result = adminService.ad_Login(dto, request);
 		
+		if(!result) {
+			rttr.addFlashAttribute("result", 0);
+			return "redirect:ad_login";
+		}
 		return "redirect:/";
 	}
 	

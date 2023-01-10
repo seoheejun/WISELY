@@ -26,7 +26,7 @@
     </select>
     
     <select id="getProductBySearch" parameterType="String" resultType="productDTO">
-    	SELECT * FROM product WHERE pName like '%' || #{pName} || '%'
+    	SELECT * FROM product WHERE pName like CONCAT('%', #{pName}, '%')
     </select>
     
     <select id="productView" parameterType="Integer" resultType="productDTO">
@@ -50,6 +50,7 @@
     	UPDATE product SET pCategory_fk = #{pCategory_fk}, pName = #{pName}, pCompany = #{pCompany}, 
     	pImage_1 = #{pImage_1}, pImage_2 = #{pImage_2}, 
     	pQty = #{pQty}, price = #{price}, pSpec = #{pSpec}, pContent = #{pContent}
+    	WHERE pNo = #{pNo}
     </update>
     
     <delete id="productDelete" parameterType="Integer">

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
 <!DOCTYPE html>
-<html>
+<html style="position:relative; height:auto; min-height:100%; padding-bottom:300px;">
 <head>
 <meta charset="UTF-8">
 <title>와이즐리 - 일상을 채우는 현명한 습관</title>
@@ -65,7 +65,7 @@
 	    	<form id="searchForm" method="post" action="pd_search">
 				<div class="d-flex">
 					<input class="form-control form-control-lg rounded-0 rounded-start" type="text" id="pName" name="pName" 
-						style="width:350px; border-color:#00388C;"/>
+						placeholder="" style="width:350px; border-color:#00388C;"/>
 					<button class="btn rounded-0 rounded-end" style="width:60px; background:#00388C; color:white;">
 						<i class="fa fa-search"></i>
 					</button>

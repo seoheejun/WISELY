@@ -11,7 +11,7 @@
 			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
 		    		</a>
 		      		<div class="card-body">
-			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<h5 class="card-title" style="letter-spacing: -0.05em; white-space:pre-line;">${dto.pName}</h5>
 			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
 		      		</div>
    					<a href="#" class="btn btn-outline-success">장바구니 담기</a>

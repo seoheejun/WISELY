@@ -11,9 +11,9 @@ import com.project.domain.ProductDTO;
 
 public interface ProductService {
 	public List<ProductDTO> prodList();
-	public Map prodInsert(MultipartHttpServletRequest mhr, HttpServletRequest request) throws Exception;
+	public void prodInsert(MultipartHttpServletRequest mhr, HttpServletRequest request) throws Exception;
 	public ProductDTO prodInfo(int pNo);
-	public Map prodUpdate(MultipartHttpServletRequest mhr, HttpServletRequest request) throws Exception;
+	public void prodUpdate(MultipartHttpServletRequest mhr, HttpServletRequest request) throws Exception;
 	public int prodDelete(int pNo);
 	public List<ProductDTO> getProdAll();
 	public List<ProductDTO> getProdBySpec(String pSpec);

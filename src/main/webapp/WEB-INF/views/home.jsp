@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../views/inc/header.jsp" %>
+<c:if test="${error != null}">
+<script type="text/javascript">
+	console.log("${error}");
+	alert("${error}");
+</script>
+</c:if>
 <main>
 	
 	<!-- carousel -->
@@ -44,15 +50,15 @@
 
 	  	<!-- Left and right controls/icons -->
 	  	<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-	    	<span class="carousel-control-prev-icon" style="color:black; margin-left:30em; padding:30px;"></span>
+	    	<span class="carousel-control-prev-icon" style="color:black; margin-left:20em; padding:30px;"></span>
 	  	</button>
 	  	<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="padding:20px;">
-	    	<span class="carousel-control-next-icon" style="color:black; margin-right:30em; padding:30px;"></span>
+	    	<span class="carousel-control-next-icon" style="color:black; margin-right:20em; padding:30px;"></span>
 	  	</button>
 	</div>
 	
 	<section style="width:1000px; margin:auto;">
-		<h2 style="margin-top:100px; margin-bottom:40px;"><b>새해를 건강하게 시작하세요!</b></h2>
+		<h2 style="margin-top:100px; margin-bottom:40px; letter-spacing:-0.05em;"><b>새해를 건강하게 시작하세요!</b></h2>
 		<div class="row row-cols-1 row-cols-md-4 g-4">
 			<c:forEach var="dto" items="${list1}">
 			<div class="col">
@@ -61,7 +67,7 @@
 			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
 		    		</a>
 		      		<div class="card-body">
-			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<h5 class="card-title" style="letter-spacing: -0.05em; white-space:pre-line;">${dto.pName}</h5>
 			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
 		      		</div>
    					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
@@ -69,7 +75,7 @@
 		  	</div>
 		  	</c:forEach>
 		</div>
-		<h2 style="margin-top:100px; margin-bottom:40px;"><b>이런 가격은 처음이시죠?</b></h2>
+		<h2 style="margin-top:100px; margin-bottom:40px; letter-spacing:-0.05em;"><b>이런 가격은 처음이시죠?</b></h2>
 		<div class="row row-cols-1 row-cols-md-4 g-4">
 			<c:forEach var="dto" items="${list2}">
 			<div class="col">
@@ -78,7 +84,7 @@
 			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
 		    		</a>
 		      		<div class="card-body">
-			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<h5 class="card-title" style="letter-spacing: -0.05em; white-space:pre-line;">${dto.pName}</h5>
 			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
 		      		</div>
    					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
@@ -89,7 +95,7 @@
 		<a href="<c:url value='pd_cat?pCategory_fk=욕실용품'/>">
 	    	<img src="img/home_banner/6.png" alt="..." class="d-block w-100" style="margin-top:100px;">
     	</a>
-		<h2 style="margin-top:100px; margin-bottom:40px;"><b>후기가 칭찬하는 새 제품</b></h2>
+		<h2 style="margin-top:100px; margin-bottom:40px; letter-spacing:-0.05em;"><b>후기가 칭찬하는 새 제품</b></h2>
 		<div class="row row-cols-1 row-cols-md-4 g-4">
 			<c:forEach var="dto" items="${list3}">
 			<div class="col">
@@ -98,7 +104,7 @@
 			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
 		    		</a>
 		      		<div class="card-body">
-			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<h5 class="card-title" style="letter-spacing: -0.05em; white-space:pre-line;">${dto.pName}</h5>
 			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
 		      		</div>
    					<a href="#" class="btn btn-outline-success">장바구니 담기</a>
@@ -106,7 +112,7 @@
 		  	</div>
 		  	</c:forEach>
 		</div>
-		<h2 style="margin-top:100px; margin-bottom:40px;"><b>꾸준히 찾아주시는 장바구니 단골 제품</b></h2>
+		<h2 style="margin-top:100px; margin-bottom:40px; letter-spacing:-0.05em;"><b>꾸준히 찾아주시는 장바구니 단골 제품</b></h2>
 		<div class="row row-cols-1 row-cols-md-4 g-4">
 			<c:forEach var="dto" items="${list4}">
 			<div class="col">
@@ -115,7 +121,7 @@
 			      		<img src="prod_img/${dto.pImage_1}" class="card-img-top">		    		
 		    		</a>
 		      		<div class="card-body">
-			        	<h5 class="card-title">${dto.pName}</h5>
+			        	<h5 class="card-title" style="letter-spacing: -0.05em; white-space:pre-line;">${dto.pName}</h5>
 			        	<p class="card-text"><b><fmt:formatNumber value="${dto.price}"/>원</b></p>
 		      		</div>
    					<a href="#" class="btn btn-outline-success">장바구니 담기</a>

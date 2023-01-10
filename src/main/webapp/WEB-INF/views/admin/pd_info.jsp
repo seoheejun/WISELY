@@ -5,6 +5,7 @@
 <div class="container w-50 border shadow-sm p-5 mt-5">
 	<h3>상품 수정</h3>
 	<form action="<c:url value='pd_update'/>" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="pNo" value="${pd_dto.pNo}"/>
 		<table class="table table-borderless">
 			<tbody>
 				<tr>

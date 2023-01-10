@@ -38,6 +38,26 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("movePage1")
+	public String movePage1() {
+		return "page/page1";
+	}
+	
+	@RequestMapping("movePage2")
+	public String movePage2() {
+		return "page/page2";
+	}
+	
+	@RequestMapping("movePage3")
+	public String movePage3() {
+		return "page/page3";
+	}
+	
+	@RequestMapping("movePage4")
+	public String movePage4() {
+		return "page/page4";
+	}
+	
 	@RequestMapping("ad_login")
 	public String ad_login() {
 		return "admin/ad_login";
