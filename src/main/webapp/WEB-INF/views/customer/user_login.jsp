@@ -9,12 +9,15 @@
 <main>
 	<div class="container mt-5 border shadow p-5" style="width:600px; height:500px;">
 		<h3 class="text-center">로그인</h3>
-		<form action="${ctx}/user_loginOk.do" method="post">
+		<c:if test = "${result == 0}">
+			<div class="text-danger my-3 text-center"><b>아이디와 비밀번호를 확인해주세요.</b></div>
+		</c:if>
+		<form action="<c:url value='memberLogin'/>" method="post">
 			<div class="mt-5 mb-3">
-				<input type="text" class="form-control mt-2" id="email" placeholder="이메일을 입력해주세요" name="email"/>
+				<input type="text" class="form-control mt-2" id="memEmail" placeholder="이메일을 입력해주세요" name="memEmail"/>
 			</div>
 			<div class="mb-2">
-				<input type="password" class="form-control mt-2" id="pw" placeholder="비밀번호를 입력해주세요" name="pw"/>
+				<input type="password" class="form-control mt-2" id="memPw" placeholder="비밀번호를 입력해주세요" name="memPw"/>
 			</div>
 			<div class="d-grid gap-2 text-center">
 				<input type="submit" class="btn btn-lg btn-primary mt-5" value="로그인" 

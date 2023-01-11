@@ -1,9 +1,8 @@
-<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp" %>
 <main>
-<div class="container w-75 border shadow-sm p-5 mt-5">
+<div class="container w-50 border shadow-sm p-5 mt-5">
 	<h3>회원관리</h3>
 	<table class="table">
 		<thead>

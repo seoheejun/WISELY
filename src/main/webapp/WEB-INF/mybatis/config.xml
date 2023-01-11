@@ -7,5 +7,6 @@
 		<typeAlias type="com.project.domain.CategoryDTO" alias="categoryDTO"/>
 		<typeAlias type="com.project.domain.AdminDTO" alias="adminDTO"/>
 		<typeAlias type="com.project.domain.ProductDTO" alias="productDTO"/>
+		<typeAlias type="com.project.domain.MemberDTO" alias="memberDTO"/>
 	</typeAliases>
 </configuration>

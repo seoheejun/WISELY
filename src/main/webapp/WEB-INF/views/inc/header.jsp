@@ -19,7 +19,7 @@
 <header>
     <section class="navbar navbar-expand">
     	<ul class="navbar-nav w-100">
-	        <c:if test="${sessionScope.userName == null && sessionScope.adminName == null}">
+	        <c:if test="${sessionScope.memName == null && sessionScope.adminName == null}">
 	        	<li class="nav-item ms-auto" style="margin-right:20px;">
 	        		<a href="<c:url value='user_join'/>" class="nav-link" style="color:#00388C">회원가입</a>
 	        	</li>
@@ -27,7 +27,7 @@
 	        		<a href="<c:url value='user_login'/>" class="nav-link">로그인</a>
 	        	</li>
 	        	<li class="nav-item" style="margin-right:40px;">
-	        		<a href="<c:url value='/'/>" class="nav-link">고객센터</a>
+	        		<a href="<c:url value='service1'/>" class="nav-link">고객센터</a>
 	        	</li>
         	</c:if>
     		<c:if test="${sessionScope.adminName != null}">
@@ -44,15 +44,15 @@
 	        		<a href="<c:url value='ad_logoutOK'/>" class="nav-link">로그아웃</a>
 	        	</li>
         	</c:if>
-        	<c:if test="${sessionScope.userName != null}">
-        		<li class="nav-item" style="margin-right:20px;">
+        	<c:if test="${sessionScope.memName != null}">
+        		<li class="nav-item ms-auto" style="margin-right:20px;">
 	        		<a href="<c:url value='/'/>" class="nav-link" style="color:#00388C">마이페이지</a>
 	        	</li>
 	        	<li class="nav-item" style="margin-right:20px;">
-	        		<a href="<c:url value='/'/>" class="nav-link">로그아웃</a>
+	        		<a href="<c:url value='memberLogout'/>" class="nav-link">로그아웃</a>
 	        	</li>
 	        	<li class="nav-item" style="margin-right:40px;">
-	        		<a href="<c:url value='/'/>" class="nav-link">고객센터</a>
+	        		<a href="<c:url value='service1'/>" class="nav-link">고객센터</a>
 	        	</li>
         	</c:if>
     	</ul>

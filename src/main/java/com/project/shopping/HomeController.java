@@ -78,6 +78,31 @@ public class HomeController {
 		return "customer/user_join";
 	}
 	
+	@RequestMapping("service1")
+	public String service_1() {
+		return "service/service1";
+	}
+	
+	@RequestMapping("service2")
+	public String service_2() {
+		return "service/service2";
+	}
+	
+	@RequestMapping("service3")
+	public String service_3() {
+		return "service/service3";
+	}
+	
+	@RequestMapping("service4")
+	public String service_4() {
+		return "service/service4";
+	}
+	
+	@RequestMapping("service5")
+	public String service_5() {
+		return "service/service5";
+	}
+	
 	@RequestMapping("secTest")
 	public void st() {
 		// 암호화 전 비밀번호
