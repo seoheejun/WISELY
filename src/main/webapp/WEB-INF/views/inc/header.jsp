@@ -33,6 +33,9 @@
 			        	<li class="nav-item" style="margin-right:20px;">
 			          		<a href="<c:url value='pd_list'/>" class="nav-link">상품관리</a>
 			        	</li>
+			        	<li class="nav-item" style="margin-right:20px;">
+			          		<a href="<c:url value='user_modify'/>" class="nav-link">test</a>
+			        	</li>
 			        	
 			        	<li class="nav-item ms-auto">
 			        		<a href="<c:url value='user_login'/>" class="nav-link">로그인</a>

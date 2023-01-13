@@ -46,4 +46,13 @@ public class HomeController {
 	public String cart_list() {
 		return "customer/cart_list";
 	}
+	
+	
+	
+	
+	
+	@GetMapping("user_modify")
+	public String user_modify() {
+		return "customer/user_modify";
+	}
 }
