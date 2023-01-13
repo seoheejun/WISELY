@@ -11,11 +11,28 @@
 	</insert>
 	
 	<select id="memberLogin" parameterType="memberDTO" resultType="String">
-		SELECT memName FROM member WHERE memEmail = #{memEmail} and memPw = #{memPw}
+		SELECT memNo, memName FROM member WHERE memEmail = #{memEmail} and memPw = #{memPw}
 	</select>
 	
 	<select id="emailFind" resultType="memberDTO">
 		SELECT memEmail FROM member WHERE memName = #{memName} AND memTel = #{memTel}
 	</select>
+	
+	<select id="memberList" resultType="memberDTO">
+		SELECT * FROM member
+	</select>
+	
+	<select id="memberInfo" parameterType="Integer" resultType="memberDTO">
+		SELECT * FROM member WHERE memNo = #{memNo}
+	</select>
+	
+	<update id="memberUpdate" parameterType="memberDTO">
+		UPDATE member SET memPw = #{memPw}, memTel = #{memTel}, memZipcode = #{memZipcode},
+		memRoadAddr = #{memRoadAddr}, memJibunAddr = #{memJibunAddr}, memDetailAddr = #{memDetailAddr}
+	</update>
+	
+	<delete id="memberDelete" parameterType="Integer">
+		DELETE FROM member WHERE memNo = #{memNo}
+	</delete>
 
 </mapper>

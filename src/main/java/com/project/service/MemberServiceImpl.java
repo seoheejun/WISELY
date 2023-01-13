@@ -30,16 +30,38 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean memberLogin(MemberDTO dto, HttpServletRequest request) {
 		String memName = mapper.memberLogin(dto);
+		String memNo = mapper.memberLogin(dto);
+		
 		HttpSession session = request.getSession();
 		
 		if(memName != null) {
 			session.setAttribute("memName", memName);
+			session.setAttribute("memNo", memNo);
 			return true;
 		} else {
 			return false;			
 		}
 	}
 
+	@Override
+	public List<MemberDTO> memberList() {
+		return mapper.memberList();
+	}
 
+	@Override
+	public MemberDTO memberInfo(int memNo) {
+		return mapper.memberInfo(memNo);
+	}
+
+	@Override
+	public int memberDelete(int memNo) {
+		return mapper.memberDelete(memNo);
+	}
+
+	@Override
+	public int memberUpdate(MemberDTO dto) {
+		return mapper.memberUpdate(dto);
+	}
+	
 	
 }

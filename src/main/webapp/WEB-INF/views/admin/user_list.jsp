@@ -14,24 +14,29 @@
 			</tr>
 		</thead>
 		<tbody>
-		<%-- <%
-			MemberDAO dao = MemberDAO.getInstance();
-			ArrayList<MemberDTO> dtos = dao.memberList();
-			
-			for(int i=0; i<dtos.size(); i++){
-				MemberDTO dto = dtos.get(i);
-		%>
-			<tr>
-				<td><%= dto.getEmail() %></td>
-				<td><%= dto.getPw() %></td>
-				<td><%= dto.getTel() %></td>
-				<td><%= dto.getBirth() %></td>
-				<td><%= dto.getName() %></td>
-				<td><%= dto.getGender() %></td>
-			</tr>
-		<%  } // for %> --%>
+			<c:forEach var="dto" items="${list}">
+				<tr>
+					<td>${dto.memName}</td>
+					<td>${dto.memEmail}</td>
+					<td>${dto.memTel}</td>
+					<td>
+						<input type="button" value="수정" class="btn btn-warning btn-sm"
+						onclick="infoMember(${dto.memNo})"/>
+						<input type="button" value="삭제" class="btn btn-danger btn-sm"
+						onclick="delMember(${dto.memNo})"/>
+					</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	function infoMember(memNo){
+		location.href="user_info?memNo=" + memNo;
+	}
+	function delMember(memNo){
+		location.href="user_delete?memNo=" + memNo;
+	}
+</script>
 </main>
 <%@ include file="../inc/footer.jsp" %>

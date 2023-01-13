@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp"%>
 <link href="resources/css/my_page.css" rel="stylesheet"/> 
-<main class="container d-flex mt-5">
-	<%@ include file="../inc/myPage.jsp"%>
-	<section class="container ms-4 ps-5" style="width:1000px; margin:auto; margin-top:0;">
-		<article>
+<main class="container mt-5">
+	<section class="container d-flex" style="width:1000px; margin:auto; margin-top:0;">
+		<%@ include file="../inc/myPage.jsp"%>
+		<article class="w-75 ms-4 ps-5">
 			<div class="container d-flex">
 				<h3 class="mb-3 me-4">고객센터</h3>
-				<span class="my-1">평일 9:00 ~ 18:00</span>
+				<span class="my-1" style="color:#666;">평일 9:00 ~ 18:00</span>
 			</div>
 			<div class="container d-flex justify-content-between">
 				<a href="<c:url value='service1'/>" class="btn btn-primary me-3" 
@@ -22,8 +22,7 @@
 				<a href="<c:url value='service5'/>" class="btn btn-primary" 
 				style="width:120px; height:50px; line-height:35px; background:#00388C; border-color:#00388C;">환불</a>
 			</div>
-		</article>
-		<article>
+		
 			<!-- 환불 확인 -->
 			<div class="container mt-5">
 				<div class="border-bottom border-dark pb-2" style="font-size:20px;">

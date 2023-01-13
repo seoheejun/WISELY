@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp"%>
 <link href="resources/css/my_page.css" rel="stylesheet"/> 
-<main class="container d-flex mt-5">
-	<%@ include file="../inc/myPage.jsp"%>
-	<section class="container ms-4 ps-5" style="width:1000px; margin:auto;">
-		<article>
+<main class="container mt-5">
+	<section class="container d-flex" style="width:1000px; margin:auto;">
+		<%@ include file="../inc/myPage.jsp"%>
+		<article class="w-75 ms-4 ps-5">
 			<div class="container d-flex">
 				<h3 class="mb-3 me-4">고객센터</h3>
-				<span class="my-1">평일 9:00 ~ 18:00</span>
+				<span class="my-1" style="color:#666;">평일 9:00 ~ 18:00</span>
 			</div>
 			<div class="container d-flex justify-content-between">
 				<a href="<c:url value='service1'/>" class="btn btn-primary me-3" 
@@ -22,8 +22,7 @@
 				<a href="<c:url value='service5'/>" class="btn btn-primary" 
 				style="width:120px; height:50px; line-height:35px; color:#666; border-color:#ccc; background-color:white;">환불</a>
 			</div>
-		</article>
-		<article>
+
 			<!-- 결제 전 -->
 			<div class="container mt-5">
 				<div class="border-bottom border-dark pb-2" style="font-size:20px;">
@@ -40,7 +39,7 @@
 					<div class="collapse" id="different">
 						<div class="card card-body">
 							<p style="margin-bottom:0px; line-height:30px;">
-								<b>금액만 같다면 주문자와 입금자가 달라도 괜찮습니다.</b>
+								<b>금액만 같다면 주문자와 입금자가 달라도 괜찮습니다.</b><br>
 								고객님 전용의 계좌번호가 생성되기 때문에, 입금자명이 달라도 입금 확인이 가능합니다.<br>
 								다만, <b>주문 금액과 입금 금액이 다를 경우 입금 처리가 어려우니 이 점 꼭 유의해 주세요!</b><br>
 								입금이 완료되면 입금 확인 문자를 보내드립니다.

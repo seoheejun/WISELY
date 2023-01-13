@@ -63,11 +63,6 @@ public class HomeController {
 		return "admin/ad_login";
 	}
 	
-	@RequestMapping("user_list")
-	public String user_list() {
-		return "admin/user_list";
-	}
-	
 	@RequestMapping("user_login")
 	public String user_login() {
 		return "customer/user_login";
@@ -101,6 +96,21 @@ public class HomeController {
 	@RequestMapping("service5")
 	public String service_5() {
 		return "service/service5";
+	}
+	
+	@RequestMapping("board")
+	public String board() {
+		return "myPage/board";
+	}
+	
+	@RequestMapping("delivery")
+	public String delivery() {
+		return "myPage/delivery";
+	}
+	
+	@RequestMapping("recentView")
+	public String recentView() {
+		return "myPage/recentView";
 	}
 	
 	@RequestMapping("secTest")

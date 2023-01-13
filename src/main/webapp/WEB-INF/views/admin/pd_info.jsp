@@ -140,7 +140,7 @@
 				<tr>
 					<td colspan="2" class="text-center">
 						<input type="submit" class="btn btn-sm btn-warning" value="수정"/>	
-						<a href="pd_list" class="btn btn-secondary btn-sm">취소</a>
+						<a href="<c:url value='pd_list'/>" class="btn btn-secondary btn-sm">취소</a>
 					</td>
 				</tr>
 			</tbody>			

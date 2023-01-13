@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ include file="../inc/header.jsp" %>
-<main>
-	<section class="container mt-5 border shadow p-5" style="width:700px;">
-		<h3 class="text-center mb-5">회원가입</h3>
-		<form action="<c:url value='memberInsert'/>" method="post" name="joinForm">
 
+<main>
+	<section class="container border shadow-sm p-5" style="width:700px;">
+		<h3 class="text-center mb-5">${dto.memName}님의 회원정보</h3>
+		<form action="<c:url value='user_update'/>" method='post'>
+			<input type='hidden' name='memNo' value='${dto.memNo}'>
+			
 			<!-- 이메일 -->
 			<div class="mt-4 mb-2 d-flex justify-content-start">
-				<label class="pt-1 px-2 " style="width:120px;" for="memEmail" ><b>이메일</b></label>
+				<label class="pt-1 px-2 " style="width:120px;" for="memEmail"><b>이메일</b></label>
 				<div>
-					<input type="text" class="form-control mb-1" id="memEmail" name="memEmail" placeholder="이메일을 입력해주세요"
-						style="width:420px;"/>
+					<input type="text" class="form-control mb-1" id="memEmail" name="memEmail" value="${dto.memEmail}"
+						style="width:420px;" readonly/>
 				</div>
 			</div>
 
@@ -34,19 +37,12 @@
 				</div>
 			</div>
 
-			<!-- 이름 -->
-			<div class="mb-2 d-flex justify-content-start">
-				<label class="pt-1 px-2" style="width:120px" for="memName"><b>이름</b></label>
-				<input class="form-control mb-3" style="width: 420px"
-					type="text" id="memName" name="memName" placeholder="실명으로 기입해주세요" />
-			</div>
-
 			<!-- 휴대전화 -->
 			<div class="mb-2 d-flex justify-content-start">
 				<label class="pt-1 px-2" style="width:120px" for="memTel"><b>전화번호</b></label>
 				<div>
 					<input class="form-control mb-3" style="width:420px"
-					type="text" id="memTel" name="memTel" placeholder="'-'제외하고 입력해주세요" />
+					type="text" id="memTel" name="memTel" value="${dto.memTel}"/>
 				</div>
 			</div>
 
@@ -57,23 +53,23 @@
 					<button class="btn btn-sm btn-outline-secondary mb-3" type="button"
 						onclick="DaumPostcode()">우편번호 찾기</button>
 					<input class="form-control" style="width:420px;" name="memZipcode"
-						type="text" id="memZipcode" placeholder="우편번호"/><br>
+						type="text" id="memZipcode" value="${dto.memZipcode}"/><br>
 					<input class="form-control" style="width:420px; margin-top:-10px;"
 						name="memRoadAddr" type="text" id="memRoadAddr"
-						placeholder="도로명주소"/><br> 
+						value="${dto.memRoadAddr}"/><br> 
 						<input class="form-control" style="width:420px; margin-top:-10px;" name="memJibunAddr"
-						type="text" id="memJibunAddr" placeholder="지번주소"/><br>
+						type="text" id="memJibunAddr" value="${dto.memJibunAddr}"/><br>
 						<span id="guide" style="color: #999; display: none"></span>
 					<input class="form-control" style="width:420px; margin-top:-10px;"
 						name="memDetailAddr" type="text" id="memDetailAddr"
-						placeholder="상세주소"/><br>
+						value="${dto.memDetailAddr}"/><br>
 				</div>
 			</div>
 			
-			<!-- 가입하기 버튼 -->
-			<div class="d-grid gap-2 text-center">
-				<input type="submit" class="btn btn-lg btn-dark mt-3" value="가입완료"
-					style="background:#00388C; border-color:#00388C;"/>
+			<!-- 수정/취소 버튼 -->
+			<div class="d-grid gap-2 text-center d-flex" style="margin-top:-20px;">
+				<input type="submit" class="btn btn-sm btn-warning ms-auto" value="수정"/>	
+				<a href="<c:url value='user_list'/>" class="btn btn-secondary btn-sm me-auto">취소</a>
 			</div>
 						
 			<script>	
@@ -136,7 +132,4 @@
 		</form>
 	</section>
 </main>
-<script>
-
-</script>
-<%@ include file="../inc/footer.jsp"%>
+<%@ include file="../inc/footer.jsp" %>
