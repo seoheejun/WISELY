@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.project.mapper.OrderDetailMapper">
+
+	<select id="get" resultType="orderDetailDTO">
+		select orderDetailNo,
+		    orderNo,
+			productNo,
+            productName,
+            productPrice,
+            productImagePath
+		from order_detail
+		where orderNo = #{orderNo}
+	</select>
+
+	<insert id="insert" >
+		insert into sample.`order_detail`(orderDetailNo, orderNo, productNo, productName, productPrice, productImagePath)
+		values
+		<foreach item="detail" collection="details" open="(" close=")" separator=",">
+			(#{orderDetailNo}, #{orderNo}, #{productNo}, #{productName}, #{productPrice}, #{productImagePath})
+		</foreach>
+	</insert>
+
+</mapper>

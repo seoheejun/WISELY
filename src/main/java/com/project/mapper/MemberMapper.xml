@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.mapper.MemberMapper">
+	
+	<insert id="memberInsert" parameterType="memberDTO">
+		INSERT INTO member(memName, memEmail, memPw, memTel, memZipcode, memRoadAddr, memJibunAddr, memDetailAddr) 
+		VALUES(#{memName}, #{memEmail}, #{memPw}, #{memTel}, #{memZipcode}, #{memRoadAddr}, #{memJibunAddr}, #{memDetailAddr})
+	</insert>
+	
+	<select id="memberLogin" parameterType="memberDTO" resultType="String">
+		SELECT memNo FROM member WHERE memEmail = #{memEmail} and memPw = #{memPw}
+	</select>
+	
+	<select id="emailFind" resultType="memberDTO">
+		SELECT memEmail FROM member WHERE memName = #{memName} AND memTel = #{memTel}
+	</select>
+
+	<select id="memberFind" resultType="memberDTO">
+		SELECT * FROM member WHERE memNo = #{memNo}
+	</select>
+
+</mapper>
