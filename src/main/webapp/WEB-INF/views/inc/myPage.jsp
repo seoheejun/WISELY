@@ -5,7 +5,7 @@
 	<h3 class="mb-5">마이페이지</h3>
 	<ul class="submenu p-0 m-0" style="list-style: none; font-size:20px;">
 		<li class="mb-3">
-			<a class="button" href="<c:url value='delivery'/>">주문/배송조회 <i class="fas fa-angle-right pt-1" style="float:right;"></i></a>
+			<a class="button" href="<c:url value='order'/>">주문/배송조회 <i class="fas fa-angle-right pt-1" style="float:right;"></i></a>
 		</li>
 		<li class="mb-3">
 			<a class="button" href="<c:url value='recentView'/>">최근 본 상품<i class="fas fa-angle-right pt-1" style="float:right;"></i></a>

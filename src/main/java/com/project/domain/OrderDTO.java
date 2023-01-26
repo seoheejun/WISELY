@@ -1,8 +1,11 @@
 package com.project.domain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+
+import javax.swing.text.DateFormatter;
 
 public class OrderDTO {
 
@@ -22,8 +25,27 @@ public class OrderDTO {
 
     private String paymentType;
     private LocalDateTime createdAt;
+    private int count;
+    private String productName;
 
-    public Integer getOrderNo() {
+	public String getProductName() {
+		
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public Integer getOrderNo() {
         return orderNo;
     }
 
@@ -127,9 +149,29 @@ public class OrderDTO {
         this.paymentType = paymentType;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+    	String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//    	String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+//    	LocalDateTime date = LocalDateTime.parse(formatDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//    	LocalDateTime date2 = LocalDateTime.parse(createdAt,DateTimeFormatter.ofPattern(createdAt));
+    	System.out.println("formatDate : " + formatDate);
+//    	System.out.println(createdAt);
+        return formatDate;
     }
+    
+    public String getDateTime() {
+    	String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+//    	String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+//    	LocalDateTime date = LocalDateTime.parse(formatDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//    	LocalDateTime date2 = LocalDateTime.parse(createdAt,DateTimeFormatter.ofPattern(createdAt));
+    	System.out.println("formatDate : " + formatDate);
+//    	System.out.println(createdAt);
+    	return formatDate;
+    }
+    
+    
+    
+    
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
@@ -138,4 +180,34 @@ public class OrderDTO {
     public int getPaymentPrice(){
         return Objects.requireNonNullElse(productTotalPrice, 0) + Objects.requireNonNullElse(deliveryCharge, 0);
     }
+    
+    // 배송번호 
+    public String getUniqueNo() {
+    	return "20230126-00001";
+    }
+    
+    // 상품명 + 외
+    public String getProductEtc() {
+    	
+    	int cnt = getCount();
+    	String prod = getProductName();
+    	
+    	if(cnt >= 2) {
+    		return prod + " 외";
+    	}
+    	System.out.println("prod : "+ prod);
+    	System.out.println("cnt : " + cnt);
+    	return prod;
+    }
+
+	@Override
+	public String toString() {
+		return "OrderDTO [orderNo=" + orderNo + ", productTotalPrice=" + productTotalPrice + ", deliveryCharge="
+				+ deliveryCharge + ", details=" + details + ", memNo=" + memNo + ", receiverName=" + receiverName
+				+ ", receiverPostcode=" + receiverPostcode + ", receiverAddress=" + receiverAddress
+				+ ", receiverAddressDetail=" + receiverAddressDetail + ", receiverPhone=" + receiverPhone
+				+ ", receiverEmail=" + receiverEmail + ", receiverRequested=" + receiverRequested + ", paymentType="
+				+ paymentType + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + "]";
+	}
+    
 }

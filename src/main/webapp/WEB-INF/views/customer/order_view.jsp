@@ -122,7 +122,7 @@
 							width:1050px; padding-top: 34px; padding-bottom: 34px; text-align: center;">
 					<c:forEach var="cDto" items="${cList}">
 						<div>
-							상품명 : <span>${cDto.pName}</span>
+							상품명 : <span>${cDto.pName}</span> 
 							개수 : <span>${cDto.prodCount}</span>
 						</div>
 					</c:forEach>
@@ -149,7 +149,7 @@
 									<input class="order-input" type="text" value="${mDto.memTel}"style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
 								</td>
 							</tr>
-							<tr style="width:1050px; height:60px;">
+							<%-- <tr style="width:1050px; height:60px;">
 								<th style="width:200px;">이메일</th>
 								<td>
 									<div style="justify-content: space-between; width:489px; height:46px; display: flex; align-items: center">
@@ -170,7 +170,7 @@
 										</select>
 									</div>
 								</td>
-							</tr>
+							</tr> --%>
 						</tbody>
 					</table>
 							<div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">

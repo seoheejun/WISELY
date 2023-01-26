@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderDTO get(int orderNo, int memNo) {
+	public OrderDTO get(int orderNo, int memNo) {// 주문 상세페이지
 		OrderDTO orderDTO = orderMapper.get(orderNo, memNo);
 
 		List<OrderDetailDTO> orderDetailDTOS = orderDetailMapper.get(orderNo);

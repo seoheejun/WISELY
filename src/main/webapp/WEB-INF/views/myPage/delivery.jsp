@@ -13,14 +13,14 @@
 .base-btn{
   border: 1px solid #dddddd;
   color: #333333;
-  width:140px; 
+  width:100px; 
   height:50px; 
   border-radius: 5px;
   background-color: white;
 }
 
 .prod{
-  width:100px; 
+  width:70px; 
   text-align:left;
 }
 </style>
@@ -28,11 +28,7 @@
 <main class="container d-flex mt-5">
 	<%@ include file="../inc/myPage.jsp"%>
 	<section class="container ms-4 ps-5" style="width:1000px; margin:auto; margin-top:0;">
-		<article>
-			<div class="container d-flex">
-				<h3 class="mb-3 me-4 mb-4">주문/배송 조회</h3>
-			</div>
-		</article>
+				<h3>주문/배송 조회</h3>
 		<article>
 			<div style="width:790px; margin:0">
 			<!-------- 주문 내역이 없는 경우 -------->
@@ -41,41 +37,47 @@
 				</c:if> --%>
 				
 			<!-------- 주문 내역이 있는 경우 -------->
-				<div style="width:790px; justify-content: space-between; display: flex;">
-					<div>2023-01-25</div>
-					<div>주문상세</div>
+				<c:forEach var="oDto" items="${oList}">
+				<div style="width:790px; justify-content: space-between; display: flex; margin-top:40px">
+					<div>${oDto.createdAt}</div>
 				</div>
-				<div style="width:790px; padding-top: 20px; padding-bottom:10px; display:flex;
+				<div style="width:790px;  padding-bottom:10px; display:flex;
 							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
                       </div>
 					<div class="row" data-cart-no="${cDto.cartNo}" style="width:790px; margin:0; display: flex; align-items:center; height:140px;
-										border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;">
+										/* border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd; */">
                             <input type="hidden" class="product-no" value="${cDto.pNo}" />
 
-                            <!-- 상품 이미지 -->
                             <div style="width:790px; display: flex; justify-content: space-between; padding: 0; margin-top:10px; margin-bottom: 10px">
-	                            <div>
-	                                <%-- <img src="prod_img/${cDto.pImage_1}" style="width:100px; margin-right:12px"/> --%>
-	                                상품 이미지
-	                            </div>
-	
+                                <div style="text-align: center;">
+                                	[주문번호]<br>
+                                	<a>${oDto.uniqueNo}</a>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center;">
+		                            <div style="margin-right:10px;">
+		                                <%-- <img src="prod_img/${oDto.productImagePath}" style="width:100px; margin-right:12px"/> --%>
+		                                상품 이미지
+		                                
+		                            </div>
+	                                <div>
+	                                    <span>${oDto.productEtc}</span>
+	                                </div>
+								</div>
+								
 	                            <!-- 구매상품 정보 -->
-	                            <div style="width:250px;">
-	                                <div style="display: flex; align-items: center;">
-	                                	<span class="prod">상품명</span>
-	                                    <span>바하 모공 세럼</span>
-	                                </div>
-	                                <div style="display: flex; align-items: center; margin-top:12px">
+	                            <div style="width:100px;">
+	                                <%-- <div style="display: flex; align-items: center; margin-top:12px">
 	                                	<span class="prod">주문번호</span>
-	                                    <span>20230125-32345</span>
-	                                </div>
+	                                    <span>${oDto.orderNo}</span>
+	                                </div> --%>
 	                                <div style="display: flex; align-items: center; margin-top:12px">
-	                                	<span class="prod">결제금액</span>
-	                                    <span>3,790원</span>
+	                                	<!-- <span class="prod">결제금액</span> -->
+	                                    <span><fmt:formatNumber type="Number" value="${oDto.productTotalPrice}"/>원</span>
 	                                </div>
 	                             </div>
-	                             
-	                             <div style="display: flex; align-items: center">
+	                             <div><a href="order/${oDto.orderNo}"><button class="base-btn" type="button">주문상세</button></a></div>
+	                             <!-- <div style="display: flex; align-items: center">
 		                             <div style="width:100px; text-align: center; margin-right:20px">
 		                             	배송준비중
 		                             </div>
@@ -84,9 +86,10 @@
 		                             	<button class="base-btn" type="submit">취소신청</button>
 		                             	<button class="base-btn" type="submit" style="margin-top: 15px;">배송조회</button>
 		                             </div>
-		                         </div>
+		                         </div> -->
 	                         </div>
                           </div>
+                   </c:forEach>
 				</div>
 		</article>
 	</section>

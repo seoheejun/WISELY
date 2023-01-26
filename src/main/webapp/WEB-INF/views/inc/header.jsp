@@ -49,7 +49,7 @@
         	</c:if>
         	<c:if test="${sessionScope.memName != null}">
         		<li class="nav-item ms-auto" style="margin-right:20px;">
-	        		<a href="<c:url value='delivery'/>" class="nav-link" style="color:#00388C">마이페이지</a>
+	        		<a href="<c:url value='/order'/>" class="nav-link" style="color:#00388C">마이페이지</a>
 	        	</li>
 	        	<li class="nav-item" style="margin-right:20px;">
 	        		<a href="<c:url value='memberLogout'/>" class="nav-link">로그아웃</a>
