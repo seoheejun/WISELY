@@ -49,21 +49,6 @@ public class OrderController {
 
 		return mav;
 	}
-
-//	@GetMapping("")
-//	public ModelAndView getAll(HttpSession httpSession){
-//		ModelAndView mav = new ModelAndView("delivery");
-//
-//		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")
-//
-//		List<OrderDTO> oList = orderService.getAll(memNo);
-//		List<OrderDetailDTO> dList = orderDetailMapper.get(memNo);
-//		mav.addObject("oList", oList);
-//		mav.addObject("dList", dList);
-//		System.out.println("delivery 실행");
-//
-//		return mav;
-//	}
 	
 	@GetMapping("")
 	public ModelAndView getAll(HttpSession httpSession){
@@ -81,13 +66,21 @@ public class OrderController {
 
 	@GetMapping("/{no}")
 	public ModelAndView get(@PathVariable int no, HttpSession httpSession){
-//	public ModelAndView get(@Param("orderNo") int no, HttpSession httpSession){
 		ModelAndView mav = new ModelAndView("customer/order_detail");
 		
 		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")
 
 		OrderDTO oDto = orderService.get(no, memNo);
 		mav.addObject("oDto", oDto);
+		return mav;
+	}
+	
+	@PostMapping("")
+	public ModelAndView insert(OrderDTO oDto, HttpSession httpSession){
+		ModelAndView mav = new ModelAndView("customer/order_complete");
+		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")
+		orderService.insert(oDto, memNo);
+		System.out.println("insert");
 		return mav;
 	}
 	

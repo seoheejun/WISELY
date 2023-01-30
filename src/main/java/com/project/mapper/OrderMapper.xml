@@ -45,9 +45,9 @@
 	</select>
 
 	<insert id="insert" useGeneratedKeys="true">
-		insert into order(memNo, productTotalPrice, deliveryCharge, receiverName, receiverPostcode,
+		insert into `order`(memNo, productTotalPrice, deliveryCharge, receiverName, receiverPostcode,
 								   receiverAddress, receiverAddressDetail, receiverPhone, receiverRequest, paymentType)
 		values (#{memNo}, #{productTotalPrice}, #{deliveryCharge}, #{receiverName}, #{receiverPostcode},
-				#{receiverAddress}, #{receiverAddressDetail}, #{receiverPhone}, #{receiverRequest}, #{paymentType});
+		#{receiverAddress}, #{receiverAddressDetail}, #{receiverPhone}, #{receiverRequest}, #{paymentType});
 	</insert>
 </mapper>

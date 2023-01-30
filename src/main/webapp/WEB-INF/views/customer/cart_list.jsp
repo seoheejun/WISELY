@@ -123,11 +123,11 @@
                     <c:set var="cnt" value="1"/>
                     <c:forEach var="cDto" items="${cList}">
 
-                        <div class="row" data-cart-no="${cDto.cartNo}" style="margin-top:10px; display: flex; align-items:center; height:130px;
-										border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #FBFAFA; margin-bottom: 10px">
+                        <div class="row" data-cart-no="${cDto.cartNo}" style="margin:0; width:660px; display: flex; align-items:center; height:130px;
+										border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #FBFAFA; margin-bottom: 10px; justify-content: space-between;">
                             <input type="hidden" class="product-no" value="${cDto.pNo}" />
                             <!-- 체크박스 -->
-                            <div>
+                            <div style="width:30px">
                                 <label class="checkboxs" style="margin-right:12px">
                                         <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}"> --%>
                                         <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}" onchange="chk()" --%>
@@ -141,9 +141,7 @@
                             </div>
 
                             <!-- 상품 이미지 -->
-                            <div>
-                                <img src="prod_img/${cDto.pImage_1}" style="width:100px; margin-right:12px"/>
-                            </div>
+                                <img src="prod_img/${cDto.pImage_1}" style="width:100px; margin-left:12px;; margin-right:12px; padding:0"/>
 
                             <!-- 상품이름 -->
                             <div style="display: flex; justify-content: space-between; width:503px">
@@ -181,7 +179,7 @@
 
                                     <!-- 장바구니 상품 삭제 -->
                                     <div>
-                                        <button type="button" onclick="remove(this)">
+                                        <button type="button" onclick="remove(this)" style="border:none; background-color:white;">
                                             <i class="xi-close-thin"> </i>
                                         </button>
                                     </div>
@@ -249,11 +247,11 @@
 
                     </div>
                 </div>
-                <button type="button" onclick="order()">fuck구매하긔</button>
                 <!-- 구매하기 버튼 -->
                 <c:if test="${cList.size() != 0}">
-                    <form id="orderForm" method="post" action="indent/preview" >
-                        <input type="hidden" name="carts" />
+                    <form id="orderForm" method="post" action="order/preview" >
+                        <input type="hidden" name="memNo" value="${memName}"/>
+                        <input type="hidden" name="carts"/>
                         <button type="submit" onclick="order()" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
 										color:white; margin-top: 20px;">구매하기</button>
                     </form>
@@ -264,7 +262,8 @@
                     </button>
                 </c:if>
             </div>
-        </div><!-- 목록, 금액, 구매하기버튼 -->
+        </div>
+        
         <div style="width:980px; height:180px; background-color: #FBFAFA; margin-top:50px">
             <div style="padding: 40px;">
                 <h5><i class="fa-solid fa-circle-exclamation" style="color:#00388c"></i> 무료배송 대신, 더 낮은 가격</h5>
@@ -414,49 +413,6 @@
         }
     });
 
-    /* $(".chkbox").click(function () {
-        var chk = $(".chkbox").prop("checked");
-        if(chk){
-            $(".chkbox").value = 0;
-        }else if(!chk){
-            $(".chkbox").value = 1;
-        }
-    } */
-
-    function gownans() {
-        const form = document.createElement('form');
-        form.method = "POST";
-        form.action = "indentPreview";
-
-        $('.chkbox:checked').each(function (i, e) {
-
-            var pNo = $(e).data('pno');
-            var pImage_1 = $(e).data('pimage');
-            var pName = $(e).data('pname');
-            var prodCount = $(e).data('prodcount');
-            var cartNo = $(e).data('cartno');
-
-            arr[0].pNo = pNo;
-            arr[1].pImage_1 = pImage_1;
-            arr[2].pName = pName;
-            arr[3].prodCount = prodCount;
-            arr[4].cartNo = cartNo;
-            /*arr.push(pImage_1);
-            arr.push(pName);
-            arr.push(prodCount);
-            arr.push(cartNo);
-            console.log(arr);*/
-
-
-            getInput("pNo[0]", pNo);
-
-            form.appendChild(inputField);
-
-            /* document.body.appendChild(form); */
-
-        });
-    }
-
     function getInput(name, value) {
 
         const inputField = document.createElement('input');
@@ -472,34 +428,11 @@
     $(".chkbox").click(function () {
         $('.chkbox:checked').each(function (i, e) {
 
-            /*var form = document.createElement("form");
-
-            var arr = new Array;
-            var pNo = $(e).data('pno');
-            var pImage_1 = $(e).data('pimage');
-            var pName = $(e).data('pname');
-            var prodCount = $(e).data('prodcount');
-            var cartNo = $(e).data('cartno');
-
-            arr[0].pNo = pNo;
-            arr[1].pImage_1 = pImage_1;
-            arr[2].pName = pName;
-            arr[3].prodCount = prodCount;
-            arr[4].cartNo = cartNo;
-            arr.push(pImage_1);
-            arr.push(pName);
-            arr.push(prodCount);
-            arr.push(cartNo);
-            console.log(arr);*/
-
-
             const inputField = document.createElement('input');
             inputField.type = 'input';
             inputField.value = params[pNo];
 
             form.appendChild(inputField);
-
-            /* document.body.appendChild(form); */
 
         });
         itemSum();
@@ -597,7 +530,6 @@
                 cnt++;
                 $('')
             }
-
         })
 
         var chk = $(".chkbox").prop("checked");
@@ -607,47 +539,6 @@
         document.indentPreview.submit();
 
     }
-
-
-    /* $('.chkbox:checked').each(function(i, e){
-        var pno = $(e).data('pno');
-        var cartno = $(e).data('cartno');
-        console.log("pno : " + pno);
-        console.log("cartNo : " + cartno);
-    }); */
-
-
-    /* for (var i = 0; i < count; i++) {
-        if($(".chkbox")[i].checked){
-    $(".chkbox").each(function(){
-        var pNo = $(this).data("pNo");
-        var pImage_1 = $(this).data("pImage_1");
-        var pName = $(this).data("pName");
-        var prodCount = $(this).data("prodCount");
-
-        console.log("pNo : "+pNo);
-        console.log("pName : "+pName);
-    })
-
-    var count = $(".chkbox").length;
-    var array = [];
-
-    for (var i = 0; i < count; i++) {
-        if($(".chkbox")[i].checked){
-            var input = document.querySelector(".chkbox");
-            console.log(input.dataset)
-            var pNo1 = $(this).data('pno');
-            var pImage_1 = $(this).data("pimage_1");
-            var pName = $(this).data("pname");
-            var prodCount = $(this).data("prodcount");
-            console.log("pNo : "+ pNo1);
-            console.log("pImage_1 : "+ pImage_1);
-            console.log("pName : "+ pName);
-            console.log("prodCount : "+ prodCount);
-
-        }
-    }*/
-
 
 </script>
 <%@ include file="../inc/footer.jsp" %>

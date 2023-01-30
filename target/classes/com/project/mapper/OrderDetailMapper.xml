@@ -17,10 +17,10 @@
 	</select>
 
 	<insert id="insert" >
-		insert into sample.`order_detail`(orderDetailNo, orderNo, productNo, productName, productPrice, productImagePath)
+		insert into sample.`order_detail`(orderNo, pNo, productName, productPrice, productImagePath)
 		values
-		<foreach item="detail" collection="details" open="(" close=")" separator=",">
-			(#{orderDetailNo}, #{orderNo}, #{productNo}, #{productName}, #{productPrice}, #{productImagePath})
+		<foreach item="detail" collection="orderDetails" open="(" close=")" separator=",">
+			(#{detail.orderNo}, #{detail.pNo}, #{detail.productName}, #{detail.productPrice}, #{detail.productImagePath})
 		</foreach>
 	</insert>
 

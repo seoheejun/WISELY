@@ -21,7 +21,7 @@ public class OrderDTO {
     private String receiverAddressDetail;
     private String receiverPhone;
     private String receiverEmail;
-    private String receiverRequested;
+    private String receiverRequest;
 
     private String paymentType;
     private LocalDateTime createdAt;
@@ -133,12 +133,12 @@ public class OrderDTO {
         this.receiverEmail = receiverEmail;
     }
 
-    public String getReceiverRequested() {
-        return receiverRequested;
+    public String getreceiverRequest() {
+        return receiverRequest;
     }
 
-    public void setReceiverRequested(String receiverRequested) {
-        this.receiverRequested = receiverRequested;
+    public void setreceiverRequest(String receiverRequest) {
+        this.receiverRequest = receiverRequest;
     }
 
     public String getPaymentType() {
@@ -206,7 +206,7 @@ public class OrderDTO {
 				+ deliveryCharge + ", details=" + details + ", memNo=" + memNo + ", receiverName=" + receiverName
 				+ ", receiverPostcode=" + receiverPostcode + ", receiverAddress=" + receiverAddress
 				+ ", receiverAddressDetail=" + receiverAddressDetail + ", receiverPhone=" + receiverPhone
-				+ ", receiverEmail=" + receiverEmail + ", receiverRequested=" + receiverRequested + ", paymentType="
+				+ ", receiverEmail=" + receiverEmail + ", receiverRequest=" + receiverRequest + ", paymentType="
 				+ paymentType + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + "]";
 	}
     

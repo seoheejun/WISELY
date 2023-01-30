@@ -8,6 +8,7 @@ public class OrderDetailDTO {
     private Integer productCount;
     private Integer productPrice;
     private String productImagePath;
+    
 
     public Integer getOrderDetailNo() {
         return orderDetailNo;
@@ -49,11 +50,11 @@ public class OrderDetailDTO {
         this.productPrice = productPrice;
     }
 
-    public String getproductImagePath() {
+    public String getProductImagePath() {
         return productImagePath;
     }
 
-    public void setproductImagePath(String productImagePath) {
+    public void setProductImagePath(String productImagePath) {
         this.productImagePath = productImagePath;
     }
 
