@@ -60,7 +60,7 @@ tr{
 	                            <div style="width:790px; display: flex; justify-content: space-between; padding: 0; 
 	                            			margin-top:10px; margin-bottom: 10px; text-align: center">
 	                                
-			                                <img src="prod_img/${dDto.productImagePath}" style="width:100px; margin-right:12px"/>
+			                                <img src="/shopping/prod_img/${dDto.productImagePath}" style="width:100px; margin-right:12px"/>
 		                                    <span>${dDto.productName}</span>
 		                                    <span><fmt:formatNumber type="Number" value="${dDto.productPrice}"/>원</span>
 		                         </div>

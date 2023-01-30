@@ -113,6 +113,7 @@
 </c:if>
 	<h2 class="text-center mb-5 mt-5">주문서</h2>
 	<div class="container" style="width:1050px; padding: 0">
+		<form id="orderComplete" method="post" action="/shopping/order" >
 			<div style="width:1050px; height:200px;">
 				<div style="width:1050px; padding-top: 20px; padding-bottom:10px;
 							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
@@ -124,6 +125,10 @@
 						<div>
 							상품명 : <span>${cDto.pName}</span> 
 							개수 : <span>${cDto.prodCount}</span>
+							멤버 넘버 : ${cDto.memNo}
+							멤버 넘버 : ${cDto.price}
+							멤버 넘버 : ${cDto.pImage_1}
+							상품 넘버 : ${cDto.pNo}
 						</div>
 					</c:forEach>
 				</div>
@@ -204,19 +209,19 @@
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">받는사람</th>
 								<td>
-									<input class="order-input" type="text" value="${mDto.memName}"style="width:489px">
+									<input class="order-input" type="text" name="receiverName" value="${mDto.memName}"style="width:489px">
 								</td>
 							</tr>
 							<tr style="width:1050px; height:162px;">
 								<th style="width:200px;">주소</th>
 								<td>
 									<div style="width:489px; margin-bottom:12px; display: flex">
-										<input class="order-input" value="${mDto.memZipcode}" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
+										<input class="order-input" name="receiverPostcode" value="${mDto.memZipcode}" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
 										<input class="order-input" style="width:107px; border-radius: 5px; background-color: #00388c; color:white; margin-left:12px; 
 										padding-left:10px; padding-right:10px; border:none;" type="button" onclick="sample2_execDaumPostcode()" value="주소검색"><br>
 									</div>
-									<input class="order-input" value="${mDto.memRoadAddr}" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
-									<input class="order-input" value="${mDto.memDetailAddr}" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
+									<input class="order-input" name="receiverAddress" value="${mDto.memRoadAddr}" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
+									<input class="order-input" name="receiverAddressDetail" value="${mDto.memDetailAddr}" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
 									<!-- <input type="text" id="sample2_extraAddress" placeholder="참고항목"> -->
 									<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 										<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
@@ -226,7 +231,7 @@
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">휴대폰 번호</th>
 								<td>
-									<input class="order-input" type="text" style="width:489px" value="${mDto.memTel}" >
+									<input class="order-input" name="receiverPhone" type="text" style="width:489px" value="${mDto.memTel}" >
 									
 								</td>
 							</tr>
@@ -235,7 +240,7 @@
 								<td>
 									<textarea class="order-input" maxlength="10" cols="0" id="message" 
 											style="overflow:hidden; margin-bottom:12px; display:none; width:489px; resize:none;"></textarea>
-									<select class="order-input" style="width:489px" id="message-select" onchange="message()">
+									<select class="order-input" name="receiverRequest" style="width:489px" id="message-select" onchange="message()">
 										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
 										<option value="message-1">배송 전에 미리 연락바랍니다.</option>
 										<option value="message-2">부재 시 경비실에 맡겨주세요.</option>
@@ -311,8 +316,8 @@
 				<div style="width:689px; padding-top: 20px; padding-bottom:10px; margin-bottom:30px; display:flex; 
 							justify-content:space-between; border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
 					<h5>결제수단</h5>
-					<label class="checkboxs">결제수단과 입력정보를 다음에도 사용
-					<input type="checkbox" name="addr"><span class="checkmark"></span></label>
+					<!-- <label class="checkboxs">결제수단과 입력정보를 다음에도 사용
+					<input type="checkbox" name="addr"><span class="checkmark"></span></label> -->
 				</div>
 				<div style="width:689px; height:240px; padding-bottom:20px; margin-bottom:20px; display:flex;
 							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;">
@@ -496,9 +501,19 @@
 		
 		<!-- 구매하기 버튼 -->
 		<div style="width:1050px; height:60px; text-align: center;">
-			<button style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
-									color:white;">결제하기</button>
+			<c:forEach var="cDto" items="${cList}" varStatus="i">
+				<input type="text" name="details[${i.index}].pNo" value="${cDto.pNo}"/>
+				<input type="text" name="details[${i.index}].productName" value="${cDto.pName}"/>
+				<input type="text" name="details[${i.index}].productCount" value="${cDto.prodCount}"/>
+				<input type="text" name="details[${i.index}].productPrice" value="${cDto.price}"/>
+				<input type="text" name="details[${i.index}].productImagePath" value="${cDto.pImage_1}"/>
+			</c:forEach>
+				<input type="text" name="deliveryCharge" value="3000"/>
+				<input type="text" name="productTotalPrice" value="1000"/>
+				<input type="hidden" name="memNo" value="${cDto.memNo}"/>
+				<button type="submit" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none; color:white;">결제하기</button>
 		</div>
+	  </form>
 	</div>
 </main>
 <script>

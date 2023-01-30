@@ -13,6 +13,6 @@ public interface OrderMapper {
 
 	public OrderDTO get(@Param("orderNo") int orderNo, @Param("memNo") int memNo);
 
-	public int insert(List<OrderDTO> order);
+	public int insert(OrderDTO order);
 
 }

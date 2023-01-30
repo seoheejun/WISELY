@@ -9,5 +9,7 @@ public interface OrderService {
 	public List<OrderDTO> getAll(int memNo);
 
 	public OrderDTO get(int orderNo, int memNo);
+	
+	public int insert(OrderDTO order, int memNo);
 
 }
