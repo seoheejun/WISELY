@@ -55,20 +55,22 @@ tr{
 				</div>
                 </div>
 					<div class="row" style="width:790px; margin:0; display: flex; align-items:center; height:140px;
-										border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;">
+										text-align:center">
 							<c:forEach var="dDto" items="${oDto.details}">
-	                            <div style="width:790px; display: flex; justify-content: space-between; padding: 0; 
-	                            			margin-top:10px; margin-bottom: 10px; text-align: center">
+	                            <div style="width:790px; height:130px; display: flex; justify-content: space-between; padding: 0; 
+	                            			margin-top:10px; padding-bottom: 10px; text-align: center; align-items:center;
+	                            			border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;">
 	                                
 			                                <img src="/shopping/prod_img/${dDto.productImagePath}" style="width:100px; margin-right:12px"/>
-		                                    <span>${dDto.productName}</span>
-		                                    <span><fmt:formatNumber type="Number" value="${dDto.productPrice}"/>원</span>
+		                                    <span style="width:250px; text-align:left;">${dDto.productName}</span>
+		                                    <span style="width:30px; text-align:left;">${dDto.productCount}개</span>
+		                                    <span style="width:100px; text-align:right;"><fmt:formatNumber type="Number" value="${dDto.productPrice}"/>원</span>
 		                         </div>
 	                         </c:forEach>
                           </div>
                    
                 <!------------------ 주문정보 ------------>
-                <div style="width:790px; justify-content: space-between; display: flex; margin-top:100px; border-bottom: 1px; 
+                <div style="width:790px; justify-content: space-between; display: flex; margin-top:250px; border-bottom: 1px; 
 							border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
 					<div>주문/결제정보</div>
 				</div>
@@ -147,7 +149,7 @@ tr{
 						<tr>
 							<th>배송메시지 </th>
 							<td>
-								${oDto.receiverRequested}
+								${oDto.receiverRequest}
 							</td>
 						</tr>
 					</tbody>

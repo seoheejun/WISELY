@@ -13,6 +13,7 @@
 			   O.deliveryCharge,
 			   O.receiverName,
 			   D.productName,
+			   D.productImagePath,
 			   O.receiverPostcode,
 			   O.receiverAddress,
 			   O.receiverAddressDetail,
@@ -44,7 +45,7 @@
 		where orderNo = #{orderNo} and memNo = #{memNo}
 	</select>
 
-	<insert id="insert" useGeneratedKeys="true">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="orderNo">
 		insert into `order`(memNo, productTotalPrice, deliveryCharge, receiverName, receiverPostcode,
 								   receiverAddress, receiverAddressDetail, receiverPhone, receiverRequest, paymentType)
 		values (#{memNo}, #{productTotalPrice}, #{deliveryCharge}, #{receiverName}, #{receiverPostcode},

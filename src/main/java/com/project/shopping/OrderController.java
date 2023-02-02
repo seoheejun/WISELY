@@ -53,7 +53,6 @@ public class OrderController {
 	@GetMapping("")
 	public ModelAndView getAll(HttpSession httpSession){
 		ModelAndView mav = new ModelAndView("myPage/delivery");
-//		ModelAndView mav = new ModelAndView("customer/order_detail");
 		
 		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")
 		

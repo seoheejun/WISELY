@@ -80,7 +80,7 @@ public class HomeController {
 	
 	@RequestMapping("service1")
 	public String service_1() {
-		return "service/service1";
+		return "/shopping/service/service1";
 	}
 	
 	@RequestMapping("service2")
@@ -105,7 +105,7 @@ public class HomeController {
 	
 	@RequestMapping("board")
 	public String board() {
-		return "myPage/board";
+		return "/shopping/myPage/board";
 	}
 	
 	@RequestMapping("delivery")

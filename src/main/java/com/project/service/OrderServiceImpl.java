@@ -1,13 +1,14 @@
 package com.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.domain.CartDTO;
 import com.project.domain.OrderDTO;
 import com.project.domain.OrderDetailDTO;
+import com.project.mapper.CartMapper;
 import com.project.mapper.OrderDetailMapper;
 import com.project.mapper.OrderMapper;
 
@@ -19,6 +20,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderDetailMapper orderDetailMapper;
+	
+	@Autowired
+	private CartMapper cartMapper;
+	
 
 	@Override
 	public List<OrderDTO> getAll(int memNo) {
@@ -31,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
 		List<OrderDetailDTO> orderDetailDTOS = orderDetailMapper.get(orderNo);
 		orderDTO.setDetails(orderDetailDTOS);
+		System.out.println("orderDetail : "+ orderDetailDTOS);
 
 		return orderDTO;
 	}
@@ -38,22 +44,23 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int insert(OrderDTO order, int memNo) {
 		order.setMemNo(memNo);
-		int orderNo = orderMapper.insert(order);
+		orderMapper.insert(order);
+		int orderNo = order.getOrderNo();
 		
-//		List<OrderDetailDTO> orderDetails 
-//		orderDetailMapper.insert(orderDetails);
 		List<OrderDetailDTO> details = order.getDetails();
+		List<Integer> pNoList = new ArrayList<>();
 		
 		for(int i = 0; i<details.size(); i++) {
 			System.out.println("details : "+details.size());
 			OrderDetailDTO oDto = details.get(i);
 			System.out.println("orderNo : "+orderNo);
 			oDto.setOrderNo(orderNo);
+			
+			int no = oDto.getproductNo();
+			pNoList.add(no);
 		}
 		orderDetailMapper.insert(details);
-		
-		CartDTO cDto = new CartDTO();
-		
+		cartMapper.delete(pNoList, memNo);
 		
 		return 0;
 	}

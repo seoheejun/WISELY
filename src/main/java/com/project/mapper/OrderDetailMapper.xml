@@ -11,16 +11,17 @@
 			productNo,
             productName,
             productPrice,
-            productImagePath
+            productImagePath,
+            productCount
 		from order_detail
 		where orderNo = #{orderNo}
 	</select>
 
 	<insert id="insert" >
-		insert into sample.`order_detail`(orderNo, pNo, productName, productPrice, productImagePath)
+		insert into sample.`order_detail`(orderNo, productNo, productName, productPrice, productImagePath, productCount)
 		values
-		<foreach item="detail" collection="orderDetails" open="(" close=")" separator=",">
-			(#{detail.orderNo}, #{detail.pNo}, #{detail.productName}, #{detail.productPrice}, #{detail.productImagePath})
+		<foreach item="detail" collection="orderDetails" separator=",">
+			(#{detail.orderNo}, #{detail.productNo}, #{detail.productName}, #{detail.productPrice}, #{detail.productImagePath}, #{detail.productCount})
 		</foreach>
 	</insert>
 

@@ -1,569 +1,690 @@
-<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-.web-message{
-  padding: 120px 0;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color	: #dddddd;
+/* The checkboxs */
+.checkboxs {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+/* Hide the browser's default radio button */
+.checkboxs input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.checkboxs:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.checkboxs input:checked ~ .checkmark {
+  background-color: #00388c;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.checkboxs input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.checkboxs .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.order-input {
+  border-radius: 5px;
+  border:1px solid #dddddd;
+  height: 46px;
+  padding-left: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.payment-btn>span>label {
+	width:238px; 
+	height:45px; 
+	text-align:center; 
+	margin-bottom:12px;
+	padding-top:10px;
+	border-radius: 5px; 
+	border:1px solid #dddddd;
+  	height: 46px;
+	cursor: pointer;
+}
+
+.payment-btn>span>input:checked ~ label {
+	background-color: #00388c;
+	color: white;
+	border: none;
+}
+
+.payguide {
+	text-indent: -20px;
+	font-size: 14px;
+	color:#999999;
+}
+
 </style>
 <main>
-    <c:if test="${sessionScope.memName == null}">
-        <script>
-            alert("로그인 후 이용 가능합니다.")
-            history.go(-1);
-        </script>
-    </c:if>
-    <h2 class="text-center mb-5 mt-5">주문내역조회</h2>
-    <div class="container" style="width:980px; padding: 0">
-        <div style="width:660px; padding-top: 20px; padding-bottom:10px; display:flex;
-							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
-           
-        </div>
-
-        <div style="display: flex;">
-            <!-- 장바구니 목록 -->
-            <div style="width:660px; margin-right: 20px;">
-
-                <!-- 구매내역이 없는 경우  -->
-                <c:if test="${cList == null || cList.size() == 0}">
-                    <p class="web-message">장바구니에 담긴 상품이 없습니다.</p>
-                </c:if>
-
-                <!-- 장바구니에 상품이 담겨있는 경우 -->
-                <c:if test="${cList.size() != 0}">
-                    <c:set var="cnt" value="1"/>
-                    <c:forEach var="cDto" items="${cList}">
-
-                        <div class="row" data-cart-no="${cDto.cartNo}" style="margin-top:10px; display: flex; align-items:center; height:130px;
-										border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #FBFAFA; margin-bottom: 10px">
-                            <input type="hidden" class="product-no" value="${cDto.pNo}" />
-                            <!-- 체크박스 -->
-                            <div>
-                                <label class="checkboxs" style="margin-right:12px">
-                                        <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}"> --%>
-                                        <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}" onchange="chk()" --%>
-                                    <input type="checkbox" class="chkbox" name="chk" checked onchange="chk()"
-                                           data-pno="${cDto.pNo}" data-pimage="${cDto.pImage_1}"
-                                           data-pname="${cDto.pName}" data-prodcount="${cDto.prodCount}"
-                                           data-cartno="${cDto.cartNo}">
-
-                                    <input type="hidden" name="checkDel" value="${cDto.cartNo}">
-                                    <span class="checkmark"></span></label>
-                            </div>
-
-                            <!-- 상품 이미지 -->
-                            <div>
-                                <img src="prod_img/${cDto.pImage_1}" style="width:100px; margin-right:12px"/>
-                            </div>
-
-                            <!-- 상품이름 -->
-                            <div style="display: flex; justify-content: space-between; width:503px">
-                                <div>
-                                    <span style="width:100px; margin-right:12px">${cDto.pName}</span>
-                                </div>
-
-                                <!-- 수량 수정 -->
-                                <div style="display: flex; width:250px; align-items: center;">
-                                    <div style="position: relative; width: 90px; display: flex; border:1px; border-color: gray; border-style: solid; box-sizing: border-box; margin-right:20px">
-                                        <button type='button' onclick='increase(this)' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'>+</button>
-                                        <input type="text" class="product-count"
-                                               value="${cDto.prodCount}"
-                                               style='border:none; background: white; text-align:center; display:block; width: 30px; right: 12px; margin: 0; padding: 5px 7px;'/>
-                                        <button type='button' onclick='decrease(this)' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'>-</button>
-                                    </div>
-
-                                    <!-- 수정 버튼으로 수량 조정 -->
-                                        <%-- <form action="cartUpdate" method="post">
-                                        <div style="position: relative; width: 90px; display: flex; border:1px; border-color: gray; border-style: solid; box-sizing: border-box; margin-right:20px"">
-                                                <input type='button' onclick='count("plus")' value='+' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
-                                                <input type="text" id="qty" name="prodCount" value="${cDto.prodCount}" style='border:none; background: white; text-align:center; display:block; width: 30px; right: 12px; margin: 0; padding: 5px 7px;'/>
-                                                <input type="hidden" name="cartNo" value="${cDto.cartNo}"/>
-                                                <input type='button' onclick='count("minus")' value='-' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
-                                            </div>
-                                        <input type="submit" class="btn btn-sm btn-secondary mt-3" value="수정"/>
-                                        </form> --%>
-
-
-                                    <div>
-                                        <c:set var="totalPrice" value="${cDto.price*cDto.prodCount}"/>
-                                        <span style="margin-right:20px; width:100px; display: block;"><fmt:formatNumber
-                                                type="Number" value="${totalPrice}"/>원</span>
-                                    </div>
-
-                                    <!-- 장바구니 상품 삭제 -->
-                                    <div>
-                                        <button type="button" onclick="remove(this)">
-                                            <i class="xi-close-thin"> </i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <c:set var="checkTotPrice" value="${checkTotPrice + total_sum}"/>
-                        <c:set var="cartTotPrice" value="${cartTotPrice + totalPrice}"/>
-                        <div style="display: none">${cnt = cnt + 1}</div>
-                    </c:forEach>
-
-                    <!-- 장바구니 목록 하단 합계금액 -->
-                    <div style="width:660px; height:65px; background: #FBFAFA">
-                        <div style="margin-left:250px; padding-top:20px">
-                            <span>상품가격 </span>
-                            <span><fmt:formatNumber type="Number" value="${cartTotPrice}"/>원</span>
-                            <span>+ 배송비 </span>
-                            <span><fmt:formatNumber type="Number" value="3000"/>원</span>
-                            <span> = </span>
-                            <span><fmt:formatNumber type="Number" value="${cartTotPrice + 3000}"/>원</span>
-                        </div>
-                    </div>
-                </c:if>
-
-            </div>
-
-            <!-- 장바구니 금액 표시 -->
-            <div>
-                <div style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
-                    <div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
-                        <div>합계</div>
-                        <div>
-                            <c:if test="${cList.size() != 0}">
-                                <span id="total_sum"><fmt:formatNumber type="Number" value="${cartTotPrice}"/></span>원
-                            </c:if>
-                            <c:if test="${cList == null || cList.size() == 0}">
-                                <fmt:formatNumber type="Number" value="0"/>원
-                            </c:if>
-                        </div>
-                    </div>
-                    <div style="width:260px; margin-bottom: 20px; display: flex; justify-content: space-between;
-								border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
-                        <c:if test="${cList.size() != 0}">
-                            <div>배송비</div>
-                            <div>+<span id="delivery"><fmt:formatNumber type="Number" value="3000"/></span>원</div>
-                        </c:if>
-                        <c:if test="${cList == null || cList.size() == 0}">
-                            <div>배송비</div>
-                            <div>+<fmt:formatNumber type="Number" value="0"/>원</div>
-                        </c:if>
-                    </div>
-                    <div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
-                        <div><b>결제예정금액</b></div>
-                        <div><b>
-                            <c:if test="${cList.size() != 0}">
-                                <span id="total_sum2"><fmt:formatNumber type="Number"
-                                                                        value="${cartTotPrice + 3000}"/></span>원
-                            </c:if>
-                            <c:if test="${cList == null || cList.size() == 0}">
-                                <fmt:formatNumber type="Number" value="0"/>원
-                            </c:if>
-                        </b></div>
-
-
-                    </div>
-                </div>
-                <button type="button" onclick="order()">fuck구매하긔</button>
-                <!-- 구매하기 버튼 -->
-                <c:if test="${cList.size() != 0}">
-                    <form id="orderForm" method="post" action="indent/preview" >
-                        <input type="hidden" name="carts" />
-                        <button type="submit" onclick="order()" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
-										color:white; margin-top: 20px;">구매하기</button>
-                    </form>
-                </c:if>
-                <c:if test="${cList == null || cList.size() == 0}">
-                    <button style="width:300px; padding:15px; border-radius: 5px; background-color: #dddedd; border:none;
-									color:white; margin-top: 20px;">상품을 담아주세요
-                    </button>
-                </c:if>
-            </div>
-        </div><!-- 목록, 금액, 구매하기버튼 -->
-        <div style="width:980px; height:180px; background-color: #FBFAFA; margin-top:50px">
-            <div style="padding: 40px;">
-                <h5><i class="fa-solid fa-circle-exclamation" style="color:#00388c"></i> 무료배송 대신, 더 낮은 가격</h5>
-                <span>· 12월 12일부터 모든 제품 가격을 평균 17% 내립니다.</span><br>
-                <span>· 3만원 이상 조건부 무료배송은 사라지지만 구매 시 누리는 혜택은 더 커졌습니다.</span><br>
-                <span>· 와이즐리의 모든 제품, 더욱 놀라운 가격으로 만나보세요.</span>
-            </div>
-        </div>
-    </div>
-</main>
-
+<c:if test="${requestScope.msg != null}">
 <script>
-    /*** 수량 변경 ***/
-    function count(type) {
-        console.log("type: " + type);
-        console.log(type.charAt(type.length - 1));
+	alert("${requestScope.msg}");
+</script>
+</c:if>
+	<h2 class="text-center mb-5 mt-5">주문서</h2>
+	<div class="container" style="width:1050px; padding: 0">
+		<form id="orderComplete" method="post" action="/shopping/order" >
+			<div style="width:1050px; height:200px;">
+				<div style="width:1050px; padding-top: 20px; padding-bottom:10px;
+							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
+					<h5>주문상품</h5>
+				</div>
+				<div style="border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;
+							width:1050px; padding-top: 34px; padding-bottom: 34px; text-align: center;">
+					<c:forEach var="cDto" items="${cList}">
+						<div>
+							상품명 : <span>${cDto.pName}</span> 
+							개수 : <span>${cDto.prodCount}</span>
+							멤버 넘버 : ${cDto.memNo}
+							멤버 넘버 : ${cDto.price}
+							멤버 넘버 : ${cDto.pImage_1}
+							상품 넘버 : ${cDto.pNo}<br>
+							총합계 : ${cDto.totalPrice}
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			
+			<!-- 주문자 정보 -->
+				<div style="width:1050px; padding-top: 20px; padding-bottom:10px; margin-bottom: 30px;
+							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
+					<h5>주문자 정보</h5>
+				</div>
+				<div style="margin-bottom:100px">
+					<table style="width:100%">
+						<tbody>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">주문자 이름</th>
+								<td>
+									<input class="order-input" type="text" value="${mDto.memName}" style="width:489px">
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">휴대폰 번호</th>
+								<td>
+									<input class="order-input" type="text" value="${mDto.memTel}"style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
+								</td>
+							</tr>
+							<%-- <tr style="width:1050px; height:60px;">
+								<th style="width:200px;">이메일</th>
+								<td>
+									<div style="justify-content: space-between; width:489px; height:46px; display: flex; align-items: center">
+										<input class="order-input" type="text" value="${mDto.memEmail}" style="width:229px">
+										@
+										<select class="order-input" style="width:229px">
+											<option value="" selected="selected">-이메일 선택-</option>
+											<option value="naver.com">naver.com</option>
+											<option value="daum.net">daum.net</option>
+											<option value="nate.com">nate.com</option>
+											<option value="hotmail.com">hotmail.com</option>
+											<option value="yahoo.com">yahoo.com</option>
+											<option value="empas.com">empas.com</option>
+											<option value="korea.com">korea.com</option>
+											<option value="dreamwiz.com">dreamwiz.com</option>
+											<option value="gmail.com">gmail.com</option>
+											<option value="etc">직접입력</option>
+										</select>
+									</div>
+								</td>
+							</tr> --%>
+						</tbody>
+					</table>
+							<div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">
+								배송이 시작되면 주문 처리 과정을 이메일과 휴대폰 번호로 알려드리니,<br>
+								꼭 정확한 정보를 입력해 주세요.
+							</div>
+				</div>
+				
+				<!---------- 배송 정보 ---------->
+				<div style="width:1050px; padding-top: 20px; padding-bottom:10px; margin-bottom: 30px;
+							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
+					<h5>배송 정보</h5>
+				</div>
+				<div style="margin-bottom:100px">
+					<div style="width:1050px; height:30px; display: flex;">
+						<span style="width:200px">배송지 선택</span>
+							<div style="display:flex;">
+								<label class="checkboxs" style="margin-right:20px;">주문자 정보와 동일
+								<input type="radio" name="addr" checked="checked">
+								<span class="checkmark"></span></label> 
+								
+								<label class="checkboxs">새로운 배송지
+								<input type="radio" name="addr">
+								<span class="checkmark"></span></label>
+							</div> 
+					</div>
+				
+				<!----------- 주문자 정보와 동일 선택 시 ------------->
+					<table style="width:100%">
+						<tbody>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">받는사람</th>
+								<td>
+									<input class="order-input" type="text" name="receiverName" value="${mDto.memName}"style="width:489px">
+								</td>
+							</tr>
+							<tr style="width:1050px; height:162px;">
+								<th style="width:200px;">주소</th>
+								<td>
+									<div style="width:489px; margin-bottom:12px; display: flex">
+										<input class="order-input" name="receiverPostcode" value="${mDto.memZipcode}" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
+										<input class="order-input" style="width:107px; border-radius: 5px; background-color: #00388c; color:white; margin-left:12px; 
+										padding-left:10px; padding-right:10px; border:none;" type="button" onclick="sample2_execDaumPostcode()" value="주소검색"><br>
+									</div>
+									<input class="order-input" name="receiverAddress" value="${mDto.memRoadAddr}" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
+									<input class="order-input" name="receiverAddressDetail" value="${mDto.memDetailAddr}" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
+									<!-- <input type="text" id="sample2_extraAddress" placeholder="참고항목"> -->
+									<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+										<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+									</div>
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">휴대폰 번호</th>
+								<td>
+									<input class="order-input" name="receiverPhone" type="text" style="width:489px" value="${mDto.memTel}" >
+									
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">요청사항</th>
+								<td>
+									<textarea class="order-input" maxlength="10" cols="0" id="message" 
+											style="overflow:hidden; margin-bottom:12px; display:none; width:489px; resize:none;"></textarea>
+									<select class="order-input" name="receiverRequest" style="width:489px" id="message-select" onchange="message()">
+										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
+										<option value="message-1">배송 전에 미리 연락바랍니다.</option>
+										<option value="message-2">부재 시 경비실에 맡겨주세요.</option>
+										<option value="message-3">부재 시 문 앞에 놓아주세요.</option>
+										<option value="message-4">빠른 배송 부탁드립니다.</option>
+										<option value="message-5">택배함에 보관해 주세요.</option>
+										<option value="6">직접 입력(10자 이내)</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			<!----------- 새로운 배송지 선택 시 ------------->
+					<table style="width:100%; display: none;">
+						<tbody>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">받는사람</th>
+								<td>
+									<input class="order-input" type="text" style="width:489px">
+								</td>
+							</tr>
+							<tr style="width:1050px; height:162px;">
+								<th style="width:200px;">주소</th>
+								<td>
+									<div style="width:489px; margin-bottom:12px; display: flex">
+										<input class="order-input" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
+										<input class="order-input" style="width:107px; border-radius: 5px; background-color: #00388c; color:white; margin-left:12px; 
+										padding-left:10px; padding-right:10px; border:none;" type="button" onclick="sample2_execDaumPostcode()" value="주소검색"><br>
+									</div>
+									<input class="order-input" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
+									<input class="order-input" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
+									<!-- <input type="text" id="sample2_extraAddress" placeholder="참고항목"> -->
+									<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+										<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+									</div>
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">휴대폰 번호</th>
+								<td>
+									<input class="order-input" type="text" style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
+									
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">요청사항</th>
+								<td>
+									<textarea class="order-input" maxlength="10" cols="0" id="message" 
+											style="overflow:hidden; margin-bottom:12px; display:none; width:489px; resize:none;"></textarea>
+									<select class="order-input" style="width:489px" id="message-select" onchange="message()">
+										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
+										<option value="message-1">배송 전에 미리 연락바랍니다.</option>
+										<option value="message-2">부재 시 경비실에 맡겨주세요.</option>
+										<option value="message-3">부재 시 문 앞에 놓아주세요.</option>
+										<option value="message-4">빠른 배송 부탁드립니다.</option>
+										<option value="message-5">택배함에 보관해 주세요.</option>
+										<option value="6">직접 입력(10자 이내)</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+							<div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">
+								공동 현관문 비밀번호가 있다면 '직접 입력' 선택 후 꼭 입력해주세요.
+							</div>
+				</div>
+				
+				
+				
+				<!-- 결제수단 -->
+		<div style="display: flex; width:1050px; justify-content: space-between;">
+			<div>
+				<div style="width:689px; padding-top: 20px; padding-bottom:10px; margin-bottom:30px; display:flex; 
+							justify-content:space-between; border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black;">
+					<h5>결제수단</h5>
+					<!-- <label class="checkboxs">결제수단과 입력정보를 다음에도 사용
+					<input type="checkbox" name="addr"><span class="checkmark"></span></label> -->
+				</div>
+				<div style="width:689px; height:240px; padding-bottom:20px; margin-bottom:20px; display:flex;
+							border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;">
+					<div class="inner">
+						<ul style="margin:0; padding: 0">
+						<li class="paymethod-newArea" style="height: 240px; list-style: none; padding-bottom:20px; margin-bottom:20px; display: flex">
+							<input type="radio" id="payment" style="display:none;">
+							<label for="payment" style="width:200px; height:228px">결제수단 선택</label>
+							
+							<!-- 결제 수단 버튼 -->
+							<div class="payment-btn" style="width:489px; height:228px;">
+								<span>
+									<input id="paymethod0" value="naver" onclick="selPayment()"checked="checked" name="paymethod" type="radio" style="display: none">
+									<label for="paymethod0">
+									네이버페이</label>
+								</span>
+								<span>
+									<input id="paymethod1" value="kakao" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<label for="paymethod1">
+									카카오페이</label>
+								</span>
+								<span>
+									<input id="paymethod2" value="card" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<label for="paymethod2">
+									신용/체크카드</label>
+								</span>
+								<span>
+									<input id="paymethod3" value="payco" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<label for="paymethod3">
+									페이코</label>
+								</span>
+								<span>
+									<input id="paymethod4" value="toss" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<label for="paymethod4">
+									토스페이</label>
+								</span>
+								<span>
+									<input id="paymethod5" value="excrow" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<label for="paymethod5">
+									에스크로(가상계좌)</label>
+								</span>
+								<span>
+									<input id="paymethod6" value="phone" onclick="selPayment()" name="paymethod" type="radio" style="display: none">
+									<label for="paymethod6">
+									휴대폰</label>
+								</span>
+							</div>
+						</li>
+						</ul>
+					</div>
+				</div>
+				
+				<!-- 선택한 결제수단 안내 -->
+				<!-- 네이버페이 -->
+				<div id="naver" style="width:689px; height:140px; padding-left: 200px;">
+					<li style="list-style: none; font-size: 14px; margin-bottom:12px">주문 변경 시 카드사 혜택 및 할부 적용 여부는 해당 카드사 정책에 따라 변경될 수 있습니다.</li>
+					<li class="payguide">네이버페이는 네이버ID로 별도 앱 설치 없이 신용카드 또는 은행 계좌 정보를 
+					등록하여 네이버페이 비밀번호로 결제할 수 있는 간편결제 서비스입니다.</li>
+					<li class="payguide">네이버페이 카드 간편결제는 네이버페이에서 제공하는 카드사별 무이자, 청구 할인 혜택을 받을 수 있습니다.</li>
+				</div>
+				
+				<!-- 카카오페이 -->
+				<div id="kakao" style="width:689px; height:82px; padding-left: 200px; display: none;">
+					<li style="list-style: none; font-size: 14px; margin-bottom:12px">
+					카카오톡 앱을 설치한 후, 최초 1회 카드정보를 등록하셔야 사용 가능합니다.</li>
+					<li class="payguide">인터넷 익스플로러는 8 이상에서만 결제 가능합니다.</li>
+					<li class="payguide">카카오머니로 결제 시, 현금영수증 발급은 ㈜카카오페이에서 발급가능합니다.</li>
+				</div>
 
-        let iNum = type.charAt(type.length - 1);
-        for (i = 1; i <${cnt}; i++) {
-            if (iNum == i)
-                // 결과를 표시할 element
-                var resultElement = document.getElementById('qty_' + i);
-        }
+				<!-- 신용/체크카드 -->
+				<div id="card" style="width:689px; height:33px; padding-left: 200px; display: none;">
+					<li class="payguide">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</li>
+				</div>
+				
+				<!-- 페이코 -->
+				<div id="payco" style="width:689px; height:60px; padding-left: 200px; display: none;">
+					<li style="list-style: none; font-size: 14px; margin-bottom:12px">
+					페이코(www.payco.com)에 회원가입 후, 최초 1회 카드 및 계좌 정보를 등록하셔야 사용 가능합니다.</li>
+				</div>
+				
+				<!-- 토스페이 -->
+				<div id="toss" style="width:689px; height:120px; padding-left: 200px; display: none;">
+					<li style="list-style: none; font-size: 14px; margin-bottom:12px">
+					토스는 간편하게 지문 또는 비밀번호만으로 결제할 수 있는 빠르고 편리한 간편 결제 서비스입니다.</li>
+					<li class="payguide">토스 결제 후 취소/반품 등이 발생할 경우 토스를 통한 신용카드 취소/토스머니 환불이 이루어집니다.</li>
+					<li class="payguide">토스 이용가능 결제수단 : 국내 발행 신용/체크카드, 토스머니</li>
+				</div>
+				
+				<!-- 휴대폰 -->
+				<div id="phone" style="width:689px; height:33px; padding-left: 200px; display: none;">
+					<li class="payguide" style="margin-top:20px">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</li>
+				</div>
+				
+				<!-- 에스크로(가상계좌) -->
+				<div id="excrow" style="width:689px; height:140px; padding-left: 200px; display: none;">
+					<div class="" style="display: flex; justify-content: space-between;">
+					<li style="list-style: none; font-size: 14px;">에스크로</li>
+					<li style="list-style: none; font-size: 14px; color:#999999">
+						<label class="checkboxs">에스크로(구매안전)서비스를 적용합니다.
+						<input type="checkbox" name="addr"><span class="checkmark"></span></label>
+					</li>
+					</div>
+					<li class="payguide" style="margin-top:20px">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</li>
+					
+					<div>
+						<div style="width:457px; height:121px">
+							<div style="width:450px; height:62px; padding-top: 20px">
+								현금영수증
+							</div>
+							
+							<!-- 현금영수증 신청 여부 -->
+							<div id="select-receipt" style="display:flex; ">
+									<label class="checkboxs" style="margin-right:30px;">현금영수증 신청
+									<input type="radio" onclick="receipt()" name="receipt" id="cashReceipt1">
+									<span class="checkmark"></span></label> 
+									
+									<label class="checkboxs">신청안함
+									<input type="radio" onclick="receipt()" name="receipt" checked="checked" id="cashReceipt2">
+									<span class="checkmark"></span></label>
+							</div>
+						</div>
+						
+						<!-- 현금영수증 개인/사업자 -->
+						<div>
+							<div id="receipt-user" style="display:flex; display: none; padding-top: 20px">
+								<label class="checkboxs" style="margin-right:30px;">개인
+								<input type="radio"  onclick="receiptuser()" name="receipt-user" id="user1" value="2" checked="checked">
+								<span class="checkmark"></span></label> 
+								
+								<label class="checkboxs">사업자
+								<input type="radio" onclick="receiptuser()" name="receipt-user" id="user2" value="3">
+								<span class="checkmark"></span></label>
+							</div>
+							<!-- 현금영수증 휴대폰번호 -->
+							<div id="receipt-phone" style="display: none; padding-top: 20px"">
+								<input class="order-input" style="width:489px;" type="text" 
+							 			placeholder="휴대폰 번호 ('-' 없이 입력)">
+							</div>
+							
+							<!-- 현금영수증 사업자번호 -->
+							<div id="receipt-company" style="display: none; padding-top: 10px"">
+								<input class="order-input" style="width:489px;" type="text" 
+								 			placeholder="사업자번호">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width:689px; height:140px; padding-left: 200px; margin-top:40px; margin-bottom:20px">
+					<label class="checkboxs" style="margin-bottom:20px">[필수]구매조건 확인 및 결제진행 동의
+						<input type="checkbox" name="agree"><span class="checkmark"></span></label>
+					<li style="list-style: none; font-size: 14px; margin-bottom:12px">
+					주문 전 확인해주세요!</li>
+					<li class="payguide">무이자 할부가 적용되지 않은 상품과 무이자 할부가 가능한 상품을 구매 할 경우 무이자 할부가 적용되지 않습니다.</li>
+				</div>
+			</div>
+				
+				
+				
+				<!-- 장바구니 금액 표시 -->	
+				<c:set var="TotalPrice" value="${cDto.productPrice*cDto.productCount}"/>
+				<c:set var="productTotalPrice" value="${productTotalPrice + TotalPrice}"/>
+				<div style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
+					<div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
+						합계 : ${productTotalPrice}
+						합계 : ${TotalPrice}
+						<div>합계</div>
+						<div>
+							<fmt:formatNumber type="Number" value="${productTotalPrice}"/>원
+						</div>
+					</div>
+					<div style="width:260px; margin-bottom: 20px; display: flex; justify-content: space-between;
+								border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
+							<div>배송비</div><div>+<span id="delivery"><fmt:formatNumber type="Number" value="3000"/></span>원</div>
+					</div>
+					<div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
+						<div><b>결제예정금액</b></div>
+						<div><b>
+						<span id="total_sum2"><fmt:formatNumber type="Number" value="${amount + 3000}"/></span>원
+						</b></div>
+						
+						
+					</div>
+				</div>
+		</div><!-- 결제수단 -->
+		
+		<!-- 구매하기 버튼 -->
+		<div style="width:1050px; height:60px; text-align: center;">
+			<c:forEach var="cDto" items="${cList}" varStatus="i">
+				<input type="text" name="details[${i.index}].productNo" value="${cDto.pNo}"/>
+				<input type="text" name="details[${i.index}].productName" value="${cDto.pName}"/>
+				<input type="text" name="details[${i.index}].productCount" value="${cDto.prodCount}"/>
+				<input type="text" name="details[${i.index}].productPrice" value="${cDto.price}"/>
+				<input type="text" name="details[${i.index}].productImagePath" value="${cDto.pImage_1}"/>
+			</c:forEach>
+				<input type="text" name="deliveryCharge" value="3000"/>
+				<input type="text" name="productTotalPrice" value="1000"/>
+				<input type="hidden" name="memNo" value="${cDto.memNo}"/>
+				<button type="submit" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none; color:white;">결제하기</button>
+		</div>
+	  </form>
+	</div>
+</main>
+<script>
 
-        // 현재 화면에 표시된 값
-        let number = resultElement.value;
-        console.log(number);
+	/* 현금영수증 */
+	function receipt(){
+		var receipt1 = document.getElementById("cashReceipt1")
+		var receipt2 = document.getElementById("cashReceipt2")
 
-        // 더하기/빼기
+		if(receipt1.checked){
+			document.getElementById("receipt-user").style.display="flex";
+			document.getElementById("receipt-phone").style.display="block";
+		}else if(!receipt1.checked || receipt2.checked){
+			document.getElementById("receipt-user").style.display="none";
+			document.getElementById("receipt-phone").style.display="none";
+			document.getElementById("receipt-company").style.display="none";
+		}
+	
+	}
+	
+	/* 현금영수증 발급자 */
+	function receiptuser(){
+		var user1 = document.getElementById("user1")
+		var user2 = document.getElementById("user2")
+		
+		if(user1.checked){
+			document.getElementById("receipt-phone").style.display="block";
+			document.getElementById("receipt-company").style.display="none";
+		}else if(user2.checked){
+			document.getElementById("receipt-phone").style.display="block";
+			document.getElementById("receipt-company").style.display="block";
+		}
+	}
+	
 
-        for (i = 1; i <${cnt}; i++) {
-            if (type === 'plus_' + i) {
-                number = parseInt(number) + 1;
-            } else if (type === 'minus_' + i && number > 1) {
-                number = parseInt(number) - 1;
-            }
-        }
-        // 결과 출력
-        resultElement.value = number;
+	/* 결제수단 선택 */
+	function selPayment(){
+		  var pm = document.getElementsByName("paymethod");
+		  
+		  for(var i = 0; i <= pm.length; i++){
+			  if(pm[i].checked){
+			  console.log(i)
+				  if(i == 5){
+					  document.getElementById("cashReceipt2").checked = "checked";
+					  document.getElementById("user1").checked = "checked";
+					  document.getElementById("receipt-user").style.display="none";
+					  document.getElementById("receipt-phone").style.display="none";
+					  document.getElementById("receipt-company").style.display="none";
+				  }
+			  	  
+			  	 /*  if(i == 6){
+			  		document.getElementById("phone").style.display="block";
+			  	  } */
+			  	  
+				  document.getElementById(pm[i].value).style.display="block";
+			  }else{
+				  document.getElementById(pm[i].value).style.display="none";
+			  } 
+		  }
+	 }
+
+		/* var ms = document.getElementById('message');
+		var selectedphone = document.getElementById("phone");
+	    
+	    // 선택한 option의 value, 텍스트
+	    var optionVal = selectedElement.options[selectedElement.selectedIndex].value;
+	    var optionTxt = selectedElement.options[selectedElement.selectedIndex].text;
+	    
+	    var optionVal2 = selectedphone.options[selectedphone.selectedIndex].value;
+	    var optionTxt2 = selectedphone.options[selectedphone.selectedIndex].text; */
+	    
+	/* 배송 요청사항 직접입력 */
+	function message(){
+		var selectedElement = document.getElementById("message-select");
+		var selectedValue = selectedElement.options[selectedElement.selectedIndex].value;
+		if(selectedValue == '6'){
+			document.getElementById("message").style.display="block";
+		}else if(selectedValue != '6'){
+			document.getElementById("message").style.display="none";
+		}
+	}
+	
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layer');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
     }
 
-    function increase(button) {
-        var $button = $(button);
+    function sample2_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-        $.ajax({
-            url: 'cart/increase',
-            type : "post",
-            data: {
-                pNo: parseInt($button.parents('.row').children('.product-no').val())
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    /* if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample2_extraAddress").value = extraAddr; */
+                
+                } /* else {
+                    document.getElementById("sample2_extraAddress").value = '';
+                } */
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample2_postcode').value = data.zonecode;
+                document.getElementById("sample2_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                /* document.getElementById("sample2_detailAddress").focus(); */
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_layer.style.display = 'none';
             },
-            success: function (data) {
-                var $count = $button.siblings('.product-count');
-                $count.val(parseInt($count.val()) +1);
-            },
-            error: function (){
-                alert('상품 개수 증가 실패');
-            }
-        });
+            width : '100%',
+            height : '100%',
+            maxSuggestItems : 5
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
     }
 
-    function decrease(button) {
-        var $button = $(button);
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition(){
+        var width = 400; //우편번호서비스가 들어갈 element의 width
+        var height = 500; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 2; //샘플에서 사용하는 border의 두께
 
-        $.ajax({
-            url: 'cart/decrease',
-            type : "post",
-            data: {
-                pNo: parseInt($button.parents('.row').children('.product-no').val())
-            },
-            success: function (data) {
-                var $count = $button.siblings('.product-count');
-                $count.val(parseInt($count.val()) -1);
-            },
-            error: function (){
-                alert('상품 개수 감소 실패');
-            }
-        });
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
-
-    function remove(button) {
-        var $button = $(button);
-        var $row = $button.parents('.row');
-
-        $.ajax({
-            url: 'cart/delete',
-            type : "post",
-            data: {
-                pNoList: [parseInt($row.children('.product-no').val())]
-            },
-            success: function (data) {
-                $row.remove();
-            },
-            error: function (e){
-                console.log(e);
-                alert('상품 삭제 실패');
-            }
-        });
-    }
-
-    function order(){
-        const $selected = $('.chkbox:checked');
-        if($selected.length <= 0){
-            alert("선택 상품 없음");
-        }
-
-        const carts = [];
-        $selected.each(function(i, e){
-            var $row = $(e).parents('.row');
-            carts.push($row.data('cart-no'));
-        });
-
-        const $form = $("#orderForm");
-        $("[name='carts']", $form).val(carts);
-        $form.submit();
-    }
-
-    function setForm(name, value, form){
-        var input = document.createElement('input');
-
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", name);
-        input.setAttribute("value", value);
-
-        form.appendChild(input);
-    }
-
-    /*** 장바구니 목록 체크박스 해제 시 전체선택 체크박스 해제 ***/
-    $(".chkbox").click(function () {
-        $("#allCheck").prop("checked", false);
-    });
-
-
-    /*** 전체 선택 시 목록 체크박스 체크 ***/
-    $("#allCheck").click(function () {
-        var delivery = 3000;
-        var charge = delivery.toLocaleString('ko-KR');
-        var chk = $("#allCheck").prop("checked");
-        if (chk) {
-            $(".chkbox").prop("checked", true);
-            itemSum();
-            document.getElementById("delivery").innerText = charge;
-        } else {
-            $(".chkbox").prop("checked", false);
-            itemSum();
-            document.getElementById("delivery").innerText = 0;
-            document.getElementById("total_sum2").innerText = 0;
-        }
-    });
-
-    /* $(".chkbox").click(function () {
-        var chk = $(".chkbox").prop("checked");
-        if(chk){
-            $(".chkbox").value = 0;
-        }else if(!chk){
-            $(".chkbox").value = 1;
-        }
-    } */
-
-    function gownans() {
-        const form = document.createElement('form');
-        form.method = "POST";
-        form.action = "indentPreview";
-
-        $('.chkbox:checked').each(function (i, e) {
-
-            var pNo = $(e).data('pno');
-            var pImage_1 = $(e).data('pimage');
-            var pName = $(e).data('pname');
-            var prodCount = $(e).data('prodcount');
-            var cartNo = $(e).data('cartno');
-
-            arr[0].pNo = pNo;
-            arr[1].pImage_1 = pImage_1;
-            arr[2].pName = pName;
-            arr[3].prodCount = prodCount;
-            arr[4].cartNo = cartNo;
-            /*arr.push(pImage_1);
-            arr.push(pName);
-            arr.push(prodCount);
-            arr.push(cartNo);
-            console.log(arr);*/
-
-
-            getInput("pNo[0]", pNo);
-
-            form.appendChild(inputField);
-
-            /* document.body.appendChild(form); */
-
-        });
-    }
-
-    function getInput(name, value) {
-
-        const inputField = document.createElement('input');
-        inputField.type = 'input';
-        inputField.name = name;
-        inputField.value = value;
-
-        return inputField;
-    }
-
-
-    /*** 선택한 상품 합계 함수 호출 ***/
-    $(".chkbox").click(function () {
-        $('.chkbox:checked').each(function (i, e) {
-
-            /*var form = document.createElement("form");
-
-            var arr = new Array;
-            var pNo = $(e).data('pno');
-            var pImage_1 = $(e).data('pimage');
-            var pName = $(e).data('pname');
-            var prodCount = $(e).data('prodcount');
-            var cartNo = $(e).data('cartno');
-
-            arr[0].pNo = pNo;
-            arr[1].pImage_1 = pImage_1;
-            arr[2].pName = pName;
-            arr[3].prodCount = prodCount;
-            arr[4].cartNo = cartNo;
-            arr.push(pImage_1);
-            arr.push(pName);
-            arr.push(prodCount);
-            arr.push(cartNo);
-            console.log(arr);*/
-
-
-            const inputField = document.createElement('input');
-            inputField.type = 'input';
-            inputField.value = params[pNo];
-
-            form.appendChild(inputField);
-
-            /* document.body.appendChild(form); */
-
-        });
-        itemSum();
-
-    });
-
-    /*** 전체선택 해제된 후 체크박스 모두 체크되었을 대 전체선택 체크박스 체크 ***/
-    function chk() {
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-        var isAllCheck = 1;
-
-        for (var i = 0; i < count; i++) {
-            if ($(".chkbox")[i] == chk) {
-                isAllCheck = 2;
-                console.log("is : " + isAllCheck);
-                console.log("chk : " + chk);
-
-            } else if ($(".chkbox")[i] != chk) {
-                isAllCheck = 1;
-                console.log("is : " + isAllCheck);
-                console.log("chk : " + chk);
-            }
-        }
-        if (isAllCheck == 1) {
-            $("#allCheck").prop("checked", true);
-        }
-    }
-
-
-    /*** 상품 합계 출력 ***/
-    function itemSum() {
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-        var sum = 0;
-
-        for (var i = 0; i < count; i++) {
-            if ($(".chkbox")[i].checked) {
-                /* sum += parseInt($(".chkbox")[i].value); */
-                sum += ${totalPrice};
-                /* console.log(sum); */
-            }
-        }
-
-        /** 합계 **/
-        document.getElementById("total_sum").innerText = sum.toLocaleString('ko-KR');
-        document.preview.amount.value = sum;
-        console.log("sum : " + sum);
-
-        /** 배송비 포함 '결제예정금액' **/
-        sum += 3000;
-        document.getElementById("total_sum2").innerText = sum.toLocaleString('ko-KR');
-    }
-
-    /**** 선택한 상품만 장바구니에서 삭제하기 ****/
-    function selectDelete() {
-        var $checked = $('.chkbox:checked');
-
-        if ($checked.length < 1) {
-            alert("선택된 상품이 없습니다.");
-            return;
-        }
-
-        var res = confirm("선택한 상품을 삭제하시겠습니까?");
-        if (!res) {
-            return;
-        }
-
-        var pNoList = [];
-        $('.chkbox:checked').each(function (i, e){
-            pNoList.push(parseInt($(e).parents('.row').children('.product-no').val()));
-        });
-
-        $.ajax({
-            url: 'cart/delete',
-            type : "post",
-            data: {
-                pNoList: pNoList
-            },
-            success: function (data) {
-                $('.chkbox:checked').parents('.row').remove();
-            },
-            error: function (){
-                alert('선택된 상품삭제 실패');
-            }
-        });
-    }
-
-    function goIndent() {
-        var chk = $(".chkbox");
-        var cnt = 0;
-
-        $.each(chk, function (i, ch) {
-            if ($(ch).is(":checked")) {
-                cnt++;
-                $('')
-            }
-
-        })
-
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-
-        document.preview.submit();
-        document.indentPreview.submit();
-
-    }
-
-
-    /* $('.chkbox:checked').each(function(i, e){
-        var pno = $(e).data('pno');
-        var cartno = $(e).data('cartno');
-        console.log("pno : " + pno);
-        console.log("cartNo : " + cartno);
-    }); */
-
-
-    /* for (var i = 0; i < count; i++) {
-        if($(".chkbox")[i].checked){
-    $(".chkbox").each(function(){
-        var pNo = $(this).data("pNo");
-        var pImage_1 = $(this).data("pImage_1");
-        var pName = $(this).data("pName");
-        var prodCount = $(this).data("prodCount");
-
-        console.log("pNo : "+pNo);
-        console.log("pName : "+pName);
-    })
-
-    var count = $(".chkbox").length;
-    var array = [];
-
-    for (var i = 0; i < count; i++) {
-        if($(".chkbox")[i].checked){
-            var input = document.querySelector(".chkbox");
-            console.log(input.dataset)
-            var pNo1 = $(this).data('pno');
-            var pImage_1 = $(this).data("pimage_1");
-            var pName = $(this).data("pname");
-            var prodCount = $(this).data("prodcount");
-            console.log("pNo : "+ pNo1);
-            console.log("pImage_1 : "+ pImage_1);
-            console.log("pName : "+ pName);
-            console.log("prodCount : "+ prodCount);
-
-        }
-    }*/
-
-
 </script>
 <%@ include file="../inc/footer.jsp" %>

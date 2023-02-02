@@ -8,9 +8,17 @@ public class OrderDetailDTO {
     private Integer productCount;
     private Integer productPrice;
     private String productImagePath;
+    private Integer productNo;
     
+    public Integer getproductNo() {
+		return productNo;
+	}
 
-    public Integer getOrderDetailNo() {
+	public void setproductNo(Integer productNo) {
+		this.productNo = productNo;
+	}
+
+	public Integer getOrderDetailNo() {
         return orderDetailNo;
     }
 
@@ -57,5 +65,14 @@ public class OrderDetailDTO {
     public void setProductImagePath(String productImagePath) {
         this.productImagePath = productImagePath;
     }
+
+	@Override
+	public String toString() {
+		return "OrderDetailDTO [orderDetailNo=" + orderDetailNo + ", orderNo=" + orderNo + ", productName="
+				+ productName + ", productCount=" + productCount + ", productPrice=" + productPrice
+				+ ", productImagePath=" + productImagePath + ", productNo=" + productNo + "]";
+	}
+    
+    
 
 }

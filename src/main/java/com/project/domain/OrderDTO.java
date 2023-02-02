@@ -1,6 +1,9 @@
 package com.project.domain;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
@@ -22,11 +25,22 @@ public class OrderDTO {
     private String receiverPhone;
     private String receiverEmail;
     private String receiverRequest;
+    
 
     private String paymentType;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
+//    private LocalDateTime createdAt;
     private int count;
     private String productName;
+    private String productImagePath;
+
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
+	}
 
 	public String getProductName() {
 		
@@ -38,7 +52,22 @@ public class OrderDTO {
 	}
 
 	public int getCount() {
+		
 		return count;
+	}
+	
+	public String getShowCount() {
+	
+		int cnt = getCount();
+		
+		if(cnt >= 2) {
+			return (cnt-1)+"개";
+			
+		}else if(cnt < 2) {
+			return "";
+		}
+		
+		return "";
 	}
 
 	public void setCount(int count) {
@@ -133,11 +162,11 @@ public class OrderDTO {
         this.receiverEmail = receiverEmail;
     }
 
-    public String getreceiverRequest() {
+    public String getReceiverRequest() {
         return receiverRequest;
     }
 
-    public void setreceiverRequest(String receiverRequest) {
+    public void setReceiverRequest(String receiverRequest) {
         this.receiverRequest = receiverRequest;
     }
 
@@ -149,7 +178,8 @@ public class OrderDTO {
         this.paymentType = paymentType;
     }
 
-    public String getCreatedAt() {
+    // 주문/배송 조회 페이지 표시
+    public String getCreatedAt1() {
     	String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //    	String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 //    	LocalDateTime date = LocalDateTime.parse(formatDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -159,8 +189,9 @@ public class OrderDTO {
         return formatDate;
     }
     
+    // 주문 상세 페이지에 표시되는 주문일자
     public String getDateTime() {
-    	String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+    	String formatDate = LocalDateTime.ofInstant(createdAt,ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 //    	String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
 //    	LocalDateTime date = LocalDateTime.parse(formatDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //    	LocalDateTime date2 = LocalDateTime.parse(createdAt,DateTimeFormatter.ofPattern(createdAt));
@@ -168,12 +199,21 @@ public class OrderDTO {
 //    	System.out.println(createdAt);
     	return formatDate;
     }
-    
-    
-    
-    
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+//    public LocalDateTime getCreatedAt() {
+//    	return createdAt;
+//    }
+//    
+//    public void setCreatedAt(LocalDateTime createdAt) {
+//    	this.createdAt = createdAt;
+//    }
+    
+    public LocalDate getCreatedAt() {
+    	LocalDate ld = LocalDate.ofInstant(createdAt,ZoneId.systemDefault());
+		return ld;
+	}
+
+	public void String(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -207,7 +247,8 @@ public class OrderDTO {
 				+ ", receiverPostcode=" + receiverPostcode + ", receiverAddress=" + receiverAddress
 				+ ", receiverAddressDetail=" + receiverAddressDetail + ", receiverPhone=" + receiverPhone
 				+ ", receiverEmail=" + receiverEmail + ", receiverRequest=" + receiverRequest + ", paymentType="
-				+ paymentType + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + "]";
+				+ paymentType + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + 
+				", productImagePath= "+productImagePath+"]";
 	}
     
 }

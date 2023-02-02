@@ -250,7 +250,6 @@
                 <!-- 구매하기 버튼 -->
                 <c:if test="${cList.size() != 0}">
                     <form id="orderForm" method="post" action="order/preview" >
-                        <input type="hidden" name="memNo" value="${memName}"/>
                         <input type="hidden" name="carts"/>
                         <button type="submit" onclick="order()" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
 										color:white; margin-top: 20px;">구매하기</button>

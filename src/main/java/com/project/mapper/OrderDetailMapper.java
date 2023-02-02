@@ -10,6 +10,6 @@ public interface OrderDetailMapper {
 	
 	public List<OrderDetailDTO> get(int orderNo);
 
-	public int insert(List<OrderDetailDTO> orderDetails);
+	public int insert(@Param("orderDetails") List<OrderDetailDTO> orderDetails);
 
 }

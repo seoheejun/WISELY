@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 /* The checkboxs */
@@ -111,7 +112,7 @@
 	alert("${requestScope.msg}");
 </script>
 </c:if>
-	<h2 class="text-center mb-5 mt-5">주문서</h2>
+	<h2 class="text-center" style="margin-top:100px; margin-bottom:50px">주문서</h2>
 	<div class="container" style="width:1050px; padding: 0">
 		<form id="orderComplete" method="post" action="/shopping/order" >
 			<div style="width:1050px; height:200px;">
@@ -121,16 +122,19 @@
 				</div>
 				<div style="border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #dddddd;
 							width:1050px; padding-top: 34px; padding-bottom: 34px; text-align: center;">
-					<c:forEach var="cDto" items="${cList}">
-						<div>
-							상품명 : <span>${cDto.pName}</span> 
-							개수 : <span>${cDto.prodCount}</span>
-							멤버 넘버 : ${cDto.memNo}
-							멤버 넘버 : ${cDto.price}
-							멤버 넘버 : ${cDto.pImage_1}
-							상품 넘버 : ${cDto.pNo}
-						</div>
+					<c:forEach var="cDto" items="${cList}" begin="0" end="0" step="1"  varStatus="status">
+							<span>${cDto.pName}</span>
+							<span>${cDto.totalPrice}</span>
 					</c:forEach>
+					<c:if test="${cList.size() < 2}">
+						<span>상품을 주문합니다.</span>
+					</c:if>
+					<c:if test="${cList.size() >= 2}">
+						<c:forEach var="cDto" items="${cList}" begin="0" step="1" varStatus="status">
+								<c:set var="count" value="${status.count}"/>
+						</c:forEach>
+						<span>외 ${count-1}개 상품을 주문합니다.</span>
+					</c:if>
 				</div>
 			</div>
 			
@@ -145,13 +149,18 @@
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">주문자 이름</th>
 								<td>
-									<input class="order-input" type="text" value="${mDto.memName}" style="width:489px">
+									<%-- <input class="order-input" type="text" value="${mDto.memName}" style="width:489px"> --%>
+									${mDto.memName}
 								</td>
 							</tr>
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">휴대폰 번호</th>
 								<td>
-									<input class="order-input" type="text" value="${mDto.memTel}"style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
+								    <c:set var="TextValue" value="${mDto.memTel}"/>
+									${fn:substring(TextValue,0,3)}-${fn:substring(TextValue,3,7)}-${fn:substring(TextValue,7,11)}
+									<%-- <input class="order-input" type="text" 
+										value="${fn:substring(TextValue,0,3)}-${fn:substring(TextValue,3,7)}-${fn:substring(TextValue,7,11)}"
+										style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)"> --%>
 								</td>
 							</tr>
 							<%-- <tr style="width:1050px; height:60px;">
@@ -178,10 +187,10 @@
 							</tr> --%>
 						</tbody>
 					</table>
-							<div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">
+							<!-- <div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">
 								배송이 시작되면 주문 처리 과정을 이메일과 휴대폰 번호로 알려드리니,<br>
 								꼭 정확한 정보를 입력해 주세요.
-							</div>
+							</div> -->
 				</div>
 				
 				<!---------- 배송 정보 ---------->
@@ -190,21 +199,20 @@
 					<h5>배송 정보</h5>
 				</div>
 				<div style="margin-bottom:100px">
-					<div style="width:1050px; height:30px; display: flex;">
+					<!-- <div style="width:1050px; height:30px; display: flex;">
 						<span style="width:200px">배송지 선택</span>
 							<div style="display:flex;">
 								<label class="checkboxs" style="margin-right:20px;">주문자 정보와 동일
-								<input type="radio" name="addr" checked="checked">
+								<input type="radio" name="addr" checked="checked" id="sameChk" onclick="selectAdd()">
 								<span class="checkmark"></span></label> 
-								
 								<label class="checkboxs">새로운 배송지
-								<input type="radio" name="addr">
+								<input type="radio" name="addr" id="newChk" onclick="selectAdd()">
 								<span class="checkmark"></span></label>
 							</div> 
-					</div>
+					</div> -->
 				
 				<!----------- 주문자 정보와 동일 선택 시 ------------->
-					<table style="width:100%">
+					<table style="width:100%" id="sameAdd">
 						<tbody>
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">받는사람</th>
@@ -231,8 +239,60 @@
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">휴대폰 번호</th>
 								<td>
-									<input class="order-input" name="receiverPhone" type="text" style="width:489px" value="${mDto.memTel}" >
-									
+								    <c:set var="TextValue" value="${mDto.memTel}"/>
+									<input class="order-input" type="text" name="receiverPhone"
+										value="${fn:substring(TextValue,0,3)}-${fn:substring(TextValue,3,7)}-${fn:substring(TextValue,7,11)}"
+										style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">요청사항</th>
+								<td>
+									<select class="order-input" name="receiverRequest" style="width:489px" id="message-select" onchange="message()">
+										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
+										<option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
+										<option value="부재 시 경비실에 맡겨주세요.">부재 시 경비실에 맡겨주세요.</option>
+										<option value="부재 시 문 앞에 놓아주세요.">부재 시 문 앞에 놓아주세요.</option>
+										<option value="빠른 배송 부탁드립니다.">빠른 배송 부탁드립니다.</option>
+										<option value="택배함에 보관해 주세요.">택배함에 보관해 주세요.</option>
+										<option id="requestMsg" value="6">직접 입력(10자 이내)</option>
+									</select>
+									<input class="order-input" maxlength="10" id="request" maxlength='10'
+											style="overflow:hidden; margin-top:12px; display:none; width:489px; resize:none;">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			<!----------- 새로운 배송지 선택 시 ------------->
+					<%-- <table id="newAdd" style="width:100%; display:none">
+						<tbody>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">받는사람</th>
+								<td>
+									<input class="order-input" type="text" name="receiverName" style="width:489px">
+								</td>
+							</tr>
+							<tr style="width:1050px; height:162px;">
+								<th style="width:200px;">주소</th>
+								<td>
+									<div style="width:489px; margin-bottom:12px; display: flex">
+										<input class="order-input" name="receiverPostcode" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
+										<input class="order-input" style="width:107px; border-radius: 5px; background-color: #00388c; color:white; margin-left:12px; 
+										padding-left:10px; padding-right:10px; border:none;" type="button" onclick="sample2_execDaumPostcode()" value="주소검색"><br>
+									</div>
+									<input class="order-input" name="receiverAddress" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
+									<input class="order-input" name="receiverAddressDetail" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
+									<!-- <input type="text" id="sample2_extraAddress" placeholder="참고항목"> -->
+									<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+										<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+									</div>
+								</td>
+							</tr>
+							<tr style="width:1050px; height:60px;">
+								<th style="width:200px;">휴대폰 번호</th>
+								<td>
+								    <c:set var="TextValue"/>
+									<input class="order-input" type="text" style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
 								</td>
 							</tr>
 							<tr style="width:1050px; height:60px;">
@@ -252,57 +312,7 @@
 								</td>
 							</tr>
 						</tbody>
-					</table>
-			<!----------- 새로운 배송지 선택 시 ------------->
-					<table style="width:100%; display: none;">
-						<tbody>
-							<tr style="width:1050px; height:60px;">
-								<th style="width:200px;">받는사람</th>
-								<td>
-									<input class="order-input" type="text" style="width:489px">
-								</td>
-							</tr>
-							<tr style="width:1050px; height:162px;">
-								<th style="width:200px;">주소</th>
-								<td>
-									<div style="width:489px; margin-bottom:12px; display: flex">
-										<input class="order-input" style="width:370px" type="text" id="sample2_postcode" placeholder="우편번호">
-										<input class="order-input" style="width:107px; border-radius: 5px; background-color: #00388c; color:white; margin-left:12px; 
-										padding-left:10px; padding-right:10px; border:none;" type="button" onclick="sample2_execDaumPostcode()" value="주소검색"><br>
-									</div>
-									<input class="order-input" style="width:489px; margin-bottom:12px" type="text" id="sample2_address" placeholder="기본주소"><br>
-									<input class="order-input" style="width:489px;" type="text" id="sample2_detailAddress" placeholder="나머지 주소(선택 입력 가능)">
-									<!-- <input type="text" id="sample2_extraAddress" placeholder="참고항목"> -->
-									<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-										<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-									</div>
-								</td>
-							</tr>
-							<tr style="width:1050px; height:60px;">
-								<th style="width:200px;">휴대폰 번호</th>
-								<td>
-									<input class="order-input" type="text" style="width:489px" placeholder="휴대폰 번호 ('-' 없이 입력)">
-									
-								</td>
-							</tr>
-							<tr style="width:1050px; height:60px;">
-								<th style="width:200px;">요청사항</th>
-								<td>
-									<textarea class="order-input" maxlength="10" cols="0" id="message" 
-											style="overflow:hidden; margin-bottom:12px; display:none; width:489px; resize:none;"></textarea>
-									<select class="order-input" style="width:489px" id="message-select" onchange="message()">
-										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
-										<option value="message-1">배송 전에 미리 연락바랍니다.</option>
-										<option value="message-2">부재 시 경비실에 맡겨주세요.</option>
-										<option value="message-3">부재 시 문 앞에 놓아주세요.</option>
-										<option value="message-4">빠른 배송 부탁드립니다.</option>
-										<option value="message-5">택배함에 보관해 주세요.</option>
-										<option value="6">직접 입력(10자 이내)</option>
-									</select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					</table> --%>
 							<div style="margin-left:200px; font-size: 14px; color:#999999; margin-top:10px">
 								공동 현관문 비밀번호가 있다면 '직접 입력' 선택 후 꼭 입력해주세요.
 							</div>
@@ -477,11 +487,15 @@
 				
 				
 				<!-- 장바구니 금액 표시 -->	
+				<c:set var="TotalPrice" value="${cDto.productPrice*cDto.productCount}"/>
+				<c:set var="productTotalPrice" value="${productTotalPrice + TotalPrice}"/>
 				<div style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
 					<div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
+						합계 : ${productTotalPrice}
+						합계 : ${TotalPrice}
 						<div>합계</div>
 						<div>
-							<fmt:formatNumber type="Number" value="${amount}"/>원
+							<fmt:formatNumber type="Number" value="${productTotalPrice}"/>원
 						</div>
 					</div>
 					<div style="width:260px; margin-bottom: 20px; display: flex; justify-content: space-between;
@@ -502,14 +516,14 @@
 		<!-- 구매하기 버튼 -->
 		<div style="width:1050px; height:60px; text-align: center;">
 			<c:forEach var="cDto" items="${cList}" varStatus="i">
-				<input type="text" name="details[${i.index}].pNo" value="${cDto.pNo}"/>
-				<input type="text" name="details[${i.index}].productName" value="${cDto.pName}"/>
-				<input type="text" name="details[${i.index}].productCount" value="${cDto.prodCount}"/>
-				<input type="text" name="details[${i.index}].productPrice" value="${cDto.price}"/>
-				<input type="text" name="details[${i.index}].productImagePath" value="${cDto.pImage_1}"/>
+				<input type="hidden" name="details[${i.index}].productNo" value="${cDto.pNo}"/>
+				<input type="hidden" name="details[${i.index}].productName" value="${cDto.pName}"/>
+				<input type="hidden" name="details[${i.index}].productCount" value="${cDto.prodCount}"/>
+				<input type="hidden" name="details[${i.index}].productPrice" value="${cDto.price}"/>
+				<input type="hidden" name="details[${i.index}].productImagePath" value="${cDto.pImage_1}"/>
 			</c:forEach>
-				<input type="text" name="deliveryCharge" value="3000"/>
-				<input type="text" name="productTotalPrice" value="1000"/>
+				<input type="hidden" name="deliveryCharge" value="3000"/>
+				<input type="hidden" name="productTotalPrice" value="1000"/>
 				<input type="hidden" name="memNo" value="${cDto.memNo}"/>
 				<button type="submit" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none; color:white;">결제하기</button>
 		</div>
@@ -518,10 +532,25 @@
 </main>
 <script>
 
+	/* 배송지 선택 */
+	function selectAdd(){
+		var sameChk = document.getElementById("sameChk");
+		var newChk = document.getElementById("newChk");
+		
+		if(sameChk.checked){
+			document.getElementById("sameAdd").style.display="block";
+			document.getElementById("newAdd").style.display="none";
+		}if(newChk.checked){
+			document.getElementById("sameAdd").style.display="none";
+			document.getElementById("newAdd").style.display="block";
+		}
+	}
+
+
 	/* 현금영수증 */
 	function receipt(){
-		var receipt1 = document.getElementById("cashReceipt1")
-		var receipt2 = document.getElementById("cashReceipt2")
+		var receipt1 = document.getElementById("cashReceipt1");
+		var receipt2 = document.getElementById("cashReceipt2");
 
 		if(receipt1.checked){
 			document.getElementById("receipt-user").style.display="flex";
@@ -536,8 +565,8 @@
 	
 	/* 현금영수증 발급자 */
 	function receiptuser(){
-		var user1 = document.getElementById("user1")
-		var user2 = document.getElementById("user2")
+		var user1 = document.getElementById("user1");
+		var user2 = document.getElementById("user2");
 		
 		if(user1.checked){
 			document.getElementById("receipt-phone").style.display="block";
@@ -574,28 +603,23 @@
 			  } 
 		  }
 	 }
-
-		/* var ms = document.getElementById('message');
-		var selectedphone = document.getElementById("phone");
-	    
-	    // 선택한 option의 value, 텍스트
-	    var optionVal = selectedElement.options[selectedElement.selectedIndex].value;
-	    var optionTxt = selectedElement.options[selectedElement.selectedIndex].text;
-	    
-	    var optionVal2 = selectedphone.options[selectedphone.selectedIndex].value;
-	    var optionTxt2 = selectedphone.options[selectedphone.selectedIndex].text; */
 	    
 	/* 배송 요청사항 직접입력 */
 	function message(){
 		var selectedElement = document.getElementById("message-select");
+		var rMsg = document.getElementById("requestMsg");
 		var selectedValue = selectedElement.options[selectedElement.selectedIndex].value;
+		
 		if(selectedValue == '6'){
-			document.getElementById("message").style.display="block";
+			document.getElementById("request").style.display="block";
+			rMsg.value = document.getElementById("request").innerText;
 		}else if(selectedValue != '6'){
-			document.getElementById("message").style.display="none";
+			document.getElementById("request").style.display="none";
 		}
 	}
 	
+	
+	/*********** 주소 API **************/
     // 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');
 
