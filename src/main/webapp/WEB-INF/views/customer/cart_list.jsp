@@ -172,9 +172,8 @@
 
 
                                     <div>
-                                        <c:set var="totalPrice" value="${cDto.price*cDto.prodCount}"/>
-                                        <span style="margin-right:20px; width:100px; display: block;"><fmt:formatNumber
-                                                type="Number" value="${totalPrice}"/>원</span>
+                                        <input type="hidden" class="product-price" value="${cDto.price}" />
+                                        <span style="margin-right:20px; width:100px; display: block;"><span class="product-total-price"></span>원</span>
                                     </div>
 
                                     <!-- 장바구니 상품 삭제 -->
@@ -196,11 +195,11 @@
                     <div style="width:660px; height:65px; background: #FBFAFA">
                         <div style="margin-left:250px; padding-top:20px">
                             <span>상품가격 </span>
-                            <span><fmt:formatNumber type="Number" value="${cartTotPrice}"/>원</span>
+                            <span class="total_sum"></span>원
                             <span>+ 배송비 </span>
-                            <span><fmt:formatNumber type="Number" value="3000"/>원</span>
+                            <span class="delivery"></span>원
                             <span> = </span>
-                            <span><fmt:formatNumber type="Number" value="${cartTotPrice + 3000}"/>원</span>
+                            <span class="total_sum2"></span>원
                         </div>
                     </div>
                 </c:if>
@@ -213,35 +212,18 @@
                     <div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
                         <div>합계</div>
                         <div>
-                            <c:if test="${cList.size() != 0}">
-                                <span id="total_sum"><fmt:formatNumber type="Number" value="${cartTotPrice}"/></span>원
-                            </c:if>
-                            <c:if test="${cList == null || cList.size() == 0}">
-                                <fmt:formatNumber type="Number" value="0"/>원
-                            </c:if>
+                            <span class="total_sum"></span>원
                         </div>
                     </div>
                     <div style="width:260px; margin-bottom: 20px; display: flex; justify-content: space-between;
 								border-bottom: 1px; border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
-                        <c:if test="${cList.size() != 0}">
                             <div>배송비</div>
-                            <div>+<span id="delivery"><fmt:formatNumber type="Number" value="3000"/></span>원</div>
-                        </c:if>
-                        <c:if test="${cList == null || cList.size() == 0}">
-                            <div>배송비</div>
-                            <div>+<fmt:formatNumber type="Number" value="0"/>원</div>
-                        </c:if>
+                            <div>+<span class="delivery"></span>원</div>
                     </div>
                     <div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
                         <div><b>결제예정금액</b></div>
                         <div><b>
-                            <c:if test="${cList.size() != 0}">
-                                <span id="total_sum2"><fmt:formatNumber type="Number"
-                                                                        value="${cartTotPrice + 3000}"/></span>원
-                            </c:if>
-                            <c:if test="${cList == null || cList.size() == 0}">
-                                <fmt:formatNumber type="Number" value="0"/>원
-                            </c:if>
+                            <span class="total_sum2"></span>원
                         </b></div>
 
 
@@ -306,16 +288,20 @@
 
     function increase(button) {
         var $button = $(button);
+        var $row = $button.parents('.row');
 
         $.ajax({
             url: 'cart/increase',
             type : "post",
             data: {
-                pNo: parseInt($button.parents('.row').children('.product-no').val())
+                pNo: parseInt($row.children('.product-no').val())
             },
             success: function (data) {
                 var $count = $button.siblings('.product-count');
                 $count.val(parseInt($count.val()) +1);
+
+                changeProductPrice($row);
+                changeTotalPrice();
             },
             error: function (){
                 alert('상품 개수 증가 실패');
@@ -325,16 +311,20 @@
 
     function decrease(button) {
         var $button = $(button);
+        var $row = $button.parents('.row');
 
         $.ajax({
             url: 'cart/decrease',
             type : "post",
             data: {
-                pNo: parseInt($button.parents('.row').children('.product-no').val())
+                pNo: parseInt($row.children('.product-no').val())
             },
             success: function (data) {
                 var $count = $button.siblings('.product-count');
                 $count.val(parseInt($count.val()) -1);
+
+                changeProductPrice($row);
+                changeTotalPrice();
             },
             error: function (){
                 alert('상품 개수 감소 실패');
@@ -354,6 +344,7 @@
             },
             success: function (data) {
                 $row.remove();
+                changeTotalPrice();
             },
             error: function (e){
                 console.log(e);
@@ -471,7 +462,7 @@
         for (var i = 0; i < count; i++) {
             if ($(".chkbox")[i].checked) {
                 /* sum += parseInt($(".chkbox")[i].value); */
-                sum += ${totalPrice};
+                <%--sum += ${totalPrice};--%>
                 /* console.log(sum); */
             }
         }
@@ -513,6 +504,7 @@
             },
             success: function (data) {
                 $('.chkbox:checked').parents('.row').remove();
+                changeTotalPrice();
             },
             error: function (){
                 alert('선택된 상품삭제 실패');
@@ -538,6 +530,41 @@
         document.indentPreview.submit();
 
     }
+
+    function changeProductPrice($row){
+        const count = parseInt($('.product-count', $row).val());
+        const price = parseInt($('.product-price', $row).val());
+
+        const total = count * price;
+        $('.product-total-price', $row).text(addComma(total)).data('value', total);
+    }
+
+    function changeTotalPrice(){
+        let product_total_price = 0;
+        $('.row .product-total-price').each(function(i, e){
+            product_total_price += $(e).data('value');
+        });
+
+        const delivery = product_total_price > 0 ? 3000 : 0;
+
+        $('.total_sum').text(addComma(product_total_price));
+        $('.delivery').text(addComma(delivery));
+        $('.total_sum2').text(addComma(product_total_price + delivery));
+    }
+
+    function addComma(num){
+        const regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
+    }
+
+    function init(){
+        $('.row').each(function(i, e){
+            changeProductPrice($(e));
+        });
+        changeTotalPrice();
+    }
+
+    init();
 
 </script>
 <%@ include file="../inc/footer.jsp" %>
