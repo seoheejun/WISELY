@@ -131,7 +131,7 @@
                                 <label class="checkboxs" style="margin-right:12px">
                                         <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}"> --%>
                                         <%-- <input type="checkbox" class="chkbox" name="chk" checked value="${cDto.price*cDto.prodCount}" onchange="chk()" --%>
-                                    <input type="checkbox" class="chkbox" name="chk" checked onchange="chk()"
+                                    <input type="checkbox" class="chkbox" name="chk" checked
                                            data-pno="${cDto.pNo}" data-pimage="${cDto.pImage_1}"
                                            data-pname="${cDto.pName}" data-prodcount="${cDto.prodCount}"
                                            data-cartno="${cDto.cartNo}">
@@ -192,7 +192,7 @@
                     </c:forEach>
 
                     <!-- 장바구니 목록 하단 합계금액 -->
-                    <div style="width:660px; height:65px; background: #FBFAFA">
+                    <div class="total-price" style="width:660px; height:65px; background: #FBFAFA">
                         <div style="margin-left:250px; padding-top:20px">
                             <span>상품가격 </span>
                             <span class="total_sum"></span>원
@@ -208,7 +208,7 @@
 
             <!-- 장바구니 금액 표시 -->
             <div>
-                <div style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
+                <div class="total-price-checked" style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
                     <div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
                         <div>합계</div>
                         <div>
@@ -257,34 +257,6 @@
 </main>
 
 <script>
-    /*** 수량 변경 ***/
-    function count(type) {
-        console.log("type: " + type);
-        console.log(type.charAt(type.length - 1));
-
-        let iNum = type.charAt(type.length - 1);
-        for (i = 1; i <${cnt}; i++) {
-            if (iNum == i)
-                // 결과를 표시할 element
-                var resultElement = document.getElementById('qty_' + i);
-        }
-
-        // 현재 화면에 표시된 값
-        let number = resultElement.value;
-        console.log(number);
-
-        // 더하기/빼기
-
-        for (i = 1; i <${cnt}; i++) {
-            if (type === 'plus_' + i) {
-                number = parseInt(number) + 1;
-            } else if (type === 'minus_' + i && number > 1) {
-                number = parseInt(number) - 1;
-            }
-        }
-        // 결과 출력
-        resultElement.value = number;
-    }
 
     function increase(button) {
         var $button = $(button);
@@ -301,7 +273,7 @@
                 $count.val(parseInt($count.val()) +1);
 
                 changeProductPrice($row);
-                changeTotalPrice();
+                changeTotalPriceAll();
             },
             error: function (){
                 alert('상품 개수 증가 실패');
@@ -324,7 +296,7 @@
                 $count.val(parseInt($count.val()) -1);
 
                 changeProductPrice($row);
-                changeTotalPrice();
+                changeTotalPriceAll();
             },
             error: function (){
                 alert('상품 개수 감소 실패');
@@ -344,7 +316,7 @@
             },
             success: function (data) {
                 $row.remove();
-                changeTotalPrice();
+                changeTotalPriceAll();
             },
             error: function (e){
                 console.log(e);
@@ -387,95 +359,21 @@
 
 
     /*** 전체 선택 시 목록 체크박스 체크 ***/
-    $("#allCheck").click(function () {
-        var delivery = 3000;
-        var charge = delivery.toLocaleString('ko-KR');
-        var chk = $("#allCheck").prop("checked");
-        if (chk) {
-            $(".chkbox").prop("checked", true);
-            itemSum();
-            document.getElementById("delivery").innerText = charge;
-        } else {
-            $(".chkbox").prop("checked", false);
-            itemSum();
-            document.getElementById("delivery").innerText = 0;
-            document.getElementById("total_sum2").innerText = 0;
-        }
+    $("#allCheck").change(function () {
+        var checked = $(this).prop("checked");
+        $(".chkbox").prop("checked", checked);
+
+        changeTotalPrice($('.chkbox:checked').parents('.row'), $('.total-price-checked'));
     });
-
-    function getInput(name, value) {
-
-        const inputField = document.createElement('input');
-        inputField.type = 'input';
-        inputField.name = name;
-        inputField.value = value;
-
-        return inputField;
-    }
 
 
     /*** 선택한 상품 합계 함수 호출 ***/
-    $(".chkbox").click(function () {
-        $('.chkbox:checked').each(function (i, e) {
+    $(".chkbox").change(function () {
+        const allChecked = $('.chkbox').length == $('.chkbox:checked').length;
+        $("#allCheck").prop('checked', allChecked);
 
-            const inputField = document.createElement('input');
-            inputField.type = 'input';
-            inputField.value = params[pNo];
-
-            form.appendChild(inputField);
-
-        });
-        itemSum();
-
+        changeTotalPriceAll();
     });
-
-    /*** 전체선택 해제된 후 체크박스 모두 체크되었을 대 전체선택 체크박스 체크 ***/
-    function chk() {
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-        var isAllCheck = 1;
-
-        for (var i = 0; i < count; i++) {
-            if ($(".chkbox")[i] == chk) {
-                isAllCheck = 2;
-                console.log("is : " + isAllCheck);
-                console.log("chk : " + chk);
-
-            } else if ($(".chkbox")[i] != chk) {
-                isAllCheck = 1;
-                console.log("is : " + isAllCheck);
-                console.log("chk : " + chk);
-            }
-        }
-        if (isAllCheck == 1) {
-            $("#allCheck").prop("checked", true);
-        }
-    }
-
-
-    /*** 상품 합계 출력 ***/
-    function itemSum() {
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-        var sum = 0;
-
-        for (var i = 0; i < count; i++) {
-            if ($(".chkbox")[i].checked) {
-                /* sum += parseInt($(".chkbox")[i].value); */
-                <%--sum += ${totalPrice};--%>
-                /* console.log(sum); */
-            }
-        }
-
-        /** 합계 **/
-        document.getElementById("total_sum").innerText = sum.toLocaleString('ko-KR');
-        document.preview.amount.value = sum;
-        console.log("sum : " + sum);
-
-        /** 배송비 포함 '결제예정금액' **/
-        sum += 3000;
-        document.getElementById("total_sum2").innerText = sum.toLocaleString('ko-KR');
-    }
 
     /**** 선택한 상품만 장바구니에서 삭제하기 ****/
     function selectDelete() {
@@ -504,31 +402,12 @@
             },
             success: function (data) {
                 $('.chkbox:checked').parents('.row').remove();
-                changeTotalPrice();
+                changeTotalPriceAll();
             },
             error: function (){
                 alert('선택된 상품삭제 실패');
             }
         });
-    }
-
-    function goIndent() {
-        var chk = $(".chkbox");
-        var cnt = 0;
-
-        $.each(chk, function (i, ch) {
-            if ($(ch).is(":checked")) {
-                cnt++;
-                $('')
-            }
-        })
-
-        var chk = $(".chkbox").prop("checked");
-        var count = $(".chkbox").length;
-
-        document.preview.submit();
-        document.indentPreview.submit();
-
     }
 
     function changeProductPrice($row){
@@ -539,17 +418,22 @@
         $('.product-total-price', $row).text(addComma(total)).data('value', total);
     }
 
-    function changeTotalPrice(){
+    function changeTotalPrice($row, $total){
         let product_total_price = 0;
-        $('.row .product-total-price').each(function(i, e){
+        $('.product-total-price', $row).each(function(i, e){
             product_total_price += $(e).data('value');
         });
 
         const delivery = product_total_price > 0 ? 3000 : 0;
 
-        $('.total_sum').text(addComma(product_total_price));
-        $('.delivery').text(addComma(delivery));
-        $('.total_sum2').text(addComma(product_total_price + delivery));
+        $('.total_sum', $total).text(addComma(product_total_price));
+        $('.delivery', $total).text(addComma(delivery));
+        $('.total_sum2', $total).text(addComma(product_total_price + delivery));
+    }
+
+    function changeTotalPriceAll(){
+        changeTotalPrice($('.row'), $('.total-price'));
+        changeTotalPrice($('.chkbox:checked').parents('.row'), $('.total-price-checked'));
     }
 
     function addComma(num){
@@ -561,7 +445,7 @@
         $('.row').each(function(i, e){
             changeProductPrice($(e));
         });
-        changeTotalPrice();
+        changeTotalPriceAll();
     }
 
     init();
