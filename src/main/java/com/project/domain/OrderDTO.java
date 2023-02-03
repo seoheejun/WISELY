@@ -23,16 +23,16 @@ public class OrderDTO {
     private String receiverAddress;
     private String receiverAddressDetail;
     private String receiverPhone;
-    private String receiverEmail;
     private String receiverRequest;
     
 
-    private String paymentType;
+    private String paymentMethod;
     private Instant createdAt;
 //    private LocalDateTime createdAt;
     private int count;
     private String productName;
     private String productImagePath;
+    private String uniqueNo;
 
 	public String getProductImagePath() {
 		return productImagePath;
@@ -154,14 +154,6 @@ public class OrderDTO {
         this.receiverPhone = receiverPhone;
     }
 
-    public String getReceiverEmail() {
-        return receiverEmail;
-    }
-
-    public void setReceiverEmail(String receiverEmail) {
-        this.receiverEmail = receiverEmail;
-    }
-
     public String getReceiverRequest() {
         return receiverRequest;
     }
@@ -170,12 +162,44 @@ public class OrderDTO {
         this.receiverRequest = receiverRequest;
     }
 
+    public String getPaymentMethod() {
+    	
+        return paymentMethod ;
+    }
+    
     public String getPaymentType() {
-        return paymentType;
+    	String payMethod = getPaymentMethod();
+    	String paymentType = "";
+    	
+    	switch (payMethod) {
+		case "naver":
+			paymentType = "네이버페이";
+			break;
+		case "kakao":
+			paymentType = "카카오페이";
+			break;
+		case "card":
+			paymentType = "신용/체크카드";
+			break;
+		case "payco":
+			paymentType = "페이코";
+			break;
+		case "toss":
+			paymentType = "토스페이";
+			break;
+		case "excrow":
+			paymentType = "에스크로(가상계좌)";
+			break;
+		case "phone":
+			paymentType = "휴대폰";
+			break;
+		}
+    	
+    	return paymentType;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPaymentMethod(String paymentMethod ) {
+        this.paymentMethod  = paymentMethod ;
     }
 
     // 주문/배송 조회 페이지 표시
@@ -223,10 +247,14 @@ public class OrderDTO {
     
     // 배송번호 
     public String getUniqueNo() {
-    	return "20230126-00001";
+        return String.format("%s-%05d", getCreatedAt().format(DateTimeFormatter.BASIC_ISO_DATE), orderNo);
     }
     
-    // 상품명 + 외
+    public void setUniqueNo(String uniqueNo) {
+		this.uniqueNo = uniqueNo;
+	}
+
+	// 상품명 + 외
     public String getProductEtc() {
     	
     	int cnt = getCount();
@@ -246,9 +274,9 @@ public class OrderDTO {
 				+ deliveryCharge + ", details=" + details + ", memNo=" + memNo + ", receiverName=" + receiverName
 				+ ", receiverPostcode=" + receiverPostcode + ", receiverAddress=" + receiverAddress
 				+ ", receiverAddressDetail=" + receiverAddressDetail + ", receiverPhone=" + receiverPhone
-				+ ", receiverEmail=" + receiverEmail + ", receiverRequest=" + receiverRequest + ", paymentType="
-				+ paymentType + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + 
-				", productImagePath= "+productImagePath+"]";
+				+ ", receiverRequest=" + receiverRequest + ", paymentMethod ="
+				+ paymentMethod  + ", createdAt=" + createdAt + ", count=" + count + ", productName=" + productName + 
+				", productImagePath= "+productImagePath+ "uniqueNo : "+uniqueNo+"]";
 	}
     
 }

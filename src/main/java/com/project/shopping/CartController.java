@@ -30,19 +30,15 @@ public class CartController {
 		return mav;
 	}
 
-//	@ResponseBody
-	@RequestMapping("cartAdd")
-	public String cartAdd(CartDTO cDto, HttpServletRequest request, Model model) {
+	@PostMapping("cartAdd")
+	public ResponseEntity<Integer> cartAdd(CartDTO cDto, HttpSession httpSession) {
+		int memNo = Integer.valueOf((String) httpSession.getAttribute("memName"));
+		int result = cartService.addCart(cDto, memNo);
+		System.out.println("장바구니 추가 결과 : "+ result);
 		
-		System.out.println(cDto.getProdCount());
-		int result = cartService.addCart(cDto);
-		System.out.println("result : " + result);
-		model.addAttribute("result", result);
-		System.out.println("result : " + result);
-		
-		return "customer/prod_view";
+		return ResponseEntity.ok(result);
 	}
-
+	
 	@PostMapping("increase")
 	public ResponseEntity increase(int pNo, HttpSession httpSession) {
 		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")

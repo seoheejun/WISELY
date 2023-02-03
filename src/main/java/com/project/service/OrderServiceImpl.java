@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int insert(OrderDTO order, int memNo) {
+	public OrderDTO insert(OrderDTO order, int memNo) {
 		order.setMemNo(memNo);
 		orderMapper.insert(order);
 		int orderNo = order.getOrderNo();
@@ -56,13 +56,13 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("orderNo : "+orderNo);
 			oDto.setOrderNo(orderNo);
 			
-			int no = oDto.getproductNo();
+			int no = oDto.getProductNo();
 			pNoList.add(no);
 		}
 		orderDetailMapper.insert(details);
 		cartMapper.delete(pNoList, memNo);
 		
-		return 0;
+		return orderMapper.get(orderNo, memNo);
 	}
 
 

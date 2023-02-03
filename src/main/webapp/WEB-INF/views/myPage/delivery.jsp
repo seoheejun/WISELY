@@ -66,10 +66,6 @@
 								
 	                            <!-- 구매상품 정보 -->
 	                            <div style="width:100px;">
-	                                <%-- <div style="display: flex; align-items: center; margin-top:12px">
-	                                	<span class="prod">주문번호</span>
-	                                    <span>${oDto.orderNo}</span>
-	                                </div> --%>
 	                                <div style="display: flex; align-items: center;">
 	                                    <span><fmt:formatNumber type="Number" value="${oDto.productTotalPrice}"/>원</span>
 	                                </div>

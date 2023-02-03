@@ -21,25 +21,25 @@
 								<tr style="height:25px;">
 									<th style="text-align:left; font-weight: normal;">주문번호</th>
 									<td style="text-align:right">
-										<b>20230131-00001</b>
+										<b>${oDto.uniqueNo}</b>
 									</td>
 								</tr>
 								<tr style="height:25px;">
 									<th style="text-align:left; font-weight: normal;">주문금액</th>
 									<td style="text-align:right">
-										<b>23,490원</b>
+										<b><fmt:formatNumber type="Number" value="${oDto.productTotalPrice+3000}"/>원</b>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 				</div>
 				<a href="/shopping/order">
-					<button type="submit" onclick="order()" style="width:360px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
+					<button type="submit" style="width:360px; padding:15px; border-radius: 5px; background-color: #00388c; border:none;
 							color:white; margin-top: 20px;">구매내역 확인하기</button>
 				</a>
 				
 				<a href="/shopping">
-					<button type="submit" onclick="order()" style="width:360px; padding:15px; border-radius: 5px; background-color: white;
+					<button type="submit" style="width:360px; padding:15px; border-radius: 5px; background-color: white;
 							color:#00388c; margin-top: 20px;border: 1px; border-style: solid; border-color:#00388c;">계속 쇼핑하기</button>
 				</a>
 	    	</div>

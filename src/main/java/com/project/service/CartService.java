@@ -7,7 +7,7 @@ import com.project.domain.CartDTO;
 public interface CartService {
 	
 	// 장바구니 추가
-	public int addCart(CartDTO cDto);
+	public int addCart(CartDTO cDto, int memNo);
 	
 	// 장바구니 리스트
 	public List<CartDTO> getCartList(CartDTO cDto);

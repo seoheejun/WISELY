@@ -10,6 +10,6 @@ public interface OrderService {
 
 	public OrderDTO get(int orderNo, int memNo);
 	
-	public int insert(OrderDTO order, int memNo);
+	public OrderDTO insert(OrderDTO order, int memNo);
 
 }

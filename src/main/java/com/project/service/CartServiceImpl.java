@@ -15,10 +15,11 @@ public class CartServiceImpl implements CartService {
 
 	// 장바구니 추가
 	@Override
-	public int addCart(CartDTO cDto) {
+	public int addCart(CartDTO cDto, int memNo) {
 		
 		// 0 : 등록 실패 / 1 : 등록 성공 / 2 : 등록된 데이터 존재 / 5 : 로그인 필요
 		
+		cDto.setMemNo(memNo);
 		// 장바구니 데이터 체크
 		CartDTO checkCart = cartMapper.checkCart(cDto);
 		
@@ -28,14 +29,15 @@ public class CartServiceImpl implements CartService {
 		}
 		try {
 			// 장바구니 추가 시 1반환
-			System.out.println("1번 : 장바구니 추가 완료");
 			int result = cartMapper.addCart(cDto);
+			System.out.println("1번 : 장바구니 추가 완료");
 			System.out.println("result : "+result);
 			return result;
 			
 		}catch(Exception e) {
 //			// 장바구니 추가 실패 시 0반환
 //			System.out.println("0번 : 장바구니 추가 실패");
+			System.out.println("장바구니 추가 실패");
 			return 0;
 		}
 		

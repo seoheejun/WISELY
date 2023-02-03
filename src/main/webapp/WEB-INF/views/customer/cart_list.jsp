@@ -159,18 +159,6 @@
                                         <button type='button' onclick='decrease(this)' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'>-</button>
                                     </div>
 
-                                    <!-- 수정 버튼으로 수량 조정 -->
-                                        <%-- <form action="cartUpdate" method="post">
-                                        <div style="position: relative; width: 90px; display: flex; border:1px; border-color: gray; border-style: solid; box-sizing: border-box; margin-right:20px"">
-                                                <input type='button' onclick='count("plus")' value='+' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
-                                                <input type="text" id="qty" name="prodCount" value="${cDto.prodCount}" style='border:none; background: white; text-align:center; display:block; width: 30px; right: 12px; margin: 0; padding: 5px 7px;'/>
-                                                <input type="hidden" name="cartNo" value="${cDto.cartNo}"/>
-                                                <input type='button' onclick='count("minus")' value='-' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
-                                            </div>
-                                        <input type="submit" class="btn btn-sm btn-secondary mt-3" value="수정"/>
-                                        </form> --%>
-
-
                                     <div>
                                         <input type="hidden" class="product-price" value="${cDto.price}" />
                                         <span style="margin-right:20px; width:100px; display: block;"><span class="product-total-price"></span>원</span>

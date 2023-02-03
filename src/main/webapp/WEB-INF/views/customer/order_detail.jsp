@@ -42,7 +42,6 @@ tr{
 	<section class="container ms-4 ps-5" style="width:1000px; margin:auto; margin-top:0;">
 				<h3>주문내역 상세</h3>
 		<article>
-			<div style="width:790px; margin:0">
 			<!-------- 주문 내역이 없는 경우 -------->
 				<%-- <c:if test="${cList == null || cList.size() == 0}">
 					<p class="web-message">주문내역이 없습니다.</p>
@@ -53,9 +52,6 @@ tr{
 							border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
 					<div>주문 상품</div>
 				</div>
-                </div>
-					<div class="row" style="width:790px; margin:0; display: flex; align-items:center; height:140px;
-										text-align:center">
 							<c:forEach var="dDto" items="${oDto.details}">
 	                            <div style="width:790px; height:130px; display: flex; justify-content: space-between; padding: 0; 
 	                            			margin-top:10px; padding-bottom: 10px; text-align: center; align-items:center;
@@ -67,10 +63,9 @@ tr{
 		                                    <span style="width:100px; text-align:right;"><fmt:formatNumber type="Number" value="${dDto.productPrice}"/>원</span>
 		                         </div>
 	                         </c:forEach>
-                          </div>
                    
                 <!------------------ 주문정보 ------------>
-                <div style="width:790px; justify-content: space-between; display: flex; margin-top:250px; border-bottom: 1px; 
+                <div style="width:790px; justify-content: space-between; display: flex; margin-top:100px; border-bottom: 1px; 
 							border-bottom-style: solid; border-bottom-color: black; padding-bottom: 20px">
 					<div>주문/결제정보</div>
 				</div>
@@ -79,7 +74,7 @@ tr{
 						<tr>
 							<th>주문번호</th>
 							<td>
-								20230126-000001
+								${oDto.uniqueNo}
 							</td>
 						</tr>
 						<tr>
@@ -103,7 +98,7 @@ tr{
 						<tr>
 							<th>총 결제금액</th>
 							<td>
-								<fmt:formatNumber type="Number" value="${oDto.productTotalPrice + deliveryCharge}"/>
+								<fmt:formatNumber type="Number" value="${oDto.productTotalPrice + deliveryCharge}"/>원
 							</td>
 						</tr>
 						<tr>

@@ -75,10 +75,12 @@ public class OrderController {
 	}
 	
 	@PostMapping("")
-	public ModelAndView insert(OrderDTO oDto, HttpSession httpSession){
+	public ModelAndView insert(OrderDTO dto, HttpSession httpSession){
 		ModelAndView mav = new ModelAndView("customer/order_complete");
 		int memNo = 1;	// Integer.valueOf((String) httpSession.getAttribute("memName")
-		orderService.insert(oDto, memNo);
+		OrderDTO oDto = orderService.insert(dto, memNo);
+		mav.addObject("oDto", oDto);
+		System.out.println(oDto);
 		System.out.println("insert");
 		return mav;
 	}

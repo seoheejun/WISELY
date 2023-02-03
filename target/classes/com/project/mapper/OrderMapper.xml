@@ -19,7 +19,7 @@
 			   O.receiverAddressDetail,
 			   O.receiverPhone,
 			   O.receiverRequest,
-			   O.paymentType,
+			   O.paymentMethod,
 			   O.createdAt
 		from `order` as O
         inner join order_detail as D on O.orderNo = D.orderNo
@@ -39,7 +39,7 @@
 			   receiverAddressDetail,
 			   receiverPhone,
 			   receiverRequest,
-			   paymentType,
+			   paymentMethod,
 			   createdAt
 		from `order`
 		where orderNo = #{orderNo} and memNo = #{memNo}
@@ -47,8 +47,8 @@
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="orderNo">
 		insert into `order`(memNo, productTotalPrice, deliveryCharge, receiverName, receiverPostcode,
-								   receiverAddress, receiverAddressDetail, receiverPhone, receiverRequest, paymentType)
+								   receiverAddress, receiverAddressDetail, receiverPhone, receiverRequest, paymentMethod)
 		values (#{memNo}, #{productTotalPrice}, #{deliveryCharge}, #{receiverName}, #{receiverPostcode},
-		#{receiverAddress}, #{receiverAddressDetail}, #{receiverPhone}, #{receiverRequest}, #{paymentType});
+		#{receiverAddress}, #{receiverAddressDetail}, #{receiverPhone}, #{receiverRequest}, #{paymentMethod});
 	</insert>
 </mapper>

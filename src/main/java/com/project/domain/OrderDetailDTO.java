@@ -10,11 +10,11 @@ public class OrderDetailDTO {
     private String productImagePath;
     private Integer productNo;
     
-    public Integer getproductNo() {
+    public Integer getProductNo() {
 		return productNo;
 	}
 
-	public void setproductNo(Integer productNo) {
+	public void setProductNo(Integer productNo) {
 		this.productNo = productNo;
 	}
 

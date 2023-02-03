@@ -124,8 +124,13 @@
 							width:1050px; padding-top: 34px; padding-bottom: 34px; text-align: center;">
 					<c:forEach var="cDto" items="${cList}" begin="0" end="0" step="1"  varStatus="status">
 							<span>${cDto.pName}</span>
-							<span>${cDto.totalPrice}</span>
 					</c:forEach>
+					
+					<c:forEach var="cDto" items="${cList}" begin="0" step="1"  varStatus="status">
+					<c:set var="TotalPrice" value="${cDto.price * cDto.prodCount}"/>
+					<c:set var="productTotalPrice" value="${productTotalPrice + TotalPrice}"/>
+					</c:forEach>
+							
 					<c:if test="${cList.size() < 2}">
 						<span>상품을 주문합니다.</span>
 					</c:if>
@@ -248,16 +253,16 @@
 							<tr style="width:1050px; height:60px;">
 								<th style="width:200px;">요청사항</th>
 								<td>
-									<select class="order-input" name="receiverRequest" style="width:489px" id="message-select" onchange="message()">
-										<option value="message-0" selected="selected">-- 메시지 선택 (선택사항) --</option>
-										<option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
-										<option value="부재 시 경비실에 맡겨주세요.">부재 시 경비실에 맡겨주세요.</option>
-										<option value="부재 시 문 앞에 놓아주세요.">부재 시 문 앞에 놓아주세요.</option>
-										<option value="빠른 배송 부탁드립니다.">빠른 배송 부탁드립니다.</option>
-										<option value="택배함에 보관해 주세요.">택배함에 보관해 주세요.</option>
-										<option id="requestMsg" value="6">직접 입력(10자 이내)</option>
+									<select class="order-input"  style="width:489px" id="message-select" onchange="message()">
+										<option value="" selected="selected">-- 메시지 선택 (선택사항) --</option>
+										<option value="1">배송 전에 미리 연락바랍니다.</option>
+										<option value="2">부재 시 경비실에 맡겨주세요.</option>
+										<option value="3">부재 시 문 앞에 놓아주세요.</option>
+										<option value="4">빠른 배송 부탁드립니다.</option>
+										<option value="5">택배함에 보관해 주세요.</option>
+										<option value="6">직접 입력(10자 이내)</option>
 									</select>
-									<input class="order-input" maxlength="10" id="request" maxlength='10'
+									<input class="order-input" maxlength="10" id="request" maxlength='10' name="receiverRequest"
 											style="overflow:hidden; margin-top:12px; display:none; width:489px; resize:none;">
 								</td>
 							</tr>
@@ -334,43 +339,43 @@
 					<div class="inner">
 						<ul style="margin:0; padding: 0">
 						<li class="paymethod-newArea" style="height: 240px; list-style: none; padding-bottom:20px; margin-bottom:20px; display: flex">
-							<input type="radio" id="payment" style="display:none;">
+							<!-- <input type="hidden" name="paymentType" style="display:none;"> -->
 							<label for="payment" style="width:200px; height:228px">결제수단 선택</label>
 							
 							<!-- 결제 수단 버튼 -->
 							<div class="payment-btn" style="width:489px; height:228px;">
 								<span>
-									<input id="paymethod0" value="naver" onclick="selPayment()"checked="checked" name="paymethod" type="radio" style="display: none">
+									<input id="paymethod0" value="naver" onclick="selPayment()" checked="checked" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod0">
 									네이버페이</label>
 								</span>
 								<span>
-									<input id="paymethod1" value="kakao" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<input id="paymethod1" value="kakao" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod1">
 									카카오페이</label>
 								</span>
 								<span>
-									<input id="paymethod2" value="card" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<input id="paymethod2" value="card" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod2">
 									신용/체크카드</label>
 								</span>
 								<span>
-									<input id="paymethod3" value="payco" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<input id="paymethod3" value="payco" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod3">
 									페이코</label>
 								</span>
 								<span>
-									<input id="paymethod4" value="toss" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<input id="paymethod4" value="toss" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod4">
 									토스페이</label>
 								</span>
 								<span>
-									<input id="paymethod5" value="excrow" onclick="selPayment()"name="paymethod" type="radio" style="display: none">
+									<input id="paymethod5" value="excrow" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod5">
 									에스크로(가상계좌)</label>
 								</span>
 								<span>
-									<input id="paymethod6" value="phone" onclick="selPayment()" name="paymethod" type="radio" style="display: none">
+									<input id="paymethod6" value="phone" onclick="selPayment()" name="paymentMethod" type="radio" style="display: none">
 									<label for="paymethod6">
 									휴대폰</label>
 								</span>
@@ -487,12 +492,9 @@
 				
 				
 				<!-- 장바구니 금액 표시 -->	
-				<c:set var="TotalPrice" value="${cDto.productPrice*cDto.productCount}"/>
-				<c:set var="productTotalPrice" value="${productTotalPrice + TotalPrice}"/>
+				
 				<div style="width:300px; height:200px; background: #FBFAFA; padding: 20px; box-sizing: border-box;">
 					<div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
-						합계 : ${productTotalPrice}
-						합계 : ${TotalPrice}
 						<div>합계</div>
 						<div>
 							<fmt:formatNumber type="Number" value="${productTotalPrice}"/>원
@@ -505,7 +507,7 @@
 					<div style="width:260px; margin-bottom: 15px; display: flex; justify-content: space-between;">
 						<div><b>결제예정금액</b></div>
 						<div><b>
-						<span id="total_sum2"><fmt:formatNumber type="Number" value="${amount + 3000}"/></span>원
+						<span id="total_sum2"><fmt:formatNumber type="Number" value="${productTotalPrice + 3000}"/></span>원
 						</b></div>
 						
 						
@@ -523,7 +525,7 @@
 				<input type="hidden" name="details[${i.index}].productImagePath" value="${cDto.pImage_1}"/>
 			</c:forEach>
 				<input type="hidden" name="deliveryCharge" value="3000"/>
-				<input type="hidden" name="productTotalPrice" value="1000"/>
+				<input type="hidden" name="productTotalPrice" value="${productTotalPrice}"/>
 				<input type="hidden" name="memNo" value="${cDto.memNo}"/>
 				<button type="submit" style="width:300px; padding:15px; border-radius: 5px; background-color: #00388c; border:none; color:white;">결제하기</button>
 		</div>
@@ -576,15 +578,23 @@
 			document.getElementById("receipt-company").style.display="block";
 		}
 	}
+	/*  $(document).ready(function () {
+		$("input[name='paymethod']").click(function () {
+			var pt = $("input[name='paymentType']").val();
+			
+			pt = $("input[name='paymethod']:checked").val();
+			
+			console.log(pt);
+		});
+	 }); */
 	
-
 	/* 결제수단 선택 */
 	function selPayment(){
-		  var pm = document.getElementsByName("paymethod");
+		  var pm = document.getElementsByName("paymentMethod");
 		  
 		  for(var i = 0; i <= pm.length; i++){
 			  if(pm[i].checked){
-			  console.log(i)
+				  
 				  if(i == 5){
 					  document.getElementById("cashReceipt2").checked = "checked";
 					  document.getElementById("user1").checked = "checked";
@@ -592,10 +602,6 @@
 					  document.getElementById("receipt-phone").style.display="none";
 					  document.getElementById("receipt-company").style.display="none";
 				  }
-			  	  
-			  	 /*  if(i == 6){
-			  		document.getElementById("phone").style.display="block";
-			  	  } */
 			  	  
 				  document.getElementById(pm[i].value).style.display="block";
 			  }else{
@@ -607,12 +613,35 @@
 	/* 배송 요청사항 직접입력 */
 	function message(){
 		var selectedElement = document.getElementById("message-select");
-		var rMsg = document.getElementById("requestMsg");
 		var selectedValue = selectedElement.options[selectedElement.selectedIndex].value;
+		var request = document.getElementById("request");
+		console.log("request : "+request.value);
+		
+		switch (selectedValue) {
+		case '1':
+			request.value = "배송 전에 미리 연락바랍니다.";
+			console.log(selectedValue);
+			console.log("request : "+request.value);
+			break;
+		case '2':
+			request.value = "부재 시 경비실에 맡겨주세요.";
+			console.log(selectedValue);
+			break;
+		case '3':
+			request.value = "부재 시 문 앞에 놓아주세요.";
+			console.log(selectedValue);
+			break;
+		case '4':
+			request.value = "빠른 배송 부탁드립니다.";
+			break;
+		case '5':
+			request.value = "택배함에 보관해 주세요.";
+			break;
+		}
 		
 		if(selectedValue == '6'){
 			document.getElementById("request").style.display="block";
-			rMsg.value = document.getElementById("request").innerText;
+			document.getElementById("request").value = null;
 		}else if(selectedValue != '6'){
 			document.getElementById("request").style.display="none";
 		}
