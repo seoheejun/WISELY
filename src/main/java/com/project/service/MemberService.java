@@ -14,4 +14,6 @@ public interface MemberService {
 	public MemberDTO memberInfo(int memNo);
 	public int memberDelete(int memNo);
 	public int memberUpdate(MemberDTO dto);
+	public MemberDTO memberFind(int memNo, HttpServletRequest request);
+	public MemberDTO get(int memNo);
 }

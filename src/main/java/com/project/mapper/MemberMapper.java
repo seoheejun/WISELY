@@ -9,6 +9,7 @@ import com.project.domain.MemberDTO;
 public interface MemberMapper {
 	public int memberInsert(MemberDTO dto);
 	public String memberLogin(MemberDTO dto);
+	public MemberDTO memberFind(int memNo);
 	public String emailFind(MemberDTO dto);
 	public List<MemberDTO> memberList();
 	public MemberDTO memberInfo(int memNo);

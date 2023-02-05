@@ -12,9 +12,11 @@
 <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="/shopping/css/header.css">
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js'></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script src="https://kit.fontawesome.com/3f5bc4ad42.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -47,7 +49,7 @@
         	</c:if>
         	<c:if test="${sessionScope.memName != null}">
         		<li class="nav-item ms-auto" style="margin-right:20px;">
-	        		<a href="<c:url value='/'/>" class="nav-link" style="color:#00388C">마이페이지</a>
+	        		<a href="<c:url value='/order'/>" class="nav-link" style="color:#00388C">마이페이지</a>
 	        	</li>
 	        	<li class="nav-item" style="margin-right:20px;">
 	        		<a href="<c:url value='memberLogout'/>" class="nav-link">로그아웃</a>
@@ -73,11 +75,17 @@
 				</div>
 			</form>
 			<div>
-				<a href="/" style="margin-left:50px; margin-right:100px;">
+			<c:if test="${sessionScope.memName != null}">
+				<a href="<c:url value='cart'/>?memNo=${memName}" style="margin-left:50px; margin-right:100px;">
+			</c:if>
+			<c:if test="${sessionScope.memName == null}">
+				<a href="javascript:showMsg()" style="margin-left:50px; margin-right:100px;">
+			</c:if>
 					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#555" class="bi bi-cart3" viewBox="0 0 16 16">
 						<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 					</svg>
 				</a>
+				
 			</div>
 		</div>
 	</section>
@@ -112,3 +120,9 @@
 		</div>
 	</section>
 </header>
+<script>
+	function showMsg(){
+		alert("로그인 후 이용 가능합니다.")
+		location.href="user_login";
+	}
+</script>

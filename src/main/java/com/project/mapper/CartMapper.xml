@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.project.mapper.CartMapper">  
+
+ 	<!-- 장바구니 추가 -->
+	<insert id="addCart">
+		insert into cart(memNo, pNo, prodCount)
+		values(#{memNo}, #{pNo}, #{prodCount})
+		<!-- values(#{memNo}, #{pNo}, #{prodCount}) -->
+	</insert>
+	
+	<!-- 장바구니 확인 -->
+	<select id="checkCart" resultType="CartDTO">
+		select * from cart 
+		<!-- where pNo = #{pNo} -->
+		where memNo = #{memNo} and pNo = #{pNo}
+		<!-- where memNo = #{memNo} and pNo = #{pNo} -->
+	</select>
+	
+	<select id="getCartList" resultType="cartDTO">
+		select a.cartNo, a.pNo, a.prodCount, b.pName, b.price, b.pImage_1
+		from cart a left outer join product b on a.pNo = b.pNo
+		where memNo = #{memNo}
+	</select>
+
+	<select id="get" resultType="cartDTO">
+		select a.cartNo, a.pNo, a.prodCount, b.pName, b.price, b.pImage_1
+		from cart a left outer join product b on a.pNo = b.pNo
+		where memNo = #{memNo} and cartNo in
+		<foreach item="cartNo" collection="cartNos" open="(" close=")" separator=",">
+			#{cartNo}
+		</foreach>
+	</select>
+	
+	<update id="modifyCount">
+		update cart set prodCount= #{prodCount} where cartNo = #{cartNo}
+	</update>
+
+	<update id="increase">
+		update cart set prodCount= prodCount +1 where memNo = #{memNo} and pNo = #{pNo}
+	</update>
+
+	<update id="decrease">
+		update cart set prodCount= prodCount -1 where memNo = #{memNo} and pNo = #{pNo}
+	</update>
+
+	<delete id="delete">
+		delete from cart where memNo = #{memNo} and pNo in
+		<foreach item="pNo" collection="pNoList" open="(" close=")" separator=",">
+			#{pNo}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteCart">
+		delete from cart where cartNo = #{cartNo};
+	</delete>
+
+</mapper>

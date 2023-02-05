@@ -63,5 +63,25 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.memberUpdate(dto);
 	}
 	
+	@Override
+	public MemberDTO memberFind(int memNo, HttpServletRequest request) {
+		MemberDTO mDto = mapper.memberFind(memNo);
+		HttpSession session = request.getSession();
+		
+		if(mDto != null) {
+			session.setAttribute("mDto", mDto);
+			System.out.println("memberSvcImpl : memberFind 완료");
+			return mDto;
+		}else {
+			System.out.println("memberSvcImpl : memberFind 실패");
+		}
+		
+		return null;
+	}
+
+	@Override
+	public MemberDTO get(int memNo){
+		return mapper.memberFind(memNo);
+	}
 	
 }

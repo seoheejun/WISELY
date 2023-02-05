@@ -18,6 +18,10 @@
 		SELECT memEmail FROM member WHERE memName = #{memName} AND memTel = #{memTel}
 	</select>
 	
+	<select id="memberFind" resultType="memberDTO">
+		SELECT * FROM member WHERE memNo = #{memNo}
+	</select>
+	
 	<select id="memberList" resultType="memberDTO">
 		SELECT * FROM member
 	</select>
