@@ -47,7 +47,7 @@
 						<c:if test="${sessionScope.memName ==null}">
 							<a href="javascript:showMsg()" class="btn btn-lg btn-outline-success">장바구니 담기</a> 
 						</c:if>
-						<a href="javascript:history.back()" class="btn btn-lg btn-outline-primary ms-3">계속 쇼핑하기</a>
+						<a href="javascript:history.back()" class="btn btn-lg btn-outline-primary ms-3" style="margin:0px;">계속 쇼핑하기</a>
 					</div>
 				</form>
 			</li>
