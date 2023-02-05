@@ -5,6 +5,7 @@
 <div class="container w-50 border shadow-sm p-5 mt-5">
 	<h3>상품 수정</h3>
 	<form action="<c:url value='pd_update'/>" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="pNo" value="${pd_dto.pNo}"/>
 		<table class="table table-borderless">
 			<tbody>
 				<tr>
@@ -139,7 +140,7 @@
 				<tr>
 					<td colspan="2" class="text-center">
 						<input type="submit" class="btn btn-sm btn-warning" value="수정"/>	
-						<a href="pd_list" class="btn btn-secondary btn-sm">취소</a>
+						<a href="<c:url value='pd_list'/>" class="btn btn-secondary btn-sm">취소</a>
 					</td>
 				</tr>
 			</tbody>			

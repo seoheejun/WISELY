@@ -4,6 +4,9 @@
 <main>
 <div class="container mt-5 border shadow p-5" style="width:600px;">
 	<h2>관리자 로그인</h2>
+	<c:if test = "${result == 0}">
+		<div class="text-danger my-3 text-center"><b>아이디와 비밀번호를 확인해주세요.</b></div>
+	</c:if>
 	<form action="<c:url value='/ad_loginOK'/>" method="post">
 		<div class="mt-3 mb-3">
 			<label for="adminId">아이디</label>

@@ -38,14 +38,29 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("movePage1")
+	public String movePage1() {
+		return "page/page1";
+	}
+	
+	@RequestMapping("movePage2")
+	public String movePage2() {
+		return "page/page2";
+	}
+	
+	@RequestMapping("movePage3")
+	public String movePage3() {
+		return "page/page3";
+	}
+	
+	@RequestMapping("movePage4")
+	public String movePage4() {
+		return "page/page4";
+	}
+	
 	@RequestMapping("ad_login")
 	public String ad_login() {
 		return "admin/ad_login";
-	}
-	
-	@RequestMapping("user_list")
-	public String user_list() {
-		return "admin/user_list";
 	}
 	
 	@RequestMapping("user_login")
@@ -56,6 +71,46 @@ public class HomeController {
 	@RequestMapping("user_join")
 	public String user_join() {
 		return "customer/user_join";
+	}
+	
+	@RequestMapping("service1")
+	public String service_1() {
+		return "service/service1";
+	}
+	
+	@RequestMapping("service2")
+	public String service_2() {
+		return "service/service2";
+	}
+	
+	@RequestMapping("service3")
+	public String service_3() {
+		return "service/service3";
+	}
+	
+	@RequestMapping("service4")
+	public String service_4() {
+		return "service/service4";
+	}
+	
+	@RequestMapping("service5")
+	public String service_5() {
+		return "service/service5";
+	}
+	
+	@RequestMapping("board")
+	public String board() {
+		return "myPage/board";
+	}
+	
+	@RequestMapping("delivery")
+	public String delivery() {
+		return "myPage/delivery";
+	}
+	
+	@RequestMapping("recentView")
+	public String recentView() {
+		return "myPage/recentView";
 	}
 	
 	@RequestMapping("secTest")

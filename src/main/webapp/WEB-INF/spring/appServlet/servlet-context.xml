@@ -39,7 +39,24 @@
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
 	
-	<!-- @Component 애너테이션 붙은 클래스들을 스캔을 해서 객체로 만들어주는 역할
+	<!-- 인터셉터 bean -->
+	<beans:bean id="adminLoginInterceptor" class="com.project.interceptor.AdminLoginInterceptor"/>
+	
+	<!-- 인터셉터 매핑  -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/user_list"/>
+			<mapping path="/cat_list"/>
+			<mapping path="/cat_input"/>
+			<mapping path="/pd_list"/>
+			<mapping path="/pd_input"/>
+		
+			<beans:ref bean="adminLoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<!-- 
+		@Component 애너테이션 붙은 클래스들을 스캔을 해서 객체로 만들어주는 역할
 		이렇게 만들어진 객체는 스프링 컨터네이너에 보관, 스프링 컨테이너 : 객체를 보관하는 메모리
 	-->
 	<context:component-scan base-package="com.project.shopping"/>

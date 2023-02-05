@@ -7,27 +7,45 @@
 	<section class="container mb-5">
 		<ul class="d-flex p-0 justify-content-center mt-5" style="list-style:none;">
 			<!-- 상품 이미지 -->
-			<li class="me-4">
+			<li class="me-5">
 				<img src="prod_img/${dto.pImage_1}" width="400px"/>
 			</li>
-			<!-- 상품 정보 -->
+			<!-- 상품 상세내용 -->
 			<li>
-				<form class="ms-4" name="prodForm" method="post" style="width:400px; height:300px;">
+				<form class="row" action="/shopping/cart/cartAdd" name="prodForm" method="post" style="width:400px; height:400px;">
 					<input type="hidden" name="pSpec" value="${dto.pSpec}"/>
-					<div style="color:#58c3cc"><b>${dto.pCompany}</b></div><br/>
-					<h2 class="mt-1" style="letter-spacing:0.03em"><b>${dto.pName}</b></h2><br/>
+					<div class="mt-5" style="color:#58c3cc"><b>${dto.pCompany}</b></div><br/>
+					<h2 class="mt-1" style="letter-spacing:0.03em"><b>[${dto.pName}]</b></h2><br/>
 					<div style="color:#838383">${dto.pContent}</div><br/>
 					<div class="mt-2">
 						<h4><fmt:formatNumber value="${dto.price}"/>원</h4><br/>
+						<!-- 수량 수정 -->
+						<div style="position: relative; width: 90px; display: flex; border:1px; border-color: gray; border-style: solid; box-sizing: border-box;">
+							<input type='button' onclick='count("plus")' value='+' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
+							<input type="text" id="qty" class="product-count" name="prodCount" value="1" style='border:none; background: white; text-align:center; display:block; width: 30px; right: 12px; margin: 0; padding: 5px 7px;'/>
+							<!-- <div id='qty' class="quantity_input" 
+							style='background: white; text-align:center; display:block; width: 30px; right: 12px; margin: 0; padding: 5px 7px;'>
+							1
+							</div> -->
+							<input type='button' onclick='count("minus")' value='-' style='width: 30px; background: white; border: 1px solid #bbb; border-radius: 0px; padding: 5px 7px; border: none;'/>
+						</div>
+						
 					</div>
 					<div class="d-flex mt-3">
 						<!-- 로그인 사용자만 장바구니 담기 허용 -->
-						<c:if test="${sessionScope.userName !=null}">
-							<a href="javascript:goCart(${dto.pNo})" class="btn btn-lg btn-outline-success">장바구니 담기</a>
+						<c:if test="${sessionScope.memName !=null}">
+							<!-- <a href="javascript:goCart()" class="btn btn-lg btn-outline-success">장바구니 담기</a> -->
+							<button type="button" onclick="goCart(this)" class="btn btn-lg btn-outline-success">장바구니 담기</button>
+							
+							<!-- <button type="submit" style="width:360px; padding:15px; border-radius: 5px; background-color: white;
+							color:#00388c; margin-top: 20px; border: 1px; border-style: solid; border-color:#00388c;">장바구니</button> -->
+							<input type="hidden" name="memNo" value="${memName}">
+							<input type="hidden" class="product-no" name="pNo" value="${dto.pNo}">
 						</c:if>
+						
 						<!-- 로그인을 안했을 경우 -->					
-						<c:if test="${sessionScope.userName ==null}">
-							<a href="javascript:showMsg()" class="btn btn-lg btn-outline-success">장바구니 담기</a>
+						<c:if test="${sessionScope.memName ==null}">
+							<a href="javascript:showMsg()" class="btn btn-lg btn-outline-success">장바구니 담기</a> 
 						</c:if>
 						<a href="javascript:history.back()" class="btn btn-lg btn-outline-primary ms-3">계속 쇼핑하기</a>
 					</div>
@@ -70,4 +88,54 @@
 		<hr class="mt-5 mb-5">
 	</section>
 </main>
+<script>
+function goCart(button) {
+	 var $button = $(button);
+     var $row = $button.parents('.row');
+
+     $.ajax({
+         url: 'cart/cartAdd',
+         type : "post",
+         data: {
+             pNo: $('.product-no').val(),
+             prodCount: $('.product-count').val()
+         },
+         success: function (data) {
+             switch (data) {
+ 			case 0:
+ 				alert("장바구니 추가를 실패했습니다.");
+ 				break;
+ 			case 1:
+ 				alert("장바구니에 상품을 담았습니다.");
+ 				break;
+ 			case 2:
+ 				alert("장바구니에 동일한 상품이 있습니다.");
+ 				break;
+ 			}
+         },
+         error: function (){
+             alert($('.product-count').val()+ ' : 장바구니 추가 실패!! : '+$('.product-no').val());
+         }
+     });
+}
+  	
+	function count(type)  {
+		  // 결과를 표시할 element
+		  const resultElement = document.getElementById('qty');
+		  
+		  // 현재 화면에 표시된 값
+		  let number = resultElement.value;
+		  console.log(number);
+		  
+		  // 더하기/빼기
+		  if(type === 'plus') {
+		    number = parseInt(number) + 1;
+		  }else if(type === 'minus' && number > 1)  {
+		    number = parseInt(number) - 1;
+		  }
+		  
+		  // 결과 출력
+		  resultElement.value= number;
+		}
+</script>
 <%@ include file="../inc/footer.jsp" %>

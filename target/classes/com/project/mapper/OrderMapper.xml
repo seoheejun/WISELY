@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.project.mapper.OrderMapper">
+
+	<select id="getAll" resultType="orderDTO">
+		select count(orderDetailNo) as count,
+			   O.orderNo,
+			   memNo,
+			   O.productTotalPrice,
+			   O.deliveryCharge,
+			   O.receiverName,
+			   D.productName,
+			   D.productImagePath,
+			   O.receiverPostcode,
+			   O.receiverAddress,
+			   O.receiverAddressDetail,
+			   O.receiverPhone,
+			   O.receiverRequest,
+			   O.paymentMethod,
+			   O.createdAt
+		from `order` as O
+        inner join order_detail as D on O.orderNo = D.orderNo
+		where memNo = #{memNo}
+        group by orderNo
+		order by createdAt desc
+	</select>
+
+	<select id="get" resultType="orderDTO">
+		select orderNo,
+			   memNo,
+			   productTotalPrice,
+			   deliveryCharge,
+			   receiverName,
+			   receiverPostcode,
+			   receiverAddress,
+			   receiverAddressDetail,
+			   receiverPhone,
+			   receiverRequest,
+			   paymentMethod,
+			   createdAt
+		from `order`
+		where orderNo = #{orderNo} and memNo = #{memNo}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="orderNo">
+		insert into `order`(memNo, productTotalPrice, deliveryCharge, receiverName, receiverPostcode,
+								   receiverAddress, receiverAddressDetail, receiverPhone, receiverRequest, paymentMethod)
+		values (#{memNo}, #{productTotalPrice}, #{deliveryCharge}, #{receiverName}, #{receiverPostcode},
+		#{receiverAddress}, #{receiverAddressDetail}, #{receiverPhone}, #{receiverRequest}, #{paymentMethod});
+	</insert>
+</mapper>
